@@ -1,0 +1,572 @@
+body {
+    margin: 0;
+}
+
+.icon_logo {
+    position: relative;
+    width: 100%;
+    min-height: 95px;
+    background-color: #FFFFFF;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    box-sizing: border-box;
+}
+
+.teams_icon {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.icon {
+    height: 30px;
+    margin-left: 10px;
+    justify-content: center;
+}
+
+.league-image {
+    position: absolute;
+    width: 80px;
+    top: 0;
+    left: 10px;
+}
+
+.image_insert {
+    height: 25px;
+    justify-content: center;
+}
+
+.menu {
+    position: sticky;
+    top: 0;
+    background: #301934;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    padding: 9px;
+    z-index: 9999;
+}
+
+.nav-toggle {
+    display: none;
+}
+
+@media (max-width: 1100px) {
+    .nav-toggle-label {
+        display: block;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        position: relative;
+        z-index: 2;
+    }
+
+    .nav-toggle-label span,
+    .nav-toggle-label span::before,
+    .nav-toggle-label span::after {
+        display: block;
+        background: white;
+        height: 2px;
+        width: 100%;
+        position: absolute;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .nav-toggle-label span {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .nav-toggle-label span::before {
+        content: "";
+        top: -7px;
+    }
+
+    .nav-toggle-label span::after {
+        content: "";
+        top: 7px;
+    }
+
+    .nav-toggle:checked+.nav-items {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-toggle:checked+.nav-items li {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .nav-toggle:checked+.nav-toggle-label span::before {
+        transform: rotate(45deg) translate(3px, 7px);
+    }
+
+    .nav-toggle:checked+.nav-toggle-label span {
+        background: transparent;
+    }
+
+    .nav-toggle:checked+.nav-toggle-label span::after {
+        transform: rotate(-45deg) translate(3px, -7px);
+    }
+
+    .nav-items {
+        list-style: none;
+        margin: 0;
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #301934;
+        width: 100%;
+        padding: 10px;
+        transition: transform 0.3s ease-in-out;
+        line-height: 2.5;
+    }
+
+    .nav-items li {
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    .nav-items li {
+        margin-right: 10px;
+    }
+
+    .nav-items li:last-child {
+        margin-right: 0;
+    }
+
+    .nav-items li a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .nav-toggle:checked~.nav-items {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        transform: translateY(0);
+    }
+
+    .nav-toggle:checked~.nav-items li {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.menu ul li {
+    list-style: none;
+    display: inline-block;
+    margin: 0 20px;
+    position: relative;
+}
+
+.menu ul li a {
+    text-decoration: none;
+    color: #FFFFFF;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 14px;
+}
+
+.menu ul li::after {
+    content: '';
+    height: 2px;
+    width: 0;
+    background: #FFFFFF;
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    transition: width 0.5s;
+}
+
+.menu ul li:hover::after {
+    width: 100%;
+}
+
+.content {
+    min-height: 300px;
+    width: 100%;
+}
+
+.name {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 100px;
+    color: #550055;
+    line-height: 24px;
+}
+
+.content {
+    position: relative;
+    width: 100%;
+    min-height: 150px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    padding: 10px;
+}
+
+.username {
+    text-align: right;
+    font-family: system-ui;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #da0c0c;
+    position: absolute;
+    top: 10px;
+    left: 100px;
+}
+
+.logout {
+    text-align: right;
+    font-family: system-ui;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #da0c0c;
+    position: absolute;
+    top: 10px;
+    left: 150px;
+}
+
+.user {
+    align-items: center;
+}
+
+.logo_name {
+    text-align: right;
+    position: absolute;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 24px;
+    color: #550055;
+    left: 100px;
+    top: 35px;
+}
+
+.season {
+    text-align: right;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #580b58;
+    position: absolute;
+    top: 60px;
+    left: 100px;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/* Left */
+.standings {
+    width: 500px;
+    height: 350px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    margin: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    position: relative;
+}
+
+.potm {
+    width: 500px;
+    height: 250px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    margin: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    position: relative;
+}
+
+/* Right */
+.seeall {
+    width: 90%;
+    height: 18%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #3d3dc0;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 10px;
+}
+
+.seeall a {
+    text-decoration: none;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 48px;
+    color: #FFFFFF;
+}
+
+.content_title {
+    display: flex;
+    position: absolute;
+    left: 20px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 48px;
+    color: #0C0225;
+}
+
+.potm_picture {
+    position: absolute;
+    left: 20px;
+    width: 50px;
+    height: 55px;
+    top: 50px;
+}
+
+.potm_content {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.information {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.ileft {
+    position: absolute;
+    left: 150px;
+    top: 40px;
+}
+
+.iright {
+    position: absolute;
+    right: 15px;
+    top: 60px;
+}
+
+.ileft h1 {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 42px;
+    color: #0C0225;
+}
+
+.ileft h2 {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 42px;
+    color: #0C0225;
+}
+
+.iright h1 {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 36px;
+    text-align: right;
+    color: #0C0225;
+    margin: 0;
+}
+
+.teams_logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.teams_logo img {
+    margin: 5px;
+}
+
+.teams_pts h1 {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 36px;
+    color: #0C0225;
+}
+
+.teams_name h1 {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 36px;
+    color: #0C0225;
+}
+
+.stt h1 {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 36px;
+    color: #0C0225;
+}
+
+.stt {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+
+.teams_name {
+    position: absolute;
+    top: 30px;
+    left: 35%;
+}
+
+.teams_pts {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+}
+
+.teams_logo {
+    position: absolute;
+    top: 38px;
+    left: 15%;
+}
+
+.schedule {
+    width: 500px;
+    height: 200px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.fixture {
+    display: flex;
+    width: 500px;
+    height: 10%;
+    position: absolute;
+    background-color: #EBEFFF;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#fixture1 {
+    bottom: 460px;
+}
+
+#fixture2 {
+    bottom: 240px;
+}
+
+#fixture3 {
+    bottom: 20px;
+}
+
+.fixture h1 {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 36px;
+    color: rgba(12, 2, 37, 0.4);
+    position: absolute;
+    left: 70px;
+}
+
+.calendar {
+    position: absolute;
+    left: 10px;
+}
+
+.trophy {
+    position: absolute;
+    right: 10px;
+}
+
+.versus {
+    display: flex;
+    align-items: center;
+    width: 500px;
+    height: 70%;
+    position: relative;
+}
+
+.versus h1 {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 42px;
+    color: rgb(12, 2, 37);
+    position: absolute;
+    left: 120px;
+}
+
+.attacker {
+    width: 60px;
+    height: 50px;
+    position: absolute;
+    left: 0px;
+}
+
+.defender {
+    width: 60px;
+    height: 50px;
+    position: absolute;
+    left: 60px;
+}
+
+.font-select{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 80px;
+}
+
+h3.display-4{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 50px;
+}
+
+.card-img-top {
+    height: 100%;
+    object-fit: scale-down;
+}

@@ -1,0 +1,21 @@
+{% extends "auth/base.html" %}
+{% load static %}
+{% block title %}Sign up{% endblock %}
+
+{% block content %}
+    <div class="left" style="background-image: url('{% static 'imgs/v1_21.png' %}');"></div>
+    <div class = "right">
+    {% if form.errors %}
+        <p>Account creation failed!</p>
+    {% endif %}
+    <form action="{% url 'sign_up' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Sign up" class="btn btn-primary">
+        <div class="Remind">
+            <b>Already have an account?</b>
+            <a href="/auth/">Sign in</a>
+        </div>
+    </form>
+    </div>
+{% endblock %}

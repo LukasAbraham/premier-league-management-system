@@ -1,0 +1,2 @@
+Django == 4.2.7
+xhtml2pdf == 0.2.13
