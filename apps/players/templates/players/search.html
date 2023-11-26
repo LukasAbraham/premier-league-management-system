@@ -6,7 +6,7 @@
     <div class="container">
     </br>
         <div class="input-group">
-            <form method="GET" action="{% url 'search' %}" class="d-flex">
+            <form method="GET" action="{% url 'players:search' %}" class="d-flex">
             <div class="form-outline">
                 {{ form.name }}
             </div>
@@ -24,7 +24,7 @@
                 <a href="{% url 'view' player_id=player.id %}">
                     <span class="font-weight-bold">{{player.name}}</span>
                 </a>
-                <span class="text-success font-weight-bold"> from: {{ player.club.name}}</span>
+                <span class="text-success font-weight-bold"> from: {{ player.club.name }}</span>
                 {% if user.user_profile.type == 'admin' %}
                 <span class="float-right text-info ml-2"><button onclick="deletePlayerConfirmation('{{ player.id }}')" class="btn btn-secondary">Remove</button></span>
                 <span class="float-right text-info ml-3"><button onclick="location.href='{% url 'edit' player_id=player.id %}'" class="btn btn-secondary">Edit</button></span>
@@ -40,7 +40,7 @@
     </br>
         {% if user.user_profile.type == 'admin' %}
         <div class="add-player text-center">
-            <button onclick="location.href='{% url 'add' %}'" class="btn btn-primary">Add player</button>
+            <button onclick="location.href='{% url 'players:add' %}'" class="btn btn-primary">Add player</button>
         </div>
         {% endif %}
     </div>

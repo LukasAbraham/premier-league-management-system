@@ -6,7 +6,7 @@
     <div class="container">
     </br>
         <div class="input-group">
-            <form method="GET" action="{% url 'search' %}" class="d-flex">
+            <form method="GET" action="{% url 'managers:search' %}" class="d-flex">
             <div class="form-outline">
                 {{ form.name }}
             </div>
@@ -40,7 +40,7 @@
         {% endif %}
         {% if user.user_profile.type == 'admin' %}
         <div class="add-manager text-center">
-            <button onclick="location.href='{% url 'add' %}'" class="btn btn-primary">Add manager</button>
+            <button onclick="location.href='{% url 'managers:add' %}'" class="btn btn-primary">Add manager</button>
         </div>
         {% endif %}
     </div>

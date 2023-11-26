@@ -20,10 +20,6 @@ def index(request):
     }
     return render(request, 'more/index.html',context)
 
-def logout_user(request):
-    logout(request)
-    return redirect('/login')
-
 def view_regulation(request):
     regulation = Regulation.objects.get(pk=1)
     user = request.user

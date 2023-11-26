@@ -1,8 +1,12 @@
 from django.shortcuts import render, redirect
 from .forms import SignUpForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import UserProfile
+
+def logout_user(request):
+    logout(request)
+    return redirect('/auth/')
 
 def sign_up(request):
     if request.method == "POST":
@@ -11,14 +15,14 @@ def sign_up(request):
             key = form.cleaned_data['key']
             user = form.save()
             if key == 'admin':
-                UserProfile.objects.create(user=user, user_type='admin')
+                UserProfile.objects.create(user=user, type='admin')
             else:
-                UserProfile.objects.create(user=user, user_type='user')
+                UserProfile.objects.create(user=user, type='user')
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
             login(request, user)
-            messages.success(request, ("You have signed up successful!"))
+            messages.success(request, "You have signed up successful!")
             return redirect('/')
     else:
         form = SignUpForm()
@@ -39,7 +43,7 @@ def sign_in(request):
                 request.session.pop('remember_me', None)
             return redirect('/')
         else:
-            messages.error(request, ("You did not sign in correctly."))
+            messages.error(request, "You did not sign in correctly.")
             return redirect('/auth')
     else:
         remember_me = request.session.get('remember_me', False)

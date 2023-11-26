@@ -24,10 +24,6 @@ def index(request):
     }
     return render(request, 'players/index.html', context)
 
-def logout_user(request):
-    logout(request)
-    return redirect('/sign_in')
-
 def add(request):
     submitted = False
     if request.method == "POST":

@@ -42,7 +42,7 @@
         </table>
     </br>
         {% if user.user_profile.type == 'admin' %}
-            <button onclick="location.href='{% url 'edit_regulation' %}'" class="btn btn-primary">Edit</button>
+            <button onclick="location.href='{% url 'more:edit_regulation' %}'" class="btn btn-primary">Edit</button>
         {% endif %}
         <button onclick="location.href='/more'" class="btn btn-secondary">Go back</button>
     </div>

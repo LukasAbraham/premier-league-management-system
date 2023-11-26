@@ -6,7 +6,7 @@
     <div class="container marketing">
 </br>
     <div class="input-group">
-        <form method="GET" action="{% url 'search' %}" class="d-flex">
+        <form method="GET" action="{% url 'clubs:search' %}" class="d-flex">
         <div class="form-outline">
             {{ form.name }}
         </div>
@@ -45,7 +45,7 @@
     </br>
     {% if user.user_profile.type == 'admin' %}
     <div class="add-team text-center">
-        <button class="btn btn-primary" onclick="location.href='{% url 'add' %}'">Add club</button>
+        <button class="btn btn-primary" onclick="location.href='{% url 'clubs:add' %}'">Add club</button>
     </div>
     {% endif %}
 </div>

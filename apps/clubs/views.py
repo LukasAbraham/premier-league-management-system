@@ -25,10 +25,6 @@ def index(request):
     }
     return render(request, 'clubs/index.html',context)
 
-def logout_user(request):
-    logout(request)
-    return redirect('/auth/')
-
 def add(request):
     submitted = False
     if request.method == "POST":

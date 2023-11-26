@@ -15,7 +15,7 @@
         <div class="teams_icon">
         {% if user.user_profile.type == 'admin' %}
         <button>
-        <a href="/clubs/add_club"><img src="{% static 'imgs/image_insert.png' %}" class="image_insert"/></a>
+        <a href="/clubs/add"><img src="{% static 'imgs/image_insert.png' %}" class="image_insert"/></a>
         </button>
         {% endif %}
         {% for club in clubs %}
@@ -25,7 +25,7 @@
         <div class="logo">
         <div class="user">
             <b class="username">{{user.username}}</b>
-            <a href="{% url 'logout' %}" class="logout">Log Out</a>
+            <a href="{% url 'auth:logout' %}" class="logout">Log Out</a>
         </div>
         <b class="logo_name">Premiere League</b>
         <b class="season">Season 2023 - 2024</b>

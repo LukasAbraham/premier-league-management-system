@@ -10,10 +10,6 @@ from django.utils import timezone
 from django.forms import formset_factory
 from django.core.exceptions import ObjectDoesNotExist
 
-def logout_user(request):
-    logout(request)
-    return redirect('/sign_in')
-
 def index(request):
     clubs = Club.objects.all()
     matches = Match.objects.all()

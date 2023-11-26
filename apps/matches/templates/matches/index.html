@@ -41,7 +41,7 @@
                                         {% if match.result.club1_goals >= 0 and match.result.club2_goals >= 0 %}
                                             <button class="match-bet-place" onclick="location.href='{% url 'view' match.id %}'">Detail</button>
                                         {% elif not match.result.exists %}
-										{% if user.user_profile.type == 'organizer' %}
+										{% if user.user_profile.type == 'admin' %}
                                             <button class="match-bet-place" onclick="location.href='{% url 'add_result' match.id %}'">Update</button>
 										{% endif %}
                                         {% endif %}
@@ -181,7 +181,7 @@
                         {% if fixture.result.team1pts >= 0 and fixture.result.team2pts >= 0 %}
                         <button class="match-bet-place" onclick="location.href='{% url 'show_result' fixture.fixtureid %}'">Detail</button>
                         {% elif not fixture.result.exists %}
-						{% if user.user_profile.type == 'organizer' %}
+						{% if user.user_profile.type == 'admin' %}
                         <button class="match-bet-place" onclick="location.href='{% url 'add_scores' fixture.fixtureid %}'">Update</button>
 						{% endif %}
                         {% endif %}
@@ -208,9 +208,9 @@
 {% endfor %}
 </div> 
 </div>
-{% if user.user_profile.type == 'organizer' %}
+{% if user.user_profile.type == 'admin' %}
 <div class="add-match text-center mt-5">
-    <button class="btn btn-primary" onclick="location.href='{% url 'add' %}'">Add match</button>
+    <button class="btn btn-primary" onclick="location.href='{% url 'matches:add' %}'">Add match</button>
 </div>
 {% endif %}
 {% endblock %}
