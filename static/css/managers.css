@@ -278,7 +278,7 @@ h3.display-4{
 }
 
 .card-bg {
-    background-image: url('../../static/images/bg_2.jpg');
+    background-image: url('../../static/imgs/bg_2.jpg');
     background-size: cover;
     background-position: center;
 }

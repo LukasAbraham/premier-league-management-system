@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from apps.clubs.models import Club
-from apps.players.models import Player, PlayerStats
+from apps.players.models import Player
 from apps.clubs.choices import STADIUM_CHOICES
 
 class Match(models.Model):

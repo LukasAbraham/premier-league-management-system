@@ -30,12 +30,12 @@
                 <span class="font-weight-bold">{{club.name}}</span>
             </a>
             <span class="text-success font-weight-bold">&nbsp;Manager: {{ club.manager.name }}</span>
-            {% if user.user_profile.user_type == 'organizer' %}
+            {% if user.user_profile.type == 'admin' %}
             <span class="float-right text-info ml-2"><button onclick="deleteConfirmation('{{ club.id }}')" class="btn btn-secondary">Remove</button></span>
             <span class="float-right text-info ml-3"><button onclick="location.href='{% url 'edit' club_id=club.id %}'" class="btn btn-secondary">Edit</button></span>
             {% endif %}
             <span class="float-right text-info">&nbsp; Points: {{ club.club_stats.points }} &nbsp;</span>
-            {% if user.user_profile.user_type == 'organizer' %}
+            {% if user.user_profile.type == 'admin' %}
             <span class="float-right text-info">&nbsp; Status: {{ club.status }}</span>
             {% endif %}
         </div>
@@ -43,7 +43,7 @@
     </div>
     {% endfor %}
     </br>
-    {% if user.user_profile.user_type == 'organizer' %}
+    {% if user.user_profile.type == 'admin' %}
     <div class="add-team text-center">
         <button class="btn btn-primary" onclick="location.href='{% url 'add' %}'">Add club</button>
     </div>

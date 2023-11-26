@@ -21,7 +21,7 @@ def index(request):
 
 def logout_user(request):
     logout(request)
-    return redirect('/sign_in')
+    return redirect('/auth')
 
 def add(request):
     submitted = False
@@ -91,7 +91,7 @@ def delete(request, manager_id):
     manager.delete()
     return redirect('/managers')
 
-def search_coach(request):
+def search(request):
     form = ManagerSearchForm(request.GET)
     found_managers = None
     if form.is_valid():

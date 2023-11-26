@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        {% if user.user_profile.user_type == 'organizer' %}
+        {% if user.user_profile.type == 'admin' %}
             <button onclick="location.href='{% url 'edit' player.id %}'" class="btn btn-primary">Edit</button>
             <button onclick="deletePlayerConfirmation('{{ player.id }}')" class="btn btn-primary">Remove</button>
         {% endif %}

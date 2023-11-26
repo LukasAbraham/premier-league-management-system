@@ -25,7 +25,7 @@
                     <span class="font-weight-bold">{{player.name}}</span>
                 </a>
                 <span class="text-success font-weight-bold"> from: {{ player.club.name}}</span>
-                {% if user.user_profile.user_type == 'organizer' %}
+                {% if user.user_profile.type == 'admin' %}
                 <span class="float-right text-info ml-2"><button onclick="deletePlayerConfirmation('{{ player.id }}')" class="btn btn-secondary">Remove</button></span>
                 <span class="float-right text-info ml-3"><button onclick="location.href='{% url 'edit' player_id=player.id %}'" class="btn btn-secondary">Edit</button></span>
                 {% endif %}
@@ -38,7 +38,7 @@
         <h3 class="display-4 font-select"> No players found.</h3>
         {% endif %}
     </br>
-        {% if user.user_profile.user_type == 'organizer' %}
+        {% if user.user_profile.type == 'admin' %}
         <div class="add-player text-center">
             <button onclick="location.href='{% url 'add' %}'" class="btn btn-primary">Add player</button>
         </div>

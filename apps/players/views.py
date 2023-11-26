@@ -8,8 +8,11 @@ import re
 
 def index(request):
     form = PlayerSearchForm(request.GET)
-    players_list = Player.objects.select_related('team').all()
-    highlight_players = [players_list[i] for i in [1, 10, 18, 20, 24]]
+    players_list = Player.objects.select_related('club').all()
+    if len(players_list) >= 5: 
+        highlight_players = [players_list[i] for i in range(5)]
+    else:
+        highlight_players = []
     clubs = Club.objects.all()
     user = request.user
     context = {

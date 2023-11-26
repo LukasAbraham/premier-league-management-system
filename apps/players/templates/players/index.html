@@ -20,7 +20,7 @@
             <div class="row">
                 {% for player in highlight_players|slice:":4" %}
                     <div class='col-md-6 col-sm-12 col-lg-3' style="padding-bottom:40px">
-                    <div class="card" style="width: 14rem; background-image: url('{% static 'images/bg_1.png' %}'); background-size: cover;">
+                    <div class="card" style="width: 14rem; background-image: url('{% static 'imgs/bg_1.png' %}'); background-size: cover;">
                         <img class="card-img-top" src="{{player.image.url}}" alt="">
                         <div class="card-body">
                             <p class="font-weight-bold">{{player.name}}</p>
@@ -45,7 +45,7 @@
                     <span class="font-weight-bold">{{player.name}}</span>
                 </a>
                 <span class="text-success font-weight-bold"> from: {{ player.club.name}}</span>
-                {% if user.user_profile.user_type == 'organizer' %}
+                {% if user.user_profile.type == 'admin' %}
                 <span class="float-right text-info ml-2"><button onclick="deletePlayerConfirmation('{{ player.id }}')" class="btn btn-secondary">Remove</button></span>
                 <span class="float-right text-info ml-3"><button onclick="location.href='{% url 'edit' player_id=player.id %}'" class="btn btn-secondary">Edit</button></span>
                 {% endif %}
@@ -53,7 +53,7 @@
             <br/>
         </div>
         {% endfor %}
-        {% if user.user_profile.user_type == 'organizer' %}
+        {% if user.user_profile.type == 'admin' %}
         <div class="add-player text-center">
             <button onclick="location.href='{% url 'add' %}'" class="btn btn-primary">Add player</button>
         </div>

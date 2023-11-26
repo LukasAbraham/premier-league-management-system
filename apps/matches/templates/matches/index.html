@@ -1,4 +1,4 @@
-{% extends "pages/matches_base.html" %}
+{% extends "matches/base.html" %}
 {% load static %}
 {% block title %}Matches{% endblock %}
 
@@ -13,7 +13,7 @@
                         <div class="match">
                             <div class="match-header">
                                     <div class="match-status">Previous</div>
-                                <div class="match-tournament"><img src={% static "images/Premiere-League.png" %} style="height: 30px;"/>&nbsp;English Premier League</div>
+                                <div class="match-tournament"><img src={% static "imgs/Premiere-League.png" %} style="height: 30px;"/>&nbsp;English Premier League</div>
                             </div>
                             <div class="match-content">
                                 <div class="column">
@@ -59,8 +59,6 @@
                         </div>
                     </div>
                     {% endif %}
-                {% endif %}
-                {% endfor %}
                 {% endfor %}
             </div>
         </div>
@@ -78,7 +76,7 @@
                         <div class="match">
                             <div class="match-header">
                                 <div class="match-status">Upcoming</div>
-                                <div class="match-tournament"><img src={% static "images/Premiere-League.png" %} style="height: 30px;"/>&nbsp;English Premier League</div>
+                                <div class="match-tournament"><img src={% static "imgs/Premiere-League.png" %} style="height: 30px;"/>&nbsp;English Premier League</div>
                             </div>
                             <div class="match-content">
                                 <div class="column">
@@ -154,7 +152,7 @@
                 {% else %}
                     <div class="match-status">Upcoming</div>
                 {% endif %}
-                <div class="match-tournament"><img src={%static "images/Premiere-League.png"%} style="height: 30px;"/>&nbsp;English Premier League</div>
+                <div class="match-tournament"><img src={%static "imgs/Premiere-League.png"%} style="height: 30px;"/>&nbsp;English Premier League</div>
             </div>
             <div class="match-content">
                 <div class="column">

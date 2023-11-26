@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from .models import Club
+from .choices import SPONSOR_CHOICES, STADIUM_CHOICES
 
 class ClubSearchForm(forms.Form):
     club_name = forms.CharField(label='Club name', max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Search', 'name': 'club_name'}))
@@ -10,9 +11,9 @@ class ClubForm(ModelForm):
         model = Club
         exclude = ['status']
     
-    sponsor_choice = forms.ChoiceField(choices=Club.SPONSOR_CHOICES)
+    sponsor_choice = forms.ChoiceField(choices=SPONSOR_CHOICES)
     
-    stadium_choice = forms.ChoiceField(choices=Club.STADIUM_CHOICES)
+    stadium_choice = forms.ChoiceField(choices=STADIUM_CHOICES)
     
     club_logo = forms.ImageField(required=True)
     

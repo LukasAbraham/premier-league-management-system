@@ -13,9 +13,9 @@
     {% if user.is_authenticated %}
     <div class="icon_logo">
         <div class="teams_icon">
-        {% if user.user_profile.user_type == 'organizer' %}
+        {% if user.user_profile.type == 'admin' %}
         <button>
-        <a href="/clubs/add_club"><img src="{% static 'images/image_insert.png' %}" class="image_insert"/></a>
+        <a href="/clubs/add_club"><img src="{% static 'imgs/image_insert.png' %}" class="image_insert"/></a>
         </button>
         {% endif %}
         {% for club in clubs %}
@@ -29,7 +29,7 @@
         </div>
         <b class="logo_name">Premiere League</b>
         <b class="season">Season 2023 - 2024</b>
-        <img src="{% static 'images/Premiere-League.png' %}" class="league-image"/>
+        <img src="{% static 'imgs/Premiere-League.png' %}" class="league-image"/>
         </div>
     </div>
     <div class="menu">
@@ -40,7 +40,7 @@
         <ul class="nav-items">
             <li><a href="/">Home</a></li>
             <li><a href="/matches">Matches</a></li>
-            <li><a href="/teams">Clubs</a></li>
+            <li><a href="/clubs">Clubs</a></li>
             <li><a href="/players">Players</a></li>
             <li><a href="/managers">Managers</a></li>
             <li><a href="/league">More</a></li>
@@ -50,7 +50,7 @@
     {% endblock %}
     {% else %} 
     <script>
-        window.location.replace("/sign_in/");
+        window.location.replace("/auth/");
     </script>
     {% endif %}
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

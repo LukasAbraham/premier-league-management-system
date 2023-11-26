@@ -382,13 +382,13 @@ h3.display-4{
 }
 
 .card-bg-1 {
-    background-image: url('../../static/images/bg_3.jpg');
+    background-image: url('../../static/imgs/bg_3.jpg');
     background-size: cover;
     background-position: center;
 }
 
 .card-bg-2 {
-    background-image: url('../../static/images/bg_4.jpg');
+    background-image: url('../../static/imgs/bg_4.jpg');
     background-size: cover;
     background-position: center;
 }
