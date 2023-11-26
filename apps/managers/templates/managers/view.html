@@ -1,0 +1,33 @@
+{% extends "managers/base.html" %}
+{% load static %}
+{% block title %}Managers{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="card col-md-12 p-3 jumbotron">
+            <div class="row ">
+                <div class="col-md-4">
+                    <img src="{{manager.image.url}}" width="320" height="320">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-block">
+                        <h3 class="card-title display-4">{{manager.name}}</h3>
+                        <p class="card-text text-justify">
+                            <p><b>DoB</b>: {{manager.dob}}</p>
+                            <p><b>Team</b>: {{manager.club.name}}</p>
+                            <p><b>Nationality</b>: {{manager.nationality}}</p>
+                        </p>
+                        <a href="https://www.google.com/search?q={{manager.name}}" class="btn btn-success">Read more...</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if user.user_profile.user_type == 'organizer' %}
+    <button onclick="location.href='{% url 'edit' manager.id %}'" class="btn btn-primary">Edit</button>
+    <button onclick="deleteManagerConfirmation('{{ manager.id }}')" class="btn btn-primary">Remove</button>
+    {% endif %}
+    <button onclick="location.href='/managers'" class="btn btn-secondary">Back</button>
+</div>
+{% endblock %}

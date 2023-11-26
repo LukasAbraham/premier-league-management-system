@@ -1,0 +1,69 @@
+{% extends "players/base.html" %}
+{% load static %}
+{% block title %}Players{% endblock %}
+
+{% block content %}
+    <div class="container">
+    </br>
+        <div class="input-group">
+            <form method="GET" action="{% url 'search' %}" class="d-flex">
+                <div class="form-outline">
+                    {{ form.name }}
+                </div>
+                <button type="submit" class="btn btn-outline-primary">SEARCH</button>
+            </form>
+        </div>
+    </br></br>
+        <h3 class="display-4"> Highlight Players </h2>
+        </br>
+        <div class="container-fluid bg-light">
+            <div class="row">
+                {% for player in highlight_players|slice:":4" %}
+                    <div class='col-md-6 col-sm-12 col-lg-3' style="padding-bottom:40px">
+                    <div class="card" style="width: 14rem; background-image: url('{% static 'images/bg_1.png' %}'); background-size: cover;">
+                        <img class="card-img-top" src="{{player.image.url}}" alt="">
+                        <div class="card-body">
+                            <p class="font-weight-bold">{{player.name}}</p>
+                            <p class="item-price">Goals: {{player.player_stats.goals}}</p>
+                        <p class="item-price">Assists: {{player.player_stats.assists}}</p>
+                            <a href="{% url 'view' player_id=player.id %}" class="btn btn-primary">View</a>
+                        </div>
+                    </div>
+                    </div>
+                {% endfor %}
+            </div>         
+        </div>            
+            </br></br>
+        <h3 class="display-4"> Players</h3>
+        </br>
+        {% for player in players_list %}
+        <div class="card">
+            <div class="card-header">
+                <span><img src="{{player.image.url}}" style="height:50px; width:50px; "></span>
+                &nbsp;
+                <a href="{% url 'view' player_id=player.id %}">
+                    <span class="font-weight-bold">{{player.name}}</span>
+                </a>
+                <span class="text-success font-weight-bold"> from: {{ player.club.name}}</span>
+                {% if user.user_profile.user_type == 'organizer' %}
+                <span class="float-right text-info ml-2"><button onclick="deletePlayerConfirmation('{{ player.id }}')" class="btn btn-secondary">Remove</button></span>
+                <span class="float-right text-info ml-3"><button onclick="location.href='{% url 'edit' player_id=player.id %}'" class="btn btn-secondary">Edit</button></span>
+                {% endif %}
+            </div>
+            <br/>
+        </div>
+        {% endfor %}
+        {% if user.user_profile.user_type == 'organizer' %}
+        <div class="add-player text-center">
+            <button onclick="location.href='{% url 'add' %}'" class="btn btn-primary">Add player</button>
+        </div>
+        {% endif %}
+    </div>
+    <script>
+        function deletePlayerConfirmation(playerId) {
+            if (confirm("Do you confirm to remove this player?")) {
+                location.href = "/players/delete/" + playerId + "/";
+            }
+        }
+    </script>
+{% endblock %}

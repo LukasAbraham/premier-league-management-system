@@ -1,0 +1,18 @@
+{% extends "clubs/base.html" %}
+{% load static %}
+{% block title %}Clubs{% endblock %}
+
+{% block content %}
+    <div class="content">
+        {% if submitted %}
+            <div class="alert alert-success">Club was created successfully!</div>
+        {% else %}
+        {% endif %}
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Save" class="btn btn-primary">
+            <button onclick="location.href='/clubs'" class="btn btn-secondary">Back</button>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "more/base.html" %}
+{% load static %}
+{% block title %}League{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <form action="" method="POST">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <input type="submit" value="Save" class="btn btn-primary">
+            <button onclick="location.href='/league'" class="btn btn-secondary">Go back</button>
+        </form>
+    </div>
+{% endblock %}

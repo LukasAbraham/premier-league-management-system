@@ -1,0 +1,48 @@
+{% extends "more/base.html" %}
+{% load static %}
+{% block title %}More{% endblock %}
+
+{% block content %}
+</br></br></br>
+<div class="container-fluid">
+    <div class="row row-cols-sm-1">
+      <div class="col">
+        <a href="{% url 'standing' %}">
+          <div class="hover-image">
+            <img src="{% static 'images/league/Standings.png' %}" alt="Standings" width="500" height="200" class="w-100" />
+            <div class="overlay"></div>
+          </div>
+        </a>
+      </div>
+      <div class="col">
+        <a href="{% url 'view-regulation' %}">
+          <div class="hover-image">
+            <img src="{% static 'images/league/Regulation.png' %}" alt="Regulation" width="500" height="200" class="w-100" />
+            <div class="overlay"></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container-fluid">
+    <div class="row row-cols-sm-1">
+      <div class="col">
+        <a href="{% url 'stats_records' %}">
+          <div class="hover-image">
+            <img src="{% static 'images/league/Stats.png' %}" alt="Stats" width="510" height="200" class="w-100" />
+            <div class="overlay"></div>
+          </div>
+        </a>
+      </div>
+      <div class="col">
+        <a href="{% url 'report' %}">
+          <div class="hover-image">
+            <img src="{% static 'images/league/Reports.png' %}" alt="Reports" width="500" height="200" class="w-100" />
+            <div class="overlay"></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

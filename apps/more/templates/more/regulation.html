@@ -1,0 +1,49 @@
+{% extends "more/base.html" %}
+{% load static %}
+{% block title %}Regulation{% endblock %}
+
+{% block content %}
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+    <div class="container">
+    </br>
+        <h3 class="display-4"> Regulation</h3>
+    </br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Min Age</th>
+                    <th>Max Age</th>
+                    <th>Min Players</th>
+                    <th>Max Players</th>
+                    <th>Max Foreign Players</th>
+                    <th>Win Points</th>
+                    <th>Draw Points</th>
+                    <th>Loss Points</th>
+                    <th>Match Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{regulation.min_age}}</td>
+                    <td>{{regulation.max_age}}</td>
+                    <td>{{regulation.min_players}}</td>
+                    <td>{{regulation.max_players}}</td>
+                    <td>{{regulation.max_foreign_players}}</td>
+                    <td>{{regulation.win_points}}</td>
+                    <td>{{regulation.draw_points}}</td>
+                    <td>{{regulation.loss_points}}</td>
+                    <td>{{regulation.duration}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </br>
+        {% if user.user_profile.user_type == 'organizer' %}
+            <button onclick="location.href='{% url 'edit_regulation' %}'" class="btn btn-primary">Edit</button>
+        {% endif %}
+        <button onclick="location.href='/more'" class="btn btn-secondary">Go back</button>
+    </div>
+{% endblock %}

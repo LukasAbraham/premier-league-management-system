@@ -1,0 +1,159 @@
+{% extends "more/base.html" %}
+{% load static %}
+{% block title %}More{% endblock %}
+
+{% block content %}
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+    
+    <div class="container">
+    </br>
+        <h3 class="display-4 font-select"> Standings </h3>
+    </br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Matches</th>
+                    <th>Wins</th>
+                    <th>Draws</th>
+                    <th>Loses</th>
+                    <th>Goals</th>
+                    <th>Conceded Goals</th>
+                    <th>Goal Difference</th>
+                    <th>Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for club_stat in standings %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ club_stat.club.name }}</td>
+                    <td>{{ club_stat.wins|add:club_stat.draws|add:club_stat.losses }}</td>
+                    <td>{{ club_stat.wins }}</td>
+                    <td>{{ club_stat.draws }}</td>
+                    <td>{{ club_stat.losses }}</td>
+                    <td>{{ club_stat.goals }}</td>
+                    <td>{{ club_stat.conceded_goals }}</td>
+                    <td>{{ club_stat.goal_difference }}</td>
+                    <td>{{ club_stat.points }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </br>
+        <h3 class="display-4 font-select"> Top scorers </h3>
+    </br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Team</th>
+                    <th>Position</th>
+                    <th>Appearances</th>
+                    <th>Goals</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for player_stat in top_scorers %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ player_stat.player.name }}</td>
+                    <td>{{ player_stat.player.club }}</td>
+                    <td>{{ player_stat.player.position }}</td>
+                    <td>{{ player_stat.player.club.club_stats.wins|add:player_stat.player.club.club_stats.draws|add:player_stat.player.club.club_stats.losses }}</td>
+                    <td>{{ player_stat.goals }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </br>
+    <h3 class="display-4 font-select"> Top playmakers</h3>
+</br>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Team</th>
+                <th>Position</th>
+                <th>Appearances</th>
+                <th>Assists</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player_stat in top_playmakers %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ player_stat.player.name }}</td>
+                <td>{{ player_stat.player.club }}</td>
+                <td>{{ player_stat.player.position }}</td>
+                <td>{{ player_stat.player.club.club_stats.wins|add:player_stat.player.club.club_stats.draws|add:player_stat.player.club.club_stats.losses }}</td>
+                <td>{{ player_stat.assists }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </br>
+        <h3 class="display-4 font-select"> Matches</h3>
+    </br>
+    <table class="table">
+        {% for match in matches %}
+        {% if match.status == 'Previous' %}
+                <thead>
+                    <tr class="text-center" style="font-size: 19px">
+                        <th>Team 1</th>
+                        <th>Result</th>
+                        <th>Team 2</th>
+                        <th>Round</th>
+                        <th>Stadium</th>
+                        <th colspan="2">Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color:#E0FEFE" class="text-center">
+                        <td><b>{{match.team1}}</b></td>
+                        <td><b>{{match.result.team1_goals}}-{{match.result.team2_goals}}</b></td>
+                        <td><b>{{match.team2}}</b></td>
+                        <td><b>{{match.round}}</b></td>
+                        <td><b>{{match.stadium}}</b></td>
+                        <td colspan="2"><b>{{match.time}}</b></td>
+                    </tr>
+                    <tr>
+                        <td colspan="7" class="text-center"><b>Goal Events</b></td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Scored by</th>
+                        <th colspan="2">Assisted by</th>
+                        <th>Team</th>
+                        <th>Goal Type</th>
+                        <th>Time</th>
+                    </tr>
+                    {% for id, goal_events in goal_events.items %}
+                    {% if id == match.id %}
+                        {% for goal_event in goal_events %}
+                        <tr>
+                            <td colspan="2">{{goal_event.player.name}}</td>
+                            <td colspan="2">{{goal_event.assist_player.name}}</td>
+                            <td>{{goal_event.player.club}}</td>
+                            <td>{{goal_event.type}}</td>
+                            <td>{{goal_event.time}}</td>
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+                        {% endfor %}
+                        <tr style="background-color: #FFFFFF"><td colspan="7"><br></td></tr>
+                    </tbody>
+                    {% endif %}
+                {% endfor %}
+            </table>
+    </br>
+        <button onclick="location.href='{% url 'export_pdf' %}'" class="btn btn-primary">Export to PDF</button>
+        <button onclick="location.href='/more'" class="btn btn-secondary">Back</button>
+    </div>
+{% endblock %}

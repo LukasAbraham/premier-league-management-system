@@ -1,0 +1,45 @@
+{% extends "pages/players_base.html" %}
+{% load static %}
+{% block title %}Players{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="card col-md-12 p-3 jumbotron">
+                <div class="row ">
+                    <div class="col-md-4">
+                        <img src="{{player.image.url}}" width="300" height="300">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-block">
+                            <h6 class="card-title">{{player.name}}</h6>
+                            <p class="card-text text-justify">
+                                <p>DoB: {{player.dob}}</p>
+                                <p>Team: {{player.club.name}}</p>
+                                <p>Weight (kg): {{player.weight}}</p>
+                                <p>Height (cm): {{player.height}}</p>
+                                <p>Position: {{player.position}}</p>
+                                <p>Nationality: {{player.nationality}}</p>
+                                <p>Number of Goals: {{player.player_stats.goals}}</p>
+                                <p>Number of Assists: {{player.player_stats.assists}}</p>
+                            </p>
+                            <a href="https://www.google.com/search?q={{player.name}}" class="btn btn-success">Read more...</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if user.user_profile.user_type == 'organizer' %}
+            <button onclick="location.href='{% url 'edit' player.id %}'" class="btn btn-primary">Edit</button>
+            <button onclick="deletePlayerConfirmation('{{ player.id }}')" class="btn btn-primary">Remove</button>
+        {% endif %}
+            <button onclick="location.href='/players'" class="btn btn-secondary">Back</button>
+    </div>
+    <script>
+        function deletePlayerConfirmation(playerId) {
+            if (confirm("Do you confirm to remove this player?")) {
+                location.href = "/players/delete/" + playerId + "/";
+            }
+        }
+    </script>
+{% endblock %}

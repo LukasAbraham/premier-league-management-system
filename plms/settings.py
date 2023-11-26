@@ -39,6 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.auth.apps.AuthConfig',
+    'apps.home.apps.HomeConfig',
+    'apps.players.apps.PlayersConfig',
+    'apps.managers.apps.ManagersConfig',
+    'apps.clubs.apps.ClubsConfig',
+    'apps.matches.apps.MatchesConfig',
+    'apps.more.apps.MoreConfig',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +133,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'

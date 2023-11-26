@@ -1,0 +1,56 @@
+{% extends "pages/teams_base.html" %}
+{% load static %}
+{% block title %}Teams{% endblock %}
+
+{% block content %}
+    <div class="input-group">
+        <form method="GET" action="{% url 'search' %}" class="d-flex">
+        <div class="form-outline">
+            {{ form.name }}
+        </div>
+        <button type="submit" class="btn btn-outline-primary">SEARCH</button>
+        </form>
+    </div>
+    {% if found_clubs %}
+</br></br>
+    <h3 class="display-4 font-select"> All Clubs </h3>
+</br>
+{% for club in found_clubs %}
+<div class="card">
+    <div class="card-header">
+        <span><img src="{{club.logo.url}}" style="height:30px;"></span>
+        &nbsp;
+        <a href="{% url 'view' club.id %}">
+            <span class="font-weight-bold">{{club.name}}</span>
+        </a>
+        <span class="text-success font-weight-bold">&nbsp;Manager: {{ club.manager.name}}</span>
+        {% if user.user_profile.user_type == 'organizer' %}
+        <span class="float-right text-info ml-2"><button onclick="deleteConfirmation('{{ club.id }}')" class="btn btn-secondary">Remove</button></span>
+        <span class="float-right text-info ml-3"><button onclick="location.href='{% url 'edit' club_id=club.id %}'" class="btn btn-secondary">Edit</button></span>
+        {% endif %}
+        <span class="float-right text-info">&nbsp; Points: {{ club.club_stats.points }} &nbsp;</span>
+        {% if user.user_profile.user_type == 'organizer' %}
+        <span class="float-right text-info">&nbsp; Status: {{ club.status }}</span>
+        {% endif %}
+    </div>
+    <br/>
+</div>
+{% endfor %}
+    {% else %}
+        <h3 class="display-4 font-select"> No clubs found.</h3>
+    {% endif %}
+    </br>
+    {% if user.user_profile.user_type == 'organizer' %}
+    <div class="add-team text-center">
+        <button class="btn btn-primary" onclick="location.href='{% url 'add' %}'">Add club</button>
+    </div>
+    {% endif %}
+</div>
+<script>
+    function deleteConfirmation(clubId) {
+        if (confirm("Do you confirm to remove this club?")) {
+            location.href = "/clubs/delete/" + clubId + "/";
+        }
+    }
+</script>
+{% endblock %}

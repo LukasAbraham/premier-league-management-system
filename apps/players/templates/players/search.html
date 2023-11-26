@@ -1,0 +1,54 @@
+{% extends "players/base.html" %}
+{% load static %}
+{% block title %}Players{% endblock %}
+
+{% block content %}
+    <div class="container">
+    </br>
+        <div class="input-group">
+            <form method="GET" action="{% url 'search' %}" class="d-flex">
+            <div class="form-outline">
+                {{ form.name }}
+            </div>
+            <button type="submit" class="btn btn-outline-primary">SEARCH</button>
+            </form>
+        </div>
+        {% if players %}
+    </br>
+        <h3 class="display-4 font-select"> Players </h3>
+    </br>
+        {% for player in found_players %}
+        <div class="card">
+            <div class="card-header">
+                <span><img src="{{player.image.url}}" style="height:50px; width:50px; "></span>
+                <a href="{% url 'view' player_id=player.id %}">
+                    <span class="font-weight-bold">{{player.name}}</span>
+                </a>
+                <span class="text-success font-weight-bold"> from: {{ player.club.name}}</span>
+                {% if user.user_profile.user_type == 'organizer' %}
+                <span class="float-right text-info ml-2"><button onclick="deletePlayerConfirmation('{{ player.id }}')" class="btn btn-secondary">Remove</button></span>
+                <span class="float-right text-info ml-3"><button onclick="location.href='{% url 'edit' player_id=player.id %}'" class="btn btn-secondary">Edit</button></span>
+                {% endif %}
+            </div>
+            <br/>
+        </div>
+        {% endfor %}
+        {% else %}
+    </br>
+        <h3 class="display-4 font-select"> No players found.</h3>
+        {% endif %}
+    </br>
+        {% if user.user_profile.user_type == 'organizer' %}
+        <div class="add-player text-center">
+            <button onclick="location.href='{% url 'add' %}'" class="btn btn-primary">Add player</button>
+        </div>
+        {% endif %}
+    </div>
+    <script>
+        function deletePlayerConfirmation(playerId) {
+            if (confirm("Do you confirm to remove this player?")) {
+                location.href = "/players/delete/" + playerId + "/";
+            }
+        }
+    </script>
+{% endblock %}
