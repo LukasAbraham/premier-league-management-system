@@ -6,7 +6,7 @@
 </br>
     <div class="container">
         </br>
-        <h3 class="display-4 font-select">Team</h3>
+        <h3 class="display-4 font-select">Club</h3>
         <table class="table">
             <thead>
                 <tr>
@@ -79,6 +79,8 @@
                 {% endfor %}
             </tbody>
         </table>
+        <button onclick="location.href='{% url 'clubs:edit' club_id=club.id %}'" class="btn btn-primary">Edit</button>
+        <button onclick="location.href='{% url 'clubs:delete' club_id=club.id %}'" class="btn btn-primary">Remove</button>
         <button onclick="location.href='/clubs'"class="btn btn-secondary">Back</button>
     </div>
 
