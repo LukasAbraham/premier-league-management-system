@@ -26,7 +26,7 @@
                             <p class="font-weight-bold">{{player.name}}</p>
                             <p class="item-price">Goals: {{player.player_stats.goals}}</p>
                         <p class="item-price">Assists: {{player.player_stats.assists}}</p>
-                            <a href="{% url 'view' player_id=player.id %}" class="btn btn-primary">View</a>
+                            <a href="{% url 'players:view' player_id=player.id %}" class="btn btn-primary">View</a>
                         </div>
                     </div>
                     </div>
@@ -41,13 +41,13 @@
             <div class="card-header">
                 <span><img src="{{player.image.url}}" style="height:50px; width:50px; "></span>
                 &nbsp;
-                <a href="{% url 'view' player_id=player.id %}">
+                <a href="{% url 'players:view' player_id=player.id %}">
                     <span class="font-weight-bold">{{player.name}}</span>
                 </a>
                 <span class="text-success font-weight-bold"> from: {{ player.club.name }}</span>
                 {% if user.user_profile.type == 'admin' %}
                 <span class="float-right text-info ml-2"><button onclick="deletePlayerConfirmation('{{ player.id }}')" class="btn btn-secondary">Remove</button></span>
-                <span class="float-right text-info ml-3"><button onclick="location.href='{% url 'edit' player_id=player.id %}'" class="btn btn-secondary">Edit</button></span>
+                <span class="float-right text-info ml-3"><button onclick="location.href='{% url 'players:edit' player_id=player.id %}'" class="btn btn-secondary">Edit</button></span>
                 {% endif %}
             </div>
             <br/>

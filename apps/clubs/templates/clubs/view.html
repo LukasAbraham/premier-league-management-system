@@ -43,7 +43,7 @@
                     <td>{{club.manager.nationality}}</td>
                     {% if user.user_profile.type == 'admin' %}
                     <td><button onclick="location.href='{% url 'managers:edit' manager_id=club.manager.id %}'"class="btn btn-primary">Edit</button></td>
-                    <td><button onclick="deleteManagerConfirmation('{{ team.coach.coachid }}')"class="btn btn-primary">Remove</button></td>
+                    <td><button onclick="deleteManagerConfirmation('{{ club.manager.id }}')"class="btn btn-primary">Remove</button></td>
                     {% endif %}
                 </tr>
             </tbody>
@@ -94,9 +94,4 @@
             }
         }
     </script>
-{% else %} 
-    <script>
-        window.location.replace("/auth/");
-    </script>
-{% endif %}
 {% endblock %}

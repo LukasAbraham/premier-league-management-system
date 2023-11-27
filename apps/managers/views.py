@@ -44,7 +44,7 @@ def add(request):
         'clubs': clubs,
         'user': user,
     }
-    return render(request, 'managers/add.html',context)
+    return render(request, 'managers/add.html', context)
 
 def view(request, manager_id):
     manager = Manager.objects.get(pk=manager_id)
@@ -55,13 +55,13 @@ def view(request, manager_id):
         'clubs': clubs,
         'manager': manager
     }
-    return render(request, 'managers/view.html',context)
+    return render(request, 'managers/view.html', context)
 
 def edit(request, manager_id):
     manager = Manager.objects.get(pk=manager_id)
     
     if request.method == "POST":
-        form = ManagerForm(request.POST, request.FILES, instance=coach)
+        form = ManagerForm(request.POST, request.FILES, instance=manager)
         if form.is_valid():
             manager = form.save()
             if 'image' in request.FILES:
@@ -80,7 +80,7 @@ def edit(request, manager_id):
         'clubs': clubs,
         'user': user,
     }
-    return render(request, 'managers/add.html',context)
+    return render(request, 'managers/add.html', context)
 
 def delete(request, manager_id):
     manager = Manager.objects.get(pk=manager_id)

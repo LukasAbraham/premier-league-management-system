@@ -23,13 +23,13 @@
             <div class="card-header">
                 <span><img src="{{manager.image.url}}" style="height:50px; width:50px; "></span>
                 &nbsp;
-                <a href="{% url 'view' manager_id=manager.id %}">
+                <a href="{% url 'managers:view' manager_id=manager.id %}">
                     <span class="font-weight-bold">{{manager.name}}</span>
                 </a>
                 <span class="text-success font-weight-bold"> Club: {{ manager.club.name}}</span>
                 {% if user.user_profile.type == 'admin' %}
                 <span class="float-right text-info ml-2"><button onclick="deleteManagerConfirmation('{{ manager.id }}')" class="btn btn-secondary">Remove</button></span>
-                <span class="float-right text-info ml-3"><button onclick="location.href='{% url 'edit' manager_id=manager.id %}'" class="btn btn-secondary">Edit</button></span>
+                <span class="float-right text-info ml-3"><button onclick="location.href='{% url 'managers:edit' manager_id=manager.id %}'" class="btn btn-secondary">Edit</button></span>
                 {% endif %}
             </div>
             <br/>

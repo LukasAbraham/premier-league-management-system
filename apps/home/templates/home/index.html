@@ -84,11 +84,7 @@
             <img class="rounded-circle" src="{{player.player.image.url}}" alt="Generic placeholder image" width="140" height="140">
             <h2>{{player_stat.player.name}}</h2>
             <p>Goals Scored: {{player_stat.goals}}</p>
-            <form method="POST" action="{% url 'players:view' %}">
-              {% csrf_token %}
-              <input type="hidden" name="playerid" value="{{player_stat.player.id}}">
-              <p><button class="btn btn-secondary" type="submit">Detail</button></p>
-            </form>
+            <a class="btn btn-secondary btn-md" href="/players/view/{{player_stat.player.id}}" role="button">Detail</a>
           </div>
           {% endfor %}
         </div>
@@ -108,11 +104,7 @@
                         <div class="card-body">
                           <p class="font-weight-bold">{{club_stat.club.name}}</p>
                           <p class="item-price">Points: {{club_stat.club.points}}</p>
-                          <form method="POST" action="{% url 'clubs:view' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="teamid" value="{{club_stat.club.id}}">
-                            <p><button class="btn btn-secondary" type="submit">Detail</button></p>
-                          </form>
+                          <a class="btn btn-secondary btn-md" href="/clubs/view/{{club_stat.club.id}}" role="button">Detail</a>
                         </div>
                     </div>
                     </div>

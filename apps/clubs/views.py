@@ -37,7 +37,7 @@ def add(request):
                 club.logo = request.FILES['logo']
                 club.logo.name = f'club_{club.id}.png'
                 club.save()
-            return HttpResponseRedirect('/club/add?submitted=True')
+            return HttpResponseRedirect('/clubs/add?submitted=True')
     else:
         form = ClubForm()
         if 'submitted' in request.GET:

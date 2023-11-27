@@ -1,0 +1,51 @@
+{% load static %}
+
+<div class="col-6 scrolling-item">
+    <div class="match">
+        <div class="match-header">
+                <div class="match-status">{{ match.get_status_display }}</div>
+            <div class="match-tournament"><img src={% static "imgs/Premiere-League.png" %} style="height: 30px;"/>&nbsp;English Premier League</div>
+        </div>
+        <div class="match-content">
+            <div class="column">
+                <div class="team team--home">
+                    <div class="team-logo">
+                        <img src="{{ match.club1.logo.url }}" style="width: 40%"/>
+                    </div>
+                    <h2 class="team-name">{{ match.club1.name }}</h2>
+                </div>
+            </div>
+            <div class="column">
+                <div class="match-details">
+                    <div class="match-round">
+                        <strong>Round</strong>
+                        <strong>{{ match.round }}</strong>
+                    </div>
+                    <div class="match-date">
+                        <strong>{{ match.time }}</strong>
+                    </div>
+                    <div class="match-score">
+                        <span class="match-score-number match-score-number--leading">{{ match.result.club1_goals }}</span>
+                        <span class="match-score-divider">:</span>
+                        <span class="match-score-number">{{ match.result.club2_goals }}</span>
+                    </div>
+                    {% if match.result.club1_goals >= 0 and match.result.club2_goals >= 0 %}
+                        <button class="match-bet-place" onclick="location.href='{% url 'matches:view' match.id %}'">Detail</button>
+                    {% elif not match.result.exists %}
+                        {% if user.user_profile.type == 'admin' %}
+                            <button class="match-bet-place" onclick="location.href='{% url 'matches:add_result' match.id %}'">Update</button>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="column">
+                <div class="team team--away">
+                    <div class="team-logo">
+                        <img src="{{ match.club2.logo.url }}" style="width: 40%"/>
+                    </div>
+                    <h2 class="team-name">{{ match.club2.name }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

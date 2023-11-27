@@ -1,0 +1,73 @@
+{% extends "matches/base.html" %}
+{% load static %}
+{% block title %}Matches{% endblock %}
+
+{% block content %}
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+    </br>
+    <h3 class="display-4 text-center"> Match details </h3>
+    <div class="container-fluid">
+    </br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Club 1</th>
+                    <th>Result</th>
+                    <th>Club 2</th>
+                    <th>Round</th>
+                    <th>Stadium</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{match.club1}}</td>
+                    <td>{{match.result.club1_goals}} - {{match.result.club2_goals}}</td>
+                    <td>{{match.club2}}</td>
+                    <td>{{match.round}}</td>
+                    <td>{{match.stadium}}</td>
+                    <td>{{match.time}}</td>
+                </tr>
+                {% if match.status == 'P' %}
+                <tr>
+                    <th class="text-center" colspan="6">Goal events</th>
+                </tr>
+                <tr>
+                    <th>Scored by</th>
+                    <th>Assisted by</th>
+                    <th>Club</th>
+                    <th>Goal type</th>
+                    <th colspan="2">Time</th>
+                </tr>
+                {% for goal_event in goal_events %}
+                <tr>
+                    <td>{{goal_event.scoring_player}}</td>
+                    <td>{{goal_event.assisting_player}}</td>
+                    <td>{{goal_event.scoring_player.club}}</td>
+                    <td>{{goal_event.type}}</td>
+                    <td colspan="2">{{goal_event.time}}</td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+    </table>
+    <div class="text-center">
+        {% if user.user_profile.type == 'admin' %}
+        <span class="text-info ml-2"><button class="btn btn-primary" onclick="location.href='{% url 'matches:edit' match.id %}'">Edit</button></span>
+        <span class="text-info ml-3"><button class="btn btn-primary" onclick="deleteMatchConfirmation('{{ match.id }}')">Remove</button></span>
+        {% endif %}
+        <span class="text-info ml-4"><button onclick="location.href='/matches'" class="btn btn-secondary">Back</button></span>
+    </div>
+    </div>
+    <script>
+        function deleteMatchConfirmation(matchId) {
+            if (confirm("Do you confirm to remove this match?")) {
+                location.href = "/matches/delete/" + matchId + "/";
+            }
+        }
+    </script>
+{% endblock %}

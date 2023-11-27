@@ -1,0 +1,18 @@
+{% extends "matches/base.html" %}
+{% load static %}
+{% block title %}Matches{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{ formset.management_form }}
+            {% for form in formset %}
+            <div class="match_form">
+                {{ form.as_table }}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary text-center">Save</button>
+        </form>
+    </div>
+{% endblock %}

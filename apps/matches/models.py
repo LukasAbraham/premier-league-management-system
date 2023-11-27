@@ -30,7 +30,7 @@ class Match(models.Model):
 class Result(models.Model):
     club1_goals = models.PositiveIntegerField()
     club2_goals = models.PositiveIntegerField()
-    match = models.OneToOneField(Match, on_delete=models.CASCADE, related_name='result')
+    match = models.OneToOneField(Match, on_delete=models.CASCADE, related_name='result', null=True)
     
     def __str__(self):
         return f"Result: {self.match.club1.name} {self.club1_goals} - {self.club2_goals} {self.match.club2.name}"
@@ -105,7 +105,7 @@ class GoalEvent(models.Model):
         ('OG', 'Own goal'),
     ]
     
-    match = models.ForeignKey(Match, on_delete=models.CASCADE)
+    match = models.ForeignKey(Match, on_delete=models.CASCADE, null=True)
     scoring_player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='scoring_event')
     assisting_player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='assisting_event', null=True, blank=True)
     club = models.ForeignKey(Club, on_delete=models.CASCADE)

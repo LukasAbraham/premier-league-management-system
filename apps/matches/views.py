@@ -1,9 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseRedirect
-from django.contrib.auth import logout
+from django.urls import reverse
 from .models import Match, Result, GoalEvent
 from apps.players.models import Player
-from apps.more.models import Regulation
 from apps.clubs.models import Club 
 from .forms import MatchForm, ResultForm, GoalEventForm
 from django.utils import timezone
@@ -54,7 +52,7 @@ def add_result(request, match_id):
             result = form.save(commit=False)
             result.match = match
             result.save()
-            return redirect('add_goal_events', match_id=match.id)
+            return redirect(reverse('matches:add_goal_events', args=[match.id]))
     else:
         form = ResultForm()
         
@@ -80,7 +78,7 @@ def add_goal_events(request, match_id):
                 goal_event = form.save(commit=False)
                 goal_event.match = match
                 goal_event.save()
-            return redirect('/matches')
+            return redirect(reverse('matches:index'))
     else:
         formset = GoalEventFormSet()
         # Filter players from the clubs participating in the match
@@ -122,7 +120,7 @@ def edit(request, match_id):
         'match': match,
         'form': form,
     }
-    return render(request, 'matches/edit.html', context)
+    return render(request, 'matches/add.html', context)
 
 def delete(request, match_id):
     match = get_object_or_404(Match, pk=match_id)

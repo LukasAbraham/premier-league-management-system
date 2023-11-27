@@ -6,7 +6,7 @@ from apps.players.models import Player
 from apps.more.models import Regulation
 from django.forms import widgets
 from django.utils import timezone
-import datetime
+from datetime import date
 from django.forms import formset_factory
 
 class MatchForm(forms.ModelForm):
@@ -14,6 +14,7 @@ class MatchForm(forms.ModelForm):
         model = Match
         fields = ['round', 'time', 'club1', 'club2']
         
+    time = forms.DateField(widget=widgets.DateInput(attrs={'type': 'date'}), initial=date.today())
     def clean(self):
         cleaned_data = super().clean()
         club1 = cleaned_data.get('club1')
@@ -35,17 +36,18 @@ class ResultForm(forms.ModelForm):
         model = Result
         exclude = ['match']
         
-    def clean(self):
-        cleaned_data = super().clean()
-        match = cleaned_data.get('match')
+    # def clean(self):
+        # cleaned_data = super().clean()
+        # match = cleaned_data.get('match')
+        # match = self.instance.match
         
-        if match.status != 'P':
-            raise ValidationError("Cannot add a result to a match that hasn't happened yet.")
+        # if match.status != 'P':
+            # raise ValidationError("Cannot add a result to a match that hasn't happened yet.")
         
 class GoalEventForm(forms.ModelForm):
     class Meta:
         model = GoalEvent
-        fields = ['scoring_player', 'assisting_player', 'type', 'time']
+        fields = ['scoring_player', 'assisting_player', 'type', 'time', 'club']
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -57,13 +59,13 @@ class GoalEventForm(forms.ModelForm):
             self.fields['assisting_player'].queryset = Player.objects.filter(
                 club__in=[self.instance.match.club1, self.instance.match.club2]
             )
-    def clean(self):
-        cleaned_data = super().clean()
-        match = cleaned_data.get('match')
-        club = cleaned_data.get('club')
-        if match.status != 'P':
-            raise ValidationError("Cannot add a goal event to a match that hasn't happened yet.")
-        if club not in [match.club1, match.club2]:
-            raise ValidationError("The club must be one of the clubs playing in the match.")
-        return cleaned_data
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #     match = cleaned_data.get('match')
+    #     club = cleaned_data.get('club')
+    #     if match.status != 'P':
+    #         raise ValidationError("Cannot add a goal event to a match that hasn't happened yet.")
+    #     if club not in [match.club1, match.club2]:
+    #         raise ValidationError("The club must be one of the clubs playing in the match.")
+    #     return cleaned_data
     

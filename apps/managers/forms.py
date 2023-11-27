@@ -13,7 +13,6 @@ class ManagerForm(ModelForm):
         model = Manager
         fields = "__all__"
     
-    manager_image = forms.ImageField(required=True)
     dob = forms.DateField(widget=widgets.DateInput(attrs={'type': 'date'}), initial=date.today())
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

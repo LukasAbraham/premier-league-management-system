@@ -18,6 +18,12 @@ class Club(models.Model):
     def __str__(self):
         return self.name
     
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None
+        super().save(*args, **kwargs)
+        if is_new:
+            ClubStats.objects.create(club=self)
+    
     def update_status(self, max_foreign_players, min_players, max_players):
         foreign_players = self.player_set.filter(nationality='England').count()
         total_players = self.player_set.count()
@@ -44,6 +50,7 @@ class ClubStats(models.Model):
     def goal_difference(self):
         return self.goals - self.conceded_goals
     
+    @property
     def points(self):
         regulation = Regulation.objects.get(pk=1)
         return regulation.win_points * self.wins + regulation.draw_points * self.draws + regulation.loss_points * self.losses

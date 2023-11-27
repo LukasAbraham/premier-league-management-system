@@ -16,6 +16,12 @@ class Player(models.Model):
     def __str__(self):
         return self.name
     
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None
+        super().save(*args, **kwargs)
+        if is_new:
+            PlayerStats.objects.create(player=self)
+    
 class PlayerStats(models.Model):
     player = models.OneToOneField(Player, on_delete=models.CASCADE, related_name='player_stats')
     goals = models.PositiveIntegerField(default=0)
