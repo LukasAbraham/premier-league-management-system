@@ -14,7 +14,7 @@ class MatchForm(forms.ModelForm):
         model = Match
         fields = ['round', 'time', 'club1', 'club2']
         
-    time = forms.DateField(widget=widgets.DateInput(attrs={'type': 'date'}), initial=date.today())
+    time = forms.DateTimeField(widget=widgets.DateTimeInput(attrs={'type': 'datetime-local'}), initial=timezone.now())
     def clean(self):
         cleaned_data = super().clean()
         club1 = cleaned_data.get('club1')
