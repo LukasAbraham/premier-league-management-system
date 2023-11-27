@@ -6,7 +6,7 @@
 </br>
     <div class="container">
         </br>
-        <h3 class="display-4 font-select">Team</h3>
+        <h3 class="display-4 font-select">club</h3>
         <table class="table">
             <thead>
                 <tr>
@@ -39,7 +39,11 @@
         {% if has_manager %}
             <tbody>
                 <tr>
-                    <td>{{club.manager.name}}</td>
+                    <td>
+                        <a href="{% url 'managers:view' club.manager.id %}">
+                            <span class="font-weight-bold">{{club.manager.name}}</span>
+                        </a>
+                    </td>
                     <td>{{club.manager.nationality}}</td>
                     {% if user.user_profile.type == 'admin' %}
                     <td><button onclick="location.href='{% url 'managers:edit' manager_id=club.manager.id %}'"class="btn btn-primary">Edit</button></td>
@@ -65,14 +69,14 @@
                 {% for player in club.player_set.all %}
                 <tr>
                     <td>    
-                        <a href="{% url 'players/view' player_id=player.id %}">
+                        <a href="{% url 'players:view' player.id %}">
                             <span class="font-weight-bold">{{player.name}}</span>
                         </a>
                     </td>
                     <td>{{player.nationality}}</td>
-                    <td>{{player.position}}</td>
+                    <td>{{player.get_position_display}}</td>
                     {% if user.user_profile.type == 'admin' %}
-                    <td><button onclick="location.href='{% url 'players/edit' player_id=player.id %}'"class="btn btn-primary">Edit</button></td>
+                    <td><button onclick="location.href='{% url 'players:edit' player.id %}'"class="btn btn-primary">Edit</button></td>
                     <td><button onclick="deletePlayerConfirmation('{{ player.id }}')"class="btn btn-primary">Remove</button></td>
                     {% endif %}
                 </tr>

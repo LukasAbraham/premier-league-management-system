@@ -13,7 +13,7 @@
 <body>
     {% if user.is_authenticated %}
     <div class="icon_logo">
-        <div class="teams_icon">
+        <div class="clubs_icon">
           {% if user.user_profile.type == 'admin' %}
           <button>
           <a href="/clubs/add"><img src="{% static 'imgs/image_insert.png' %}" class="image_insert"/></a>

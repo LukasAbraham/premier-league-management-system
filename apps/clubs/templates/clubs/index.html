@@ -44,7 +44,7 @@
     {% endfor %}
     </br>
     {% if user.user_profile.type == 'admin' %}
-    <div class="add-team text-center">
+    <div class="add-club text-center">
         <button class="btn btn-primary" onclick="location.href='{% url 'clubs:add' %}'">Add club</button>
     </div>
     {% endif %}

@@ -64,7 +64,7 @@
                 <a href="{% url 'managers:view' manager_id=manager.id %}">
                     <span class="font-weight-bold">{{manager.name}}</span>
                 </a>
-                <span class="text-success font-weight-bold"> Team: {{ manager.club.name}}</span>
+                <span class="text-success font-weight-bold"> club: {{ manager.club.name}}</span>
                 {% if user.user_profile.type == 'admin' %}
                 <span class="float-right text-info ml-2"><button onclick="deleteManagerConfirmation('{{ manager.id }}')" class="btn btn-secondary">Remove</button></span>
                 <span class="float-right text-info ml-3"><button onclick="location.href='{% url 'managers:edit' manager_id=manager.id %}'" class="btn btn-secondary">Edit</button></span>
