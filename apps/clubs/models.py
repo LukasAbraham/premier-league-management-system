@@ -7,12 +7,11 @@ class Club(models.Model):
     STATUS_CHOICES = [
         ('V', 'Valid'),
         ('I', 'Invalid'),
-        ('P', 'Pending'),
     ]
 
     name = models.CharField(max_length=255, unique=True)
     logo = models.ImageField(upload_to='club_imgs/')
-    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='P')
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES, default='I')
     stadium = models.CharField(max_length=2, choices=STADIUM_CHOICES)
     sponsor = models.CharField(max_length=2, choices=SPONSOR_CHOICES, blank=True)
     def __str__(self):
