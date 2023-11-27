@@ -13,7 +13,7 @@ body {
     box-sizing: border-box;
 }
 
-.teams_icon {
+.clubs_icon {
     display: flex;
     align-items: center;
     margin-right: 10px;
@@ -360,7 +360,7 @@ h3.display-4{
     margin-right: 10px;
 }
 
-.center-image .team-name {
+.center-image .club-name {
     display: inline-block;
     vertical-align: middle;
 }

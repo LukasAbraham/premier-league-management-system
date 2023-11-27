@@ -13,7 +13,7 @@ body {
     box-sizing: border-box;
 }
 
-.teams_icon {
+.clubs_icon {
     display: flex;
     align-items: center;
     margin-right: 10px;
@@ -270,7 +270,7 @@ body {
     left: 100px;
 }
 
-.teamname {
+.clubname {
     width: 100%;
     position: absolute;
     font-family: 'Poppins';

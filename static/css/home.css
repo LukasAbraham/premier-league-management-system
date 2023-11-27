@@ -13,7 +13,7 @@ body {
     box-sizing: border-box;
 }
 
-.teams_icon {
+.clubs_icon {
     display: flex;
     align-items: center;
     margin-right: 10px;
@@ -401,17 +401,17 @@ body {
     margin: 0;
 }
 
-.teams_logo {
+.clubs_logo {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.teams_logo img {
+.clubs_logo img {
     margin: 5px;
 }
 
-.teams_pts h1 {
+.clubs_pts h1 {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 600;
@@ -420,7 +420,7 @@ body {
     color: #0C0225;
 }
 
-.teams_name h1 {
+.clubs_name h1 {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 600;
@@ -444,19 +444,19 @@ body {
     left: 30px;
 }
 
-.teams_name {
+.clubs_name {
     position: absolute;
     top: 30px;
     left: 35%;
 }
 
-.teams_pts {
+.clubs_pts {
     position: absolute;
     top: 30px;
     right: 30px;
 }
 
-.teams_logo {
+.clubs_logo {
     position: absolute;
     top: 38px;
     left: 15%;
