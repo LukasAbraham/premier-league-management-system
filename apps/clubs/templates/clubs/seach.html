@@ -30,7 +30,7 @@
         {% endif %}
         <span class="float-right text-info">&nbsp; Points: {{ club.club_stats.points }} &nbsp;</span>
         {% if user.user_profile.type == 'admin' %}
-        <span class="float-right text-info">&nbsp; Status: {{ club.status }}</span>
+        <span class="float-right text-info">&nbsp; Status: {{ club.get_status_display }}</span>
         {% endif %}
     </div>
     <br/>

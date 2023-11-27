@@ -20,8 +20,8 @@
                 <tr>
                     <td><img src="{{ club.logo.url }}" height="80px"></td>
                     <td>{{ club.name }}</td>
-                    <td>{{ club.stadium }}</td>
-                    <td>{{ club.sponsor }}</td>
+                    <td>{{ club.get_stadium_display }}</td>
+                    <td>{{ club.get_sponsor_display }}</td>
                 </tr>
             </tbody>
         </table>
