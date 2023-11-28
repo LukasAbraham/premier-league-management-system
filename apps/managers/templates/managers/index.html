@@ -4,79 +4,79 @@
 
 {% block content %}
     <div class="container">
-    </br>
+        </br>
         <div class="input-group">
             <form method="GET" action="{% url 'managers:search' %}" class="d-flex">
-            <div class="form-outline">
-                {{ form.name }}
-            </div>
-            <button type="submit" class="btn btn-outline-primary">SEARCH</button>
+                <div class="form-outline">
+                    {{ form.name }}
+                </div>
+                <button type="submit" class="btn btn-outline-primary">SEARCH</button>
             </form>
         </div>
-    </br>
-    <div class="bg-dark py-2">
-        <h3 class="display-4 text-white text-center mb-0">Manager of the month</h3>
-    </div>
-    {% for manager in managers_list|slice:":1" %}
-    <div class="jumbotron">
-    <div class="col-md-6 mx-auto">
-        <div class="card mb-3 card-bg h-100" style="max-width: 540px;">
-          <div class="row no-gutters">
-            <div class="col-md-4 mt-5">
-              <img src="{{ manager.image.url }}" class="card-img" alt="">
-            </div>
-            <div class="col-md-8">
-              <div class="card-body text-white">
-                <h4 class="card-title font-weight-bold">{{ manager.name }}</h4>
-                <div class="d-flex align-items-center mb-3">
-                  <img src="{{ manager.club.image.url }}" class="card-logo-img img-fluid mr-2" height="30px" width="30px" alt="">
-                  <p class="mb-0">{{ manager.club.name }}</p>
+        </br>
+        <div class="bg-dark py-2">
+            <h3 class="display-4 text-white text-center mb-0">Manager of the month</h3>
+        </div>
+        {% for manager in managers_list|slice:":1" %}
+            <div class="jumbotron">
+                <div class="col-md-6 mx-auto">
+                    <div class="card mb-3 card-bg h-100" style="max-width: 540px;">
+                        <div class="row no-gutters">
+                            <div class="col-md-4 mt-5">
+                                <img src="{{ manager.image.url }}" class="card-img" alt="">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body text-white">
+                                    <h4 class="card-title font-weight-bold">{{ manager.name }}</h4>
+                                    <div class="d-flex align-items-center mb-3">
+                                        <img src="{{ manager.club.image.url }}" class="card-logo-img img-fluid mr-2" height="30px" width="30px" alt="">
+                                        <p class="mb-0">{{ manager.club.name }}</p>
+                                    </div>
+                                    <p class="card-text">Games: {{ manager.club.club_stats.wins|add:manager.club.club_stats.draws|add:manager.club.club_stats.losses }}</p>
+                                    <div class="d-flex">
+                                        <p class="card-text mr-4">GF: {{ manager.club.club_stats.goals }}</p>
+                                        <p class="card-text">GA: {{ manager.club.club_stats.conceded_goals }}</p>
+                                    </div>
+                                    <div class="d-flex">
+                                        <p class="card-text mr-4">Wins: {{ manager.club.club_stats.wins }}</p>
+                                        <p class="card-text mr-4">Draws: {{ manager.club.club_stats.draws }}</p>
+                                        <p class="card-text">Losses: {{ manager.club.club_stats.losses }}</p>
+                                    </div>                 
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mb-0">
+                                <img src="{% static 'imgs/MOTM_award.png' %}" class="card-logo-img img-fluid mr-2" height="25px" width="25px" alt="">
+                                <p class="card-text"><small class="text-white">MOTM award</small></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <p class="card-text">Games: {{ manager.club.club_stats.wins|add:manager.club.club_stats.draws|add:manager.club.club_stats.losses }}</p>
-                <div class="d-flex">
-                    <p class="card-text mr-4">GF: {{ manager.club.club_stats.goals }}</p>
-                    <p class="card-text">GA: {{ manager.club.club_stats.conceded_goals }}</p>
-                  </div>
-                  <div class="d-flex">
-                    <p class="card-text mr-4">Wins: {{ manager.club.club_stats.wins }}</p>
-                    <p class="card-text mr-4">Draws: {{ manager.club.club_stats.draws }}</p>
-                    <p class="card-text">Losses: {{ manager.club.club_stats.losses }}</p>
-                  </div>                 
-              </div>
             </div>
-            <div class="d-flex align-items-center mb-0">
-              <img src="{% static 'imgs/MOTM_award.png' %}" class="card-logo-img img-fluid mr-2" height="25px" width="25px" alt="">
-              <p class="card-text"><small class="text-white">MOTM award</small></p>
-            </div>
-          </div>
-        </div>
-      </div>      
-    </div>
-    {% endfor %} 
-    </br>
+        {% endfor %} 
+        </br>
         <h3 class="display-4"> Managers </h3>
-    </br>
+        </br>
         {% for manager in managers_list %}
-        <div class="card">
-            <div class="card-header">
-                <span><img src="{{manager.image.url}}" style="height:50px; width:50px; "></span>
-                &nbsp;
-                <a href="{% url 'managers:view' manager_id=manager.id %}">
-                    <span class="font-weight-bold">{{manager.name}}</span>
-                </a>
-                <span class="text-success font-weight-bold"> club: {{ manager.club.name}}</span>
-                {% if user.user_profile.type == 'admin' %}
-                <span class="float-right text-info ml-2"><button onclick="deleteManagerConfirmation('{{ manager.id }}')" class="btn btn-secondary">Remove</button></span>
-                <span class="float-right text-info ml-3"><button onclick="location.href='{% url 'managers:edit' manager_id=manager.id %}'" class="btn btn-secondary">Edit</button></span>
-                {% endif %}
+            <div class="card">
+                <div class="card-header">
+                    <span><img src="{{manager.image.url}}" style="height:50px; width:50px; "></span>
+                    &nbsp;
+                    <a href="{% url 'managers:view' manager_id=manager.id %}">
+                        <span class="font-weight-bold">{{manager.name}}</span>
+                    </a>
+                    <span class="text-success font-weight-bold"> club: {{ manager.club.name}}</span>
+                    {% if user.user_profile.type == 'admin' %}
+                        <span class="float-right text-info ml-2"><button onclick="deleteManagerConfirmation('{{ manager.id }}')" class="btn btn-secondary">Remove</button></span>
+                        <span class="float-right text-info ml-3"><button onclick="location.href='{% url 'managers:edit' manager_id=manager.id %}'" class="btn btn-secondary">Edit</button></span>
+                    {% endif %}
+                </div>
+                <br/>
             </div>
-            <br/>
-        </div>
         {% endfor %}
         {% if user.user_profile.type == 'admin' %}
-        <div class="add-manager text-center">
-            <button onclick="location.href='{% url 'managers:add' %}'" class="btn btn-primary">Add manager</button>
-        </div>
+            <div class="add-manager text-center">
+                <button onclick="location.href='{% url 'managers:add' %}'" class="btn btn-primary">Add manager</button>
+            </div>
         {% endif %}
     </div>
 {% endblock %}

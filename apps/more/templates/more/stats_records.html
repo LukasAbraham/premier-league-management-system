@@ -4,149 +4,149 @@
 
 {% block content %}
     <div class="container">
-    </br>
-    <div class="bg-primary py-2">
-        <h3 class="display-4 text-white text-center mb-0">Goals</h3>
-    </div>
-    <div class="row">
-        {% for player_stat in top_scorers|slice:":2" %}
-        <div class="col-md-6">
-          <div class="card mb-3 card-bg-2 h-100" style="max-width: 540px;">
-            <div class="row no-gutters">
-              <div class="col-md-4 mt-3">
-                <img src="{{player_stat.player.image.url}}" class="card-img" alt="">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body text-white">
-                  <h5 class="card-title font-weight-bold">{{player_stat.player.name}}</h5>
-                  <div class="d-flex align-items-center mb-3">
-                    <img src="{{player_stat.player.club.logo.url}}" class="card-logo-img img-fluid mr-2" height="30px" width="30px" alt="">
-                    <p class="mb-0">{{player_stat.player.club.name}}</p>
-                  </div>
-                  <p class="card-text">Appearances: {{player_stat.player.club.club_stats.wins|add:player_stat.player.club.club_stats.draws|add:player_stat.player.club.club_stats.losses}}</p>
-                  <p class="card-text">Goals: {{player_stat.goals}}</p>
-                </div>
-            </div>
-            {% if forloop.first %}
-            <div class="d-flex align-items-center mb-0 mt-3">
-              <img src="{% static 'imgs/golden_boot.png' %}" class="card-logo-img img-fluid mr-2" height="55px" width="55px" alt="">
-              <p class="card-text"><small class="text-white">Golden Boot award</small></p>
-            </div>
-            {% endif %}
-            </div>
-          </div>
+        </br>
+        <div class="bg-primary py-2">
+            <h3 class="display-4 text-white text-center mb-0">Goals</h3>
         </div>
-        {% endfor %}
-      </div>
+        <div class="row">
+            {% for player_stat in top_scorers|slice:":2" %}
+                <div class="col-md-6">
+                    <div class="card mb-3 card-bg-2 h-100" style="max-width: 540px;">
+                        <div class="row no-gutters">
+                            <div class="col-md-4 mt-3">
+                                <img src="{{player_stat.player.image.url}}" class="card-img" alt="">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body text-white">
+                                    <h5 class="card-title font-weight-bold">{{player_stat.player.name}}</h5>
+                                    <div class="d-flex align-items-center mb-3">
+                                        <img src="{{player_stat.player.club.logo.url}}" class="card-logo-img img-fluid mr-2" height="30px" width="30px" alt="">
+                                        <p class="mb-0">{{player_stat.player.club.name}}</p>
+                                    </div>
+                                    <p class="card-text">Appearances: {{player_stat.player.club.club_stats.wins|add:player_stat.player.club.club_stats.draws|add:player_stat.player.club.club_stats.losses}}</p>
+                                    <p class="card-text">Goals: {{player_stat.goals}}</p>
+                                </div>
+                            </div>
+                            {% if forloop.first %}
+                                <div class="d-flex align-items-center mb-0 mt-3">
+                                    <img src="{% static 'imgs/golden_boot.png' %}" class="card-logo-img img-fluid mr-2" height="55px" width="55px" alt="">
+                                    <p class="card-text"><small class="text-white">Golden Boot award</small></p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
         <hr class="featurette-divider">
         <div class="bg-info py-2">
             <h3 class="display-4 text-white text-center mb-0">Assists</h3>
         </div>
         <div class="row">
-        {% for player_stat in top_play_makers|slice:":2" %}
-        <div class="col-md-6">
-          <div class="card mb-3 card-bg-1 h-100" style="max-width: 540px;">
-            <div class="row no-gutters">
-              <div class="col-md-4 mt-3">
-                <img src="{{player_stat.player.image.url}}" class="card-img" alt="">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body text-white">
-                  <h5 class="card-title font-weight-bold">{{player_stat.player.name}}</h5>
-                  <div class="d-flex align-items-center mb-3">
-                    <img src="{{player_stat.player.club.logo.url}}" class="card-logo-img img-fluid mr-2" height="30px" width="30px" alt="">
-                    <p class="mb-0">{{player_stat.player.club.name}}</p>
-                  </div>
-                  <p class="card-text">Appearances: {{player_stat.player.club.club_stats.wins|add:player_stat.player.club.club_stats.draws|add:player_stat.player.club.club_stats.losses}}</p>
-                  <p class="card-text">Assists: {{player_stat.assists}}</p>
+            {% for player_stat in top_play_makers|slice:":2" %}
+                <div class="col-md-6">
+                    <div class="card mb-3 card-bg-1 h-100" style="max-width: 540px;">
+                        <div class="row no-gutters">
+                            <div class="col-md-4 mt-3">
+                                <img src="{{player_stat.player.image.url}}" class="card-img" alt="">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body text-white">
+                                    <h5 class="card-title font-weight-bold">{{player_stat.player.name}}</h5>
+                                    <div class="d-flex align-items-center mb-3">
+                                        <img src="{{player_stat.player.club.logo.url}}" class="card-logo-img img-fluid mr-2" height="30px" width="30px" alt="">
+                                        <p class="mb-0">{{player_stat.player.club.name}}</p>
+                                    </div>
+                                    <p class="card-text">Appearances: {{player_stat.player.club.club_stats.wins|add:player_stat.player.club.club_stats.draws|add:player_stat.player.club.club_stats.losses}}</p>
+                                    <p class="card-text">Assists: {{player_stat.assists}}</p>
+                                </div>
+                            </div>
+                            {% if forloop.first %}
+                                <div class="d-flex align-items-center mb-0 mt-3">
+                                    <img src="{% static 'imgs/playmaker_award.png' %}" class="card-logo-img img-fluid mr-2" height="55px" width="55px" alt="">
+                                    <p class="card-text"><small class="text-white">Playmaker award</small></p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
-            </div>
-            {% if forloop.first %}
-            <div class="d-flex align-items-center mb-0 mt-3">
-              <img src="{% static 'imgs/playmaker_award.png' %}" class="card-logo-img img-fluid mr-2" height="55px" width="55px" alt="">
-              <p class="card-text"><small class="text-white">Playmaker award</small></p>
-            </div>
-            {% endif %}
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-    </div>
-    </br>
-    <hr class="featurette-divider">
-    <div class="container">
-        <h3 class="display-4">Top Goalscorers</h3>
-        </br>
-        <div class="text-center">
-            <button class="btn btn-warning button-left" type="button" data-toggle="collapse" data-target="#goalscorersTable" aria-expanded="true" aria-controls="goalscorersTable">
-                Expand/Collapse All
-            </button>
-        </div>
-        <div id="goalscorersTable" class="collapse">
-        </br>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Rank</th>
-                <th>Name</th>
-                <th>club</th>
-                <th>Appearances</th>
-                <th>Position</th>
-                <th>Goals</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for player_stat in top_scorers %}
-              <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ player_stat.player.name }}</td>
-                <td>{{ player_stat.player.club }}</td>
-                <td>{{ player_stat.player.club.club_stats.wins|add:player_stat.player.club.club_stats.draws|add:player_stat.player.club.club_stats.losses }}</td>
-                <td>{{ player_stat.player.get_position_display }}</td>
-                <td>{{ player_stat.goals }}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+            {% endfor %}
         </div>
         </br>
         <hr class="featurette-divider">
-        <h3 class="display-4">Top Playmakers</h3>
-        </br>
-        <div class="text-center">
-            <button class="btn btn-warning button-left" type="button" data-toggle="collapse" data-target="#playmakersTable" aria-expanded="true" aria-controls="playmakersTable">
-                Expand/Collapse All
-            </button>
+        <div class="container">
+            <h3 class="display-4">Top Goalscorers</h3>
+            </br>
+            <div class="text-center">
+                <button class="btn btn-warning button-left" type="button" data-toggle="collapse" data-target="#goalscorersTable" aria-expanded="true" aria-controls="goalscorersTable">
+                    Expand/Collapse All
+                </button>
+            </div>
+            <div id="goalscorersTable" class="collapse">
+                </br>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>club</th>
+                            <th>Appearances</th>
+                            <th>Position</th>
+                            <th>Goals</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for player_stat in top_scorers %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ player_stat.player.name }}</td>
+                                <td>{{ player_stat.player.club }}</td>
+                                <td>{{ player_stat.player.club.club_stats.wins|add:player_stat.player.club.club_stats.draws|add:player_stat.player.club.club_stats.losses }}</td>
+                                <td>{{ player_stat.player.get_position_display }}</td>
+                                <td>{{ player_stat.goals }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            </br>
+            <hr class="featurette-divider">
+            <h3 class="display-4">Top Playmakers</h3>
+            </br>
+            <div class="text-center">
+                <button class="btn btn-warning button-left" type="button" data-toggle="collapse" data-target="#playmakersTable" aria-expanded="true" aria-controls="playmakersTable">
+                    Expand/Collapse All
+                </button>
+            </div>
+            <div id="playmakersTable" class="collapse">
+                </br>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>club</th>
+                            <th>Appearances</th>
+                            <th>Position</th>
+                            <th>Assists</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for player_stat in top_playmakers %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ player_stat.player.name }}</td>
+                                <td>{{ player_stat.player.club }}</td>
+                                <td>{{ player_stat.player.club.club_stats.wins|add:player_stat.player.club.club_stats.draws|add:player_stat.player.club.club_stats.losses }}</td>
+                                <td>{{ player_stat.player.get_position_display }}</td>
+                                <td>{{ player_stat.assists }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div id="playmakersTable" class="collapse">
         </br>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Rank</th>
-                <th>Name</th>
-                <th>club</th>
-                <th>Appearances</th>
-                <th>Position</th>
-                <th>Assists</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for player_stat in top_playmakers %}
-              <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ player_stat.player.name }}</td>
-                <td>{{ player_stat.player.club }}</td>
-                <td>{{ player_stat.player.club.club_stats.wins|add:player_stat.player.club.club_stats.draws|add:player_stat.player.club.club_stats.losses }}</td>
-                <td>{{ player_stat.player.get_position_display }}</td>
-                <td>{{ player_stat.assists }}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </br>
         <button onclick="location.href='/more'" class="btn btn-secondary">Back</button>
     </div>
 {% endblock %}
