@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/players.css' %}">
     <title>{% block title %}{% endblock %}</title>
@@ -12,7 +13,7 @@
 <body>
     {% if user.is_authenticated %}
     <div class="icon_logo">
-        <div class="teams_icon">
+        <div class="clubs_icon">
         {% if user.user_profile.type == 'admin' %}
         <button>
         <a href="/clubs/add"><img src="{% static 'imgs/image_insert.png' %}" class="image_insert"/></a>

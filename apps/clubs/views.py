@@ -23,7 +23,7 @@ def index(request):
         'user': user,
         'form': form,
     }
-    return render(request, 'clubs/index.html',context)
+    return render(request, 'clubs/index.html', context)
 
 def add(request):
     submitted = False

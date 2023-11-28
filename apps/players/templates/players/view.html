@@ -15,10 +15,10 @@
                             <h6 class="card-title">{{player.name}}</h6>
                             <p class="card-text text-justify">
                                 <p>DoB: {{player.dob}}</p>
-                                <p>Team: {{player.club.name}}</p>
+                                <p>Club: {{player.club.name}}</p>
                                 <p>Weight (kg): {{player.weight}}</p>
                                 <p>Height (cm): {{player.height}}</p>
-                                <p>Position: {{player.position}}</p>
+                                <p>Position: {{player.get_position_display}}</p>
                                 <p>Nationality: {{player.nationality}}</p>
                                 <p>Number of Goals: {{player.player_stats.goals}}</p>
                                 <p>Number of Assists: {{player.player_stats.assists}}</p>

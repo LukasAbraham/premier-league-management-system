@@ -89,7 +89,7 @@
               <tr>
                 <th>Rank</th>
                 <th>Name</th>
-                <th>Team</th>
+                <th>club</th>
                 <th>Appearances</th>
                 <th>Position</th>
                 <th>Goals</th>
@@ -102,7 +102,7 @@
                 <td>{{ player_stat.player.name }}</td>
                 <td>{{ player_stat.player.club }}</td>
                 <td>{{ player_stat.player.club.club_stats.wins|add:player_stat.player.club.club_stats.draws|add:player_stat.player.club.club_stats.losses }}</td>
-                <td>{{ player_stat.player.position }}</td>
+                <td>{{ player_stat.player.get_position_display }}</td>
                 <td>{{ player_stat.goals }}</td>
               </tr>
               {% endfor %}
@@ -125,7 +125,7 @@
               <tr>
                 <th>Rank</th>
                 <th>Name</th>
-                <th>Team</th>
+                <th>club</th>
                 <th>Appearances</th>
                 <th>Position</th>
                 <th>Assists</th>
@@ -138,7 +138,7 @@
                 <td>{{ player_stat.player.name }}</td>
                 <td>{{ player_stat.player.club }}</td>
                 <td>{{ player_stat.player.club.club_stats.wins|add:player_stat.player.club.club_stats.draws|add:player_stat.player.club.club_stats.losses }}</td>
-                <td>{{ player_stat.player.position }}</td>
+                <td>{{ player_stat.player.get_position_display }}</td>
                 <td>{{ player_stat.assists }}</td>
               </tr>
               {% endfor %}

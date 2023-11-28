@@ -25,6 +25,8 @@ class Match(models.Model):
             self.status = 'P'
         else: 
             self.status = 'U'
+            
+        self.stadium = self.club1.stadium
         super().save(*args, **kwargs)
     
 class Result(models.Model):

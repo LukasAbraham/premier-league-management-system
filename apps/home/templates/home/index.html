@@ -81,7 +81,7 @@
       <div class="row bg-light">
           {% for player_stat in top_players %}
           <div class="col-lg-4">
-            <img class="rounded-circle" src="{{player.player.image.url}}" alt="Generic placeholder image" width="140" height="140">
+            <img class="rounded-circle" src="{{player_stat.player.image.url}}" alt="Generic placeholder image" width="140" height="140">
             <h2>{{player_stat.player.name}}</h2>
             <p>Goals Scored: {{player_stat.goals}}</p>
             <a class="btn btn-secondary btn-md" href="/players/view/{{player_stat.player.id}}" role="button">Detail</a>
@@ -94,7 +94,7 @@
       </br>
     </br>
         <div class="container-fluid bg-light">
-          <h3 class="display-4"> Top Teams </h2>
+          <h3 class="display-4"> Top clubs </h2>
         </br>
             <div class="row">
                   {% for club_stat in top_clubs %}

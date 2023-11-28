@@ -29,7 +29,7 @@
                     <td>{{match.result.club1_goals}} - {{match.result.club2_goals}}</td>
                     <td>{{match.club2}}</td>
                     <td>{{match.round}}</td>
-                    <td>{{match.stadium}}</td>
+                    <td>{{match.get_stadium_display}}</td>
                     <td>{{match.time}}</td>
                 </tr>
                 {% if match.status == 'P' %}
