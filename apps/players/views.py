@@ -97,7 +97,7 @@ def search(request):
     form = PlayerSearchForm(request.GET)
     found_players = None
     if form.is_valid():
-        player_name = form.cleaned_data['name']
+        player_name = form.cleaned_data['player_name']
         found_players = Player.objects.filter(name__iregex=r'^.*{}.*$'.format(re.escape(player_name)))
     user = request.user
     clubs = Club.objects.all()

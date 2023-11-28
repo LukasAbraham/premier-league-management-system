@@ -91,7 +91,7 @@ def search(request):
     form = ManagerSearchForm(request.GET)
     found_managers = None
     if form.is_valid():
-        manager_name = form.cleaned_data['name']
+        manager_name = form.cleaned_data['manager_name']
         found_managers = Manager.objects.filter(name__iregex=r'^.*{}.*$'.format(re.escape(manager_name)))
     user = request.user
     clubs = Club.objects.all()
