@@ -14,14 +14,14 @@
                         <div class="card-block">
                             <h6 class="card-title">{{player.name}}</h6>
                             <p class="card-text text-justify">
-                                <p>DoB: {{player.dob}}</p>
-                                <p>Club: {{player.club.name}}</p>
-                                <p>Weight (kg): {{player.weight}}</p>
-                                <p>Height (cm): {{player.height}}</p>
-                                <p>Position: {{player.get_position_display}}</p>
-                                <p>Nationality: {{player.nationality}}</p>
-                                <p>Number of Goals: {{player.player_stats.goals}}</p>
-                                <p>Number of Assists: {{player.player_stats.assists}}</p>
+                            <p>DoB: {{player.dob}}</p>
+                            <p>Club: {{player.club.name}}</p>
+                            <p>Weight (kg): {{player.weight}}</p>
+                            <p>Height (cm): {{player.height}}</p>
+                            <p>Position: {{player.get_position_display}}</p>
+                            <p>Nationality: {{player.nationality}}</p>
+                            <p>Number of Goals: {{player.player_stats.goals}}</p>
+                            <p>Number of Assists: {{player.player_stats.assists}}</p>
                             </p>
                             <a href="https://www.google.com/search?q={{player.name}}" class="btn btn-success">Read more...</a>
                         </div>
@@ -33,7 +33,7 @@
             <button onclick="location.href='{% url 'players:edit' player.id %}'" class="btn btn-primary">Edit</button>
             <button onclick="deletePlayerConfirmation('{{ player.id }}')" class="btn btn-primary">Remove</button>
         {% endif %}
-            <button onclick="location.href='/players'" class="btn btn-secondary">Back</button>
+        <button onclick="location.href='/players'" class="btn btn-secondary">Back</button>
     </div>
     <script>
         function deletePlayerConfirmation(playerId) {

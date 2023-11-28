@@ -28,93 +28,92 @@
             </div>
         </div>
     </div>
-</br>
+    </br>
 
-<hr class="featurette-divider">
-<h3 class='display-4' style="position: relative; top: 20px; left: 40px"> All Matches </h3>
-</br></br>
-<button class="btn btn-warning button-left" type="button" data-toggle="collapse" data-target="#apply_collapse" aria-expanded="false" aria-controls="apply_collapse">
-    Expand/Collapse All
-</button>
+    <hr class="featurette-divider">
+    <h3 class='display-4' style="position: relative; top: 20px; left: 40px"> All Matches </h3>
+    </br></br>
+    <button class="btn btn-warning button-left" type="button" data-toggle="collapse" data-target="#apply_collapse" aria-expanded="false" aria-controls="apply_collapse">
+        Expand/Collapse All
+    </button>
 
 
-<div class="collapse" id="apply_collapse">
-</br>
-<div class="container-fluid jumbotron">
-    {% for match in matches_list %}
-    <div class="row justify-content-center">
-        <div class="match col-6">
-            <div class="match-header">
-                {% if match.status == 'P' %}
-                    <div class="match-status">Previous</div>
-                {% else %}
-                    <div class="match-status">Upcoming</div>
-                {% endif %}
-                <div class="match-tournament"><img src={%static "imgs/Premiere-League.png"%} style="height: 30px;"/>&nbsp;English Premier League</div>
-            </div>
-            <div class="match-content">
-                <div class="column">
-                    <div class="club club--home">
-                        <div class="club-logo">
-                            <img src="{{match.club1.logo.url}}" style="width:40%"/>
-                        </div>
-                        <h2 class="club-name">{{match.club1.name}}</h2>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="match-details">
-                        <div class="match-round">
-                            <strong>Round</strong>
-                            <strong>{{ match.round }}</strong>
-                        </div>
-                        <div class="match-date">
-                            <strong>{{ match.time }}</strong>
-                        </div>
-                        <div class="match-score">
-                            <span class="match-score-number match-score-number--leading">{{ match.result.club1_goals }}</span>
-                            <span class="match-score-divider">:</span>
-                            <span class="match-score-number">{{ match.result.club2_goals }}</span>
-                        </div>
-                        {% if match.status == 'P' %}
-                        {% if match.result.club1_goals >= 0 and match.result.club2_goals >= 0 %}
-                            <button class="match-bet-place" onclick="location.href='{% url 'matches:view' match.id %}'">Detail</button>
-                        {% elif not fixture.result.exists %}
-                            {% if user.user_profile.type == 'admin' %}
-                                <button class="match-bet-place" onclick="location.href='{% url 'matches:add_result' match.id %}'">Update</button>
+    <div class="collapse" id="apply_collapse">
+        </br>
+        <div class="container-fluid jumbotron">
+            {% for match in matches_list %}
+                <div class="row justify-content-center">
+                    <div class="match col-6">
+                        <div class="match-header">
+                            {% if match.status == 'P' %}
+                                <div class="match-status">Previous</div>
+                            {% else %}
+                                <div class="match-status">Upcoming</div>
                             {% endif %}
-                        {% endif %}
-                        {% else %}
-                            <button class="match-bet-place" onclick="location.href='{% url 'matches:view' match.id %}'">Detail</button>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="club club--away">
-                        <div class="club-logo">
-                            <img src="{{match.club2.logo.url}}" style="width:40%"/>
+                            <div class="match-tournament"><img src={%static "imgs/Premiere-League.png"%} style="height: 30px;"/>&nbsp;English Premier League</div>
                         </div>
-                        <h2 class="club-name">{{match.club2.name}}</h2>
+                        <div class="match-content">
+                            <div class="column">
+                                <div class="club club--home">
+                                    <div class="club-logo">
+                                        <img src="{{match.club1.logo.url}}" style="width:40%"/>
+                                    </div>
+                                    <h2 class="club-name">{{match.club1.name}}</h2>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <div class="match-details">
+                                    <div class="match-round">
+                                        <strong>Round</strong>
+                                        <strong>{{ match.round }}</strong>
+                                    </div>
+                                    <div class="match-date">
+                                        <strong>{{ match.time }}</strong>
+                                    </div>
+                                    <div class="match-score">
+                                        <span class="match-score-number match-score-number--leading">{{ match.result.club1_goals }}</span>
+                                        <span class="match-score-divider">:</span>
+                                        <span class="match-score-number">{{ match.result.club2_goals }}</span>
+                                    </div>
+                                    {% if match.status == 'P' %}
+                                        {% if match.result.club1_goals >= 0 and match.result.club2_goals >= 0 %}
+                                            <button class="match-bet-place" onclick="location.href='{% url 'matches:view' match.id %}'">Detail</button>
+                                        {% elif not fixture.result.exists %}
+                                            {% if user.user_profile.type == 'admin' %}
+                                                <button class="match-bet-place" onclick="location.href='{% url 'matches:add_result' match.id %}'">Update</button>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% else %}
+                                        <button class="match-bet-place" onclick="location.href='{% url 'matches:view' match.id %}'">Detail</button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="column">
+                                <div class="club club--away">
+                                    <div class="club-logo">
+                                        <img src="{{match.club2.logo.url}}" style="width:40%"/>
+                                    </div>
+                                    <h2 class="club-name">{{match.club2.name}}</h2>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+                </br>
+                </br>
+            {% endfor %}
+        </div> 
     </div>
-</br>
-</br>
-{% endfor %}
-</div> 
-</div>
-{% if user.user_profile.type == 'admin' %}
-<div class="add-match text-center mt-5">
-    <button class="btn btn-primary" onclick="location.href='{% url 'matches:add' %}'">Add match</button>
-</div>
-{% endif %}
+    {% if user.user_profile.type == 'admin' %}
+        <div class="add-match text-center mt-5">
+            <button class="btn btn-primary" onclick="location.href='{% url 'matches:add' %}'">Add match</button>
+        </div>
+    {% endif %}
 
-<style>
-    .button-left {
-        position: relative;
-        left: 40px;
-    }
-</style>
-
+    <style>
+        .button-left {
+            position: relative;
+            left: 40px;
+        }
+    </style>
 {% endblock %}

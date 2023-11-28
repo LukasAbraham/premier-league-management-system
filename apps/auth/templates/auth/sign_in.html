@@ -3,36 +3,36 @@
 {% block title %}Sign in{% endblock %}
 
 {% block content %}
-  <div class="left" style="background-image: url('{% static 'imgs/v1_21.png' %}');"></div>
-  <div class = "right">
-    {% if messages %}
-    {% for message in messages %}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        {{ message }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class="left" style="background-image: url('{% static 'imgs/v1_21.png' %}');"></div>
+    <div class = "right">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="exampleInputUsername1" class="form-label">Username</label>
+                <input type="text" class="form-control" id="exampleInputUsername" aria-describedby="usernameHelp" name="username">
+                <div id="usernameHelp" class="form-text">We'll never share your username with anyone else.</div>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" name="remember_me">
+                <label class="form-check-label" for="exampleCheck1">Remember me</label>
+            </div>
+            <input type="submit" value="Sign in" class="btn btn-primary">
+            <div class="Remind">
+                <b>Do not have an account?</b>
+                <a href="/auth/sign_up/">Sign up</a>
+            </div>
+        </form>
     </div>
-    {% endfor %}
-    {% endif %}
-    <form method="post">
-        {% csrf_token %}
-        <div class="mb-3">
-          <label for="exampleInputUsername1" class="form-label">Username</label>
-          <input type="text" class="form-control" id="exampleInputUsername" aria-describedby="usernameHelp" name="username">
-          <div id="usernameHelp" class="form-text">We'll never share your username with anyone else.</div>
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" name="password">
-        </div>
-        <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1" name="remember_me">
-          <label class="form-check-label" for="exampleCheck1">Remember me</label>
-        </div>
-        <input type="submit" value="Sign in" class="btn btn-primary">
-        <div class="Remind">
-            <b>Do not have an account?</b>
-            <a href="/auth/sign_up/">Sign up</a>
-        </div>
-    </form>
-  </div>
 {% endblock %}

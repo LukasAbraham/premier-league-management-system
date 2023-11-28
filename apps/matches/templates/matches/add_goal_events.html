@@ -8,9 +8,9 @@
             {% csrf_token %}
             {{ formset.management_form }}
             {% for form in formset %}
-            <div class="match_form">
-                {{ form.as_table }}
-            </div>
+                <div class="match_form">
+                    {{ form.as_table }}
+                </div>
             {% endfor %}
             <button type="submit" class="btn btn-primary text-center">Save</button>
         </form>

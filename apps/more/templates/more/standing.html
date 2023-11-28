@@ -4,9 +4,9 @@
 
 {% block content %}
     <div class="container">
-    </br>
+        </br>
         <h3 class="display-4"> Standings </h3>
-    </br>
+        </br>
         <table class="table">
             <thead>
                 <tr>
@@ -25,27 +25,27 @@
             </thead>
             <tbody>
                 {% for club_stats in standings %}
-                <tr>
-                    <td class="center-text">{{ forloop.counter }}</td>
-                    <td class="center-image">
-                        <img src="{{ club_stats.club.logo.url }}" height="27px">
-                    </td>
-                    <td>
-                        <b>{{ club_stats.club.name }}</b>
-                    </td>
-                    <td class="center-text">{{ club_stats.wins|add:club_stats.draws|add:club_stats.losses }}</td>
-                    <td class="center-text">{{ club_stats.wins }}</td>
-                    <td class="center-text">{{ club_stats.draws }}</td>
-                    <td class="center-text">{{ club_stats.losses }}</td>
-                    <td class="center-text">{{ club_stats.goals }}</td>
-                    <td class="center-text">{{ club_stats.conceded_goals }}</td>
-                    <td class="center-text">{{ club_stats.goal_difference }}</td>
-                    <td class="center-text"><b>{{ club_stats.points }}</b></td>
-                </tr>
+                    <tr>
+                        <td class="center-text">{{ forloop.counter }}</td>
+                        <td class="center-image">
+                            <img src="{{ club_stats.club.logo.url }}" height="27px">
+                        </td>
+                        <td>
+                            <b>{{ club_stats.club.name }}</b>
+                        </td>
+                        <td class="center-text">{{ club_stats.wins|add:club_stats.draws|add:club_stats.losses }}</td>
+                        <td class="center-text">{{ club_stats.wins }}</td>
+                        <td class="center-text">{{ club_stats.draws }}</td>
+                        <td class="center-text">{{ club_stats.losses }}</td>
+                        <td class="center-text">{{ club_stats.goals }}</td>
+                        <td class="center-text">{{ club_stats.conceded_goals }}</td>
+                        <td class="center-text">{{ club_stats.goal_difference }}</td>
+                        <td class="center-text"><b>{{ club_stats.points }}</b></td>
+                    </tr>
                 {% endfor %}
             </tbody>
-        </table>     
-    </br>
+        </table>
+        </br>
         <button onclick="location.href='/more'" class="btn btn-secondary">Back</button>
     </div>
 {% endblock %}
