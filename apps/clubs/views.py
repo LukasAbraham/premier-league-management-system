@@ -99,7 +99,7 @@ def search(request):
     form = ClubSearchForm(request.GET)
     found_clubs = None
     if form.is_valid():
-        club_name = form.cleaned_data['name']
+        club_name = form.cleaned_data['club_name']
         found_clubs = Club.objects.filter(name__iregex=r'^.*{}.*$'.format(re.escape(club_name)))
     user = request.user
     clubs = Club.objects.all()

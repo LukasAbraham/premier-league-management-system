@@ -8,12 +8,12 @@
         <div class="input-group">
             <form method="GET" action="{% url 'players:search' %}" class="d-flex">
             <div class="form-outline">
-                {{ form.name }}
+                {{ form.player_name }}
             </div>
             <button type="submit" class="btn btn-outline-primary">SEARCH</button>
             </form>
         </div>
-        {% if players %}
+        {% if found_players %}
     </br>
         <h3 class="display-4 font-select"> Players </h3>
     </br>
