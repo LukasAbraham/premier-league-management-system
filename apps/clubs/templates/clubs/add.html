@@ -3,16 +3,22 @@
 {% block title %}Clubs{% endblock %}
 
 {% block content %}
-    <div class="content">
-        {% if submitted %}
-            <div class="alert alert-success">Club was created successfully!</div>
-        {% else %}
-        {% endif %}
-        <form action="" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Save" class="btn btn-primary">
-            <button onclick="location.href='/clubs'" class="btn btn-secondary">Back</button>
-        </form>
-    </div>
+<div class="content">
+    {% if submitted %}
+        <div class="alert alert-success">Club was created successfully!</div>
+    {% else %}
+    {% endif %}
+    <form action="" method="POST" enctype="multipart/form-data" class="row g-3">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class='col-md-6' style='font-size: 20px; padding: 10px'>
+                <strong> {{ field.label }}: </strong> {{ field }}
+            </div>
+        {% endfor %}
+        <div class="col-12 d-flex flex-column align-items-center">
+            <button type="submit" class="btn btn-primary" style="font-size: 18px; width: 50%; margin: 10px">Save</button>
+            <a onclick="location.href='/clubs'" class="btn btn-secondary" style="color: white; font-size: 18px; width: 50%; margin: 10px; cursor: pointer;">Cancel</a>
+        </div>
+    </form>
+</div>
 {% endblock %}

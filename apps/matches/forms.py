@@ -15,6 +15,12 @@ class MatchForm(forms.ModelForm):
         fields = ['round', 'time', 'club1', 'club2']
         
     time = forms.DateTimeField(widget=widgets.DateTimeInput(attrs={'type': 'datetime-local'}), initial=timezone.now())
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+    
     def clean(self):
         cleaned_data = super().clean()
         club1 = cleaned_data.get('club1')
@@ -35,7 +41,12 @@ class ResultForm(forms.ModelForm):
     class Meta:
         model = Result
         exclude = ['match']
-        
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+    
     # def clean(self):
         # cleaned_data = super().clean()
         # match = cleaned_data.get('match')
@@ -59,6 +70,12 @@ class GoalEventForm(forms.ModelForm):
             self.fields['assisting_player'].queryset = Player.objects.filter(
                 club__in=[self.instance.match.club1, self.instance.match.club2]
             )
+            
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+            
     # def clean(self):
     #     cleaned_data = super().clean()
     #     match = cleaned_data.get('match')
