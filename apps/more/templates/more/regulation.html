@@ -9,9 +9,9 @@
         }
     </style>
     <div class="container">
-        </br>
+        <br>
         <h3 class="display-4"> Regulation</h3>
-        </br>
+        <br>
         <table class="table">
             <thead>
                 <tr>
@@ -40,7 +40,7 @@
                 </tr>
             </tbody>
         </table>
-        </br>
+        <br>
         {% if user.user_profile.type == 'admin' %}
             <button onclick="location.href='{% url 'more:edit_regulation' %}'" class="btn btn-primary">Edit</button>
         {% endif %}

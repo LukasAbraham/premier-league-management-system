@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="container">
-        </br>
+        <br>
         <div class="input-group">
             <form method="GET" action="{% url 'managers:search' %}" class="d-flex">
                 <div class="form-outline">
@@ -15,9 +15,9 @@
         </div>
 
         {% if found_managers %}
-            </br></br>
+            <br><br>
             <h3 class="display-4 font-select"> Managers </h3>
-            </br>
+            <br>
             {% for manager in found_managers %}
                 <div class="card">
                     <div class="card-header">
@@ -32,7 +32,7 @@
                         <span class="float-right text-info ml-3"><button onclick="location.href='{% url 'managers:edit' manager_id=manager.id %}'" class="btn btn-secondary">Edit</button></span>
                         {% endif %}
                     </div>
-                    <br/>
+                    <br>
                 </div>
             {% endfor %}
         {% else %}

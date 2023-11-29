@@ -13,9 +13,9 @@
     </div>
 
     {% if found_clubs %}
-        </br></br>
+        <br><br>
         <h3 class="display-4 font-select"> All Clubs </h3>
-        </br>
+        <br>
         {% for club in found_clubs %}
             <div class="card">
                 <div class="card-header">
@@ -34,13 +34,13 @@
                         <span class="float-right text-info">&nbsp; Status: {{ club.get_status_display }}</span>
                     {% endif %}
                 </div>
-                <br/>
+                <br>
             </div>
         {% endfor %}
     {% else %}
         <h3 class="display-4 font-select"> No clubs found.</h3>
     {% endif %}
-    </br>
+    <br>
     {% if user.user_profile.type == 'admin' %}
         <div class="add-club text-center">
             <button class="btn btn-primary" onclick="location.href='{% url 'clubs:add' %}'">Add club</button>

@@ -10,9 +10,9 @@
     </style>
     
     <div class="container">
-    </br>
+    <br>
     <h3 class="display-4 font-select"> Standings </h3>
-    </br>
+    <br>
         <table class="table">
             <thead>
                 <tr>
@@ -45,9 +45,9 @@
                 {% endfor %}
             </tbody>
         </table>
-    </br>
+    <br>
     <h3 class="display-4 font-select"> Top scorers </h3>
-    </br>
+    <br>
         <table class="table">
             <thead>
                 <tr>
@@ -72,9 +72,9 @@
                 {% endfor %}
             </tbody>
         </table>
-    </br>
+    <br>
     <h3 class="display-4 font-select"> Top playmakers</h3>
-    </br>
+    <br>
     <table class="table">
         <thead>
             <tr>
@@ -99,9 +99,9 @@
             {% endfor %}
         </tbody>
     </table>
-    </br>
+    <br>
     <h3 class="display-4 font-select"> Matches</h3>
-    </br>
+    <br>
     <table class="table">
         {% for match in matches %}
             {% if match.status == 'Previous' %}
@@ -152,7 +152,7 @@
             {% endif %}
         {% endfor %}
     </table>
-    </br>
+    <br>
     <button onclick="location.href='{% url 'more:export_pdf' %}'" class="btn btn-primary">Export to PDF</button>
     <button onclick="location.href='/more'" class="btn btn-secondary">Back</button>
     </div>

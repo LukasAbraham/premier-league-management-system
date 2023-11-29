@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="container marketing">
-    </br>
+    <br>
     <div class="input-group">
         <form method="GET" action="{% url 'clubs:search' %}" class="d-flex">
             <div class="form-outline">
@@ -13,14 +13,14 @@
             <button type="submit" class="btn btn-outline-primary">SEARCH</button>
         </form>
     </div>
-    </br></br>
+    <br><br>
     <h3 class="display-4 font-select"> All Clubs </h3>
     {% if not clubs|length|divisibleby:2 %}
         <div class="alert alert-warning" role="alert">
             Number of clubs should be even.
         </div>
     {% endif %}
-    </br>
+    <br>
     {% for club in clubs %}
         <div class="card">
             <div class="card-header">
@@ -39,10 +39,10 @@
                     <span class="float-right text-info">&nbsp; Status: {{ club.get_status_display }}</span>
                 {% endif %}
             </div>
-            <br/>
+            <br>
         </div>
     {% endfor %}
-    </br>
+    <br>
     {% if user.user_profile.type == 'admin' %}
         <div class="add-club text-center">
             <button class="btn btn-primary" onclick="location.href='{% url 'clubs:add' %}'">Add club</button>

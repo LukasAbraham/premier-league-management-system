@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="container">
-        </br>
+        <br>
         <div class="input-group">
             <form method="GET" action="{% url 'players:search' %}" class="d-flex">
                 <div class="form-outline">
@@ -13,9 +13,9 @@
                 <button type="submit" class="btn btn-outline-primary">SEARCH</button>
             </form>
         </div>
-        </br></br>
+        <br><br>
         <h3 class="display-4"> Highlight Players </h2>
-        </br>
+        <br>
         <div class="container-fluid bg-light">
             <div class="row">
                 {% for player in highlight_players|slice:":4" %}
@@ -33,9 +33,9 @@
                 {% endfor %}
             </div>         
         </div>            
-        </br></br>
+        <br><br>
         <h3 class="display-4"> Players</h3>
-        </br>
+        <br>
         {% for player in players_list %}
             <div class="card">
                 <div class="card-header">
@@ -50,7 +50,7 @@
                         <span class="float-right text-info ml-3"><button onclick="location.href='{% url 'players:edit' player_id=player.id %}'" class="btn btn-secondary">Edit</button></span>
                     {% endif %}
                 </div>
-                <br/>
+                <br>
             </div>
         {% endfor %}
         {% if user.user_profile.type == 'admin' %}
