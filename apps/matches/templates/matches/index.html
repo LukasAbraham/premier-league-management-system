@@ -45,12 +45,8 @@
                 <div class="row justify-content-center">
                     <div class="match col-6">
                         <div class="match-header">
-                            {% if match.status == 'P' %}
-                                <div class="match-status">Previous</div>
-                            {% else %}
-                                <div class="match-status">Upcoming</div>
-                            {% endif %}
-                            <div class="match-tournament"><img src={%static "imgs/Premiere-League.png"%} style="height: 30px;"/>&nbsp;English Premier League</div>
+                            <div class = "match-status">{{ match.get_status_display }}</div>
+                            <div class="match-tournament"><img src={%static "imgs/Premiere-League.png"%} style="height: 30px; width: auto;"/>English Premier League</div>
                         </div>
                         <div class="match-content">
                             <div class="column">

@@ -29,7 +29,7 @@
                                 <div class="card-body text-white">
                                     <h4 class="card-title font-weight-bold">{{ manager.name }}</h4>
                                     <div class="d-flex align-items-center mb-3">
-                                        <img src="{{ manager.club.image.url }}" class="card-logo-img img-fluid mr-2" height="30px" width="30px" alt="">
+                                        <img src="{{ manager.club.logo.url }}" class="card-logo-img img-fluid mr-2" height="30px" width="30px" alt="">
                                         <p class="mb-0">{{ manager.club.name }}</p>
                                     </div>
                                     <p class="card-text">Games: {{ manager.club.club_stats.wins|add:manager.club.club_stats.draws|add:manager.club.club_stats.losses }}</p>
