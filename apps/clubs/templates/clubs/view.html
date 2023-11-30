@@ -83,6 +83,26 @@
                 {% endfor %}
             </tbody>
         </table>
+        <h3 class="display-4 font-select">Achievements</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Cup</th>
+                    <th>Year</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for achievement in club.achievement_set.all %}
+                <tr>
+                    <td>    
+                        <img src="{{ achievement.get_img_url }}" height="50px">
+                        {{ achievement.cup }}
+                    </td>
+                    <td>{{ achievement.year }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
         <button onclick="location.href='{% url 'clubs:edit' club_id=club.id %}'" class="btn btn-primary">Edit</button>
         <button onclick="location.href='{% url 'clubs:delete' club_id=club.id %}'" class="btn btn-primary">Remove</button>
         <button onclick="location.href='/clubs'"class="btn btn-secondary">Back</button>

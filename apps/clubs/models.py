@@ -1,7 +1,8 @@
 from django.db import models
+from django.templatetags.static import static
 from apps.managers.models import Manager
 from apps.more.models import Regulation
-from .choices import STADIUM_CHOICES, SPONSOR_CHOICES, STATUS_CHOICES, CITY_CHOICES, CUP_CHOICES
+from .choices import STADIUM_CHOICES, SPONSOR_CHOICES, STATUS_CHOICES, CITY_CHOICES, CUP_CHOICES, CUP_CHOICES_DICT
 
 class Club(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -56,7 +57,7 @@ class ClubStats(models.Model):
     
 class Achievement(models.Model):
     club = models.ForeignKey(Club, on_delete=models.CASCADE)
-    cup = models.CharField(max_length=3, choices=[(cup[0], cup[1]) for cup in CUP_CHOICES])
+    cup = models.CharField(max_length=3, choices=CUP_CHOICES)
     year = models.PositiveIntegerField()
     image = models.CharField(max_length=255, blank=True)
     
@@ -64,6 +65,8 @@ class Achievement(models.Model):
         return f'{self.club.name} won {self.cup} in {self.year} {self.times_won} times'
 
     def save(self, *args, **kwargs):
-        cup_dict = dict(CUP_CHOICES)
-        self.image = cup_dict[self.cup][2]
+        self.image = CUP_CHOICES_DICT[self.cup][1]
         super().save(*args, **kwargs)
+        
+    def get_img_url(self):
+        return static('cup_imgs/' + self.image)

@@ -10,15 +10,47 @@
     {% endif %}
     <form action="" method="POST" enctype="multipart/form-data" class="row g-3">
         {% csrf_token %}
-        {% for field in form %}
+        {% for field in club_form %}
             <div class='col-md-6' style='font-size: 20px; padding: 10px'>
                 <strong> {{ field.label }}: </strong> {{ field }}
             </div>
         {% endfor %}
+        <div id='formset-container'>
+            {{ achievement_formset.management_form }}
+            {% for form in achievement_formset %}
+                <div class='col-md-6 formset-form' style='font-size: 20px; padding: 10px {% if forloop.last %} hidden{% endif %}'>
+                    {{ form.as_p }}
+                    <button type="button" class="delete-button">Delete</button>
+                </div>
+            {% endfor %}
+        </div>
+        <button type="button" id="add-form-button">+</button>
         <div class="col-12 d-flex flex-column align-items-center">
             <button type="submit" class="btn btn-primary" style="font-size: 18px; width: 50%; margin: 10px">Save</button>
             <a onclick="location.href='/clubs'" class="btn btn-secondary" style="color: white; font-size: 18px; width: 50%; margin: 10px; cursor: pointer;">Cancel</a>
         </div>
     </form>
 </div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#add-form-button').click(function() {
+        var totalForms = parseInt($('#id_achievements-TOTAL_FORMS').val());
+        var newForm = $('#formset-container .formset-form:last').clone(true);
+        newForm.find('input, select, textarea').each(function() {
+            var name = $(this).attr('name').replace('-' + (totalForms-1) + '-', '-' + totalForms + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+        });
+        newForm.insertBefore($('#add-form-button')).show();
+        $('#id_achievements-TOTAL_FORMS').val(totalForms + 1);
+    });
+
+    $('.delete-button').click(function() {
+        $(this).parent().hide();
+    });
+});
+</script>
 {% endblock %}

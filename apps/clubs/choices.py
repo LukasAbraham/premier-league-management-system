@@ -118,12 +118,13 @@ CITY_CHOICES = [
     ('YO', 'York'),
 ]
 
-CUP_CHOICES = [
-    ('EPL', 'Premier League', 'premier_league.png'),
-    ('CBC', 'Carabao Cup', 'carabao_cup.png'),
-    ('FA', 'FA Cup', 'fa_cup.png'),
-    ('EFL', 'EFL Cup', 'efl_cup.png'),
-    ('CS', 'Community Shield', 'community_shield.png'),
-    ('UEL', 'UEFA Europa League', 'uel.png'),
-    ('UCL', 'UEFA Champions League', 'ucl.png'),
-]
+CUP_CHOICES_DICT = {
+    'EPL': ('Premier League', 'premier_league.png'),
+    'FA': ('FA Cup', 'fa_cup.png'),
+    'EFL': ('EFL Cup', 'efl_cup.png'),
+    'CS': ('Community Shield', 'community_shield.png'),
+    'UEL': ('UEFA Europa League', 'uel.png'),
+    'UCL': ('UEFA Champions League', 'ucl.png'),
+}
+
+CUP_CHOICES = [(k, v[0]) for k, v in CUP_CHOICES_DICT.items()]

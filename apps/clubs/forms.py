@@ -1,6 +1,6 @@
 from django import forms
-from django.forms import ModelForm
-from .models import Club
+from django.forms import ModelForm, formset_factory
+from .models import Club, Achievement
 
 class ClubSearchForm(forms.Form):
     club_name = forms.CharField(label='Club name', max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Search', 'name': 'club_name'}))
@@ -21,3 +21,17 @@ class ClubForm(ModelForm):
         attrs = attrs or {}
         attrs['class'] = 'form-label'
         return super().label_tag(label, attrs, label_suffix)
+    
+class AchievementForm(ModelForm):
+    class Meta:
+        model = Achievement
+        fields = ['cup', 'year']
+     
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+            
+AchievementFormSet = formset_factory(AchievementForm, extra=1)
+
+    

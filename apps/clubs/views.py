@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
-from django.contrib.auth import logout
-from .forms import ClubForm, ClubSearchForm
-from .models import Club 
+from .forms import ClubForm, ClubSearchForm, AchievementFormSet
+from .models import Club, Achievement
 from apps.managers.models import Manager
 from apps.more.models import Regulation
 import re
@@ -28,24 +27,31 @@ def index(request):
 def add(request):
     submitted = False
     if request.method == "POST":
-        form = ClubForm(request.POST, request.FILES)
-        if form.is_valid():
-            club = form.save()
+        club_form = ClubForm(request.POST, request.FILES)
+        achievement_formset = AchievementFormSet(request.POST, prefix='achievements')
+        if club_form.is_valid() and achievement_formset.is_valid():
+            club = club_form.save()
             if 'logo' in request.FILES:
                 if club.logo:
                     club.logo.delete(save=False)
                 club.logo = request.FILES['logo']
                 club.logo.name = f'club_{club.id}.png'
                 club.save()
+            for achievement_form in achievement_formset:
+                achievement = achievement_form.save(commit=False)
+                achievement.club = club
+                achievement.save()
             return HttpResponseRedirect('/clubs/add?submitted=True')
     else:
-        form = ClubForm()
+        club_form = ClubForm()
+        achievement_formset = AchievementFormSet(prefix='achievements')
         if 'submitted' in request.GET:
             submitted = True
     user = request.user
     clubs = Club.objects.all()
     context = {
-        'form': form,
+        'achievement_formset': achievement_formset,
+        'club_form': club_form,
         'submitted': submitted,
         'clubs': clubs,
         'user': user,
