@@ -1,56 +1,119 @@
 {% extends "clubs/base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
+
 {% block title %}Clubs{% endblock %}
 
 {% block content %}
 <div class="content">
     {% if submitted %}
         <div class="alert alert-success">Club was created successfully!</div>
-    {% else %}
     {% endif %}
-    <form action="" method="POST" enctype="multipart/form-data" class="row g-3">
-        {% csrf_token %}
-        {% for field in club_form %}
-            <div class='col-md-6' style='font-size: 20px; padding: 10px'>
-                <strong> {{ field.label }}: </strong> {{ field }}
-            </div>
-        {% endfor %}
-        <div id='formset-container'>
-            {{ achievement_formset.management_form }}
-            {% for form in achievement_formset %}
-                <div class='col-md-6 formset-form' style='font-size: 20px; padding: 10px {% if forloop.last %} hidden{% endif %}'>
-                    {{ form.as_p }}
-                    <button type="button" class="delete-button">Delete</button>
+    <div class="col-lg-6">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset>
+                <legend> <strong> Club Information </strong> </legend>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        {{ club_form.name|as_crispy_field }}
+                    </div>
                 </div>
-            {% endfor %}
-        </div>
-        <button type="button" id="add-form-button">+</button>
-        <div class="col-12 d-flex flex-column align-items-center">
-            <button type="submit" class="btn btn-primary" style="font-size: 18px; width: 50%; margin: 10px">Save</button>
-            <a onclick="location.href='/clubs'" class="btn btn-secondary" style="color: white; font-size: 18px; width: 50%; margin: 10px; cursor: pointer;">Cancel</a>
-        </div>
-    </form>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        {{ club_form.logo|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-4">
+                        {{ club_form.established_year|as_crispy_field }}
+                    </div> 
+                    <div class="form-group col-md-4">
+                        {{ club_form.stadium|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        {{ club_form.sponsor|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6">
+                        {{ club_form.owner|as_crispy_field }}
+                    </div> 
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        {{ club_form.location|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6">
+                        {{ club_form.website|as_crispy_field }}
+                    </div> 
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend> <strong> Achievements </strong> </legend>
+                {{ achievement_formset.management_form|crispy }}
+                <div id='formset-container'>
+                    {% for form in achievement_formset %}
+                    <div class="form-row d-flex align-items-end {% if forloop.last %} hidden {% endif %}">
+                        <div class="col-6"> 
+                            {{ form.cup|as_crispy_field }}
+                        </div>
+                        <div class="col-5"> 
+                            {{ form.year|as_crispy_field }}
+                        </div>
+                        <div class="col">
+                            <button type="button" class="delete-button btn btn-danger mb-3">-</button>
+                        </div> 
+                    </div>
+                    {% endfor %}
+                </div>
+                <button type="button" id="add-form-button" class="btn btn-primary mb-3">+</button>
+            </fieldset>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary" style="font-size: 18px; width: 50%; margin: 10px"> Save </button>
+                <a onclick="location.href='/clubs'" class="btn btn-secondary" style="color: white; font-size: 18px; width: 50%; margin: 10px; cursor: pointer;">Cancel</a>
+            </div>
+        </form>
+    </div>
 </div>
-
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-$(document).ready(function() {
-    $('#add-form-button').click(function() {
-        var totalForms = parseInt($('#id_achievements-TOTAL_FORMS').val());
-        var newForm = $('#formset-container .formset-form:last').clone(true);
-        newForm.find('input, select, textarea').each(function() {
-            var name = $(this).attr('name').replace('-' + (totalForms-1) + '-', '-' + totalForms + '-');
-            var id = 'id_' + name;
-            $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+    $(document).ready(function() {
+        var templateForm = $('#formset-container .form-row:last').clone(true);
+    
+        $('#add-form-button').click(function() {
+            var totalForms = parseInt($('#id_achievements-TOTAL_FORMS').val());
+            var newForm = templateForm.clone(true);
+            newForm.find('input, select, textarea').each(function() {
+                var name = $(this).attr('name').replace('-0-', '-' + totalForms + '-');
+                var id = 'id_' + name;
+                $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+            });
+            newForm.insertBefore($('#add-form-button')).show();
+            $('#id_achievements-TOTAL_FORMS').val(totalForms + 1);
+            bindDeleteButton(newForm.find('.delete-button'));
         });
-        newForm.insertBefore($('#add-form-button')).show();
-        $('#id_achievements-TOTAL_FORMS').val(totalForms + 1);
+    
+        function bindDeleteButton(button) {
+            button.click(function() {
+                $(this).closest('.form-row').remove();
+                reindexForms();
+            });
+        }
+    
+        function reindexForms() {
+            $('#formset-container .form-row').each(function(index) {
+                $(this).find('input, select, textarea').each(function() {
+                    var name = $(this).attr('name').replace(/-\d+-/, '-' + index + '-');
+                    var id = 'id_' + name;
+                    $(this).attr({'name': name, 'id': id});
+                });
+            });
+            $('#id_achievements-TOTAL_FORMS').val($('#formset-container .form-row').length);
+        }
+    
+        // Bind the delete button for the original form
+        bindDeleteButton($('.delete-button'));
     });
-
-    $('.delete-button').click(function() {
-        $(this).parent().hide();
-    });
-});
+    
 </script>
 {% endblock %}

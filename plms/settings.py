@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'apps.clubs.apps.ClubsConfig',
     'apps.matches.apps.MatchesConfig',
     'apps.more.apps.MoreConfig',
+    'crispy_forms',
+    'crispy_bootstrap4',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +141,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
