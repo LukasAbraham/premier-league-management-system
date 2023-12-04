@@ -12,16 +12,16 @@
                     </div>
                     <div class="col-md-8">
                         <div class="card-block">
-                            <h6 class="card-title">{{player.name}}</h6>
+                            <h3 class="card-title">{{player.name}}</h3>
                             <p class="card-text text-justify">
-                            <p>DoB: {{player.dob}}</p>
-                            <p>Club: {{player.club.name}}</p>
-                            <p>Weight (kg): {{player.weight}}</p>
-                            <p>Height (cm): {{player.height}}</p>
-                            <p>Position: {{player.get_position_display}}</p>
-                            <p>Nationality: {{player.nationality}}</p>
-                            <p>Number of Goals: {{player.player_stats.goals}}</p>
-                            <p>Number of Assists: {{player.player_stats.assists}}</p>
+                            <p><b>Date of birth</b>: {{player.dob}} (age {{player.age}})</p>
+                            <p><b>Club</b>: {{player.club.name}}</p>
+                            <p><b>Weight (kg)</b>: {{player.weight}}</p>
+                            <p><b>Height (cm)</b>: {{player.height}}</p>
+                            <p><b>Position</b>: {{player.get_position_display}}</p>
+                            <p><b>Nationality</b>: {{player.nationality}}</p>
+                            <p><b>Number of Goals</b>: {{player.player_stats.goals}}</p>
+                            <p><b>Number of Assists</b>: {{player.player_stats.assists}}</p>
                             </p>
                             <a href="https://www.google.com/search?q={{player.name}}" class="btn btn-success">Read more...</a>
                         </div>

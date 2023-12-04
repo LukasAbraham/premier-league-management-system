@@ -1,19 +1,36 @@
 {% extends "matches/base.html" %}
 {% load static %}
-{% block title %}Matches{% endblock %}
+{% load crispy_forms_tags %}
+{% block title %}Match result{% endblock %}
 
 {% block content %}
-    <div class="content mt-5">
+    <div class="content">
         {% if submitted %}
-            <div class="alert alert-success">Match was created successfully!</div>
+            <div class="alert alert-success">Result was added successfully!</div>
         {% endif %}
-        <form action="" method="post">
-            {% csrf_token %}
-
-            {{ form.as_p }}
-
-            <input type="submit" value="Save" class="btn btn-primary">
-            <button onclick="location.href='/matches'" class="btn btn-secondary">Back</button>
-        </form>
+        <div class="col-lg-6">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset>
+                    <legend> <strong> Match Result </strong> </legend>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            {{ form.club1_goals|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-6">
+                            {{ form.club2_goals|as_crispy_field }}
+                        </div> 
+                    </div>
+                </fieldset>
+                <div class="row">
+                    <div class="col-lg-6 p-2">
+                        <button class="btn btn-primary w-100"> Save </button>
+                    </div>
+                    <div class="col-lg-6 p-2">
+                        <a onclick="location.href='/matches'" class="btn btn-secondary w-100" style="color: white; cursor: pointer">Cancel</a>
+                    </div>
+                </div>             
+            </form>
+        </div>
     </div>
 {% endblock %}

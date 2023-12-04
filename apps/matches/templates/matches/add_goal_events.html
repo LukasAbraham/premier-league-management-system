@@ -1,18 +1,53 @@
 {% extends "matches/base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
+
 {% block title %}Matches{% endblock %}
 
 {% block content %}
     <div class="content">
-        <form method="POST" action="">
-            {% csrf_token %}
-            {{ formset.management_form }}
-            {% for form in formset %}
-                <div class="match_form">
-                    {{ form.as_table }}
-                </div>
-            {% endfor %}
-            <button type="submit" class="btn btn-primary text-center">Save</button>
-        </form>
+        {% if submitted %}
+            <div class="alert alert-success">Match was created successfully!</div>
+        {% endif %}
+        <div class="col-lg-6">
+            <form method="POST">
+                {% csrf_token %}
+                {{ formset.management_form }}
+                {% for form in formset %}
+                <fieldset>
+                    <legend> <strong> Goal {{ forloop.counter }}: </strong> </legend>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            {{ form.scoring_player|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            {{ form.assisting_player|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            {{ form.type|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-md-4">
+                            {{ form.time|as_crispy_field }}
+                        </div> 
+                        <div class="form-group col-md-4">
+                            {{ form.club|as_crispy_field }}
+                        </div>
+                    </div>
+                </fieldset>
+                {% endfor %}
+                <div class="row">
+                    <div class="col-lg-6 p-2">
+                        <button class="btn btn-primary w-100"> Save </button>
+                    </div>
+                    <div class="col-lg-6 p-2">
+                        <a onclick="location.href='/matches'" class="btn btn-secondary w-100" style="color: white; cursor: pointer">Cancel</a>
+                    </div>
+                </div>             
+            </form>
+        </div>
     </div>
 {% endblock %}

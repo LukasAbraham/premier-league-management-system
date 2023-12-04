@@ -1,19 +1,61 @@
 {% extends "players/base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
+
 {% block title %}Players{% endblock %}
 
 {% block content %}
-    <div class="content">
-        {% if submitted %}
-            <div class="alert alert-success">Player was created successfully!</div>
-        {% endif %}
-        <form action="" method="POST" enctype="multipart/form-data">
+<div class="content">
+    {% if submitted %}
+        <div class="alert alert-success">Player was added successfully!</div>
+    {% endif %}
+    <div class="col-lg-6">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-
-            {{ form.as_p }}
-
-            <input type="submit" value="Save" class="btn btn-primary">
-            <button onclick="location.href='/players'" class="btn btn-secondary">Back</button>
+            <fieldset>
+                <legend> <strong> Player Information </strong> </legend>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        {{ form.name|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        {{ form.dob|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-4">
+                        {{ form.weight|as_crispy_field }}
+                    </div> 
+                    <div class="form-group col-md-4">
+                        {{ form.height|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        {{ form.image|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6">
+                        {{ form.club|as_crispy_field }}
+                    </div> 
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        {{ form.nationality|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6">
+                        {{ form.position|as_crispy_field }}
+                    </div> 
+                </div>
+            </fieldset>
+            <div class="row">
+                <div class="col-lg-6 p-2">
+                    <button class="btn btn-primary w-100"> Save </button>
+                </div>
+                <div class="col-lg-6 p-2">
+                    <a onclick="location.href='/players'" class="btn btn-secondary w-100" style="color: white; cursor: pointer">Cancel</a>
+                </div>
+            </div>             
         </form>
     </div>
+</div>
 {% endblock %}
