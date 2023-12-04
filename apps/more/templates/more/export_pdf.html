@@ -53,7 +53,7 @@
                 <tr>
                     <th>Rank</th>
                     <th>Name</th>
-                    <th>club</th>
+                    <th>Club</th>
                     <th>Position</th>
                     <th>Appearances</th>
                     <th>Goals</th>
@@ -80,14 +80,14 @@
             <tr>
                 <th>Rank</th>
                 <th>Name</th>
-                <th>club</th>
+                <th>Club</th>
                 <th>Position</th>
                 <th>Appearances</th>
                 <th>Assists</th>
             </tr>
         </thead>
         <tbody>
-            {% for player_stat in top_playmakers %}
+            {% for player_stat in top_play_makers %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
                     <td>{{ player_stat.player.name }}</td>
@@ -104,12 +104,12 @@
     <br>
     <table class="table">
         {% for match in matches %}
-            {% if match.status == 'Previous' %}
+            {% if match.status == 'P' %}
                 <thead>
                     <tr class="text-center" style="font-size: 19px">
-                        <th>club 1</th>
+                        <th>Club 1</th>
                         <th>Result</th>
-                        <th>club 2</th>
+                        <th>Club 2</th>
                         <th>Round</th>
                         <th>Stadium</th>
                         <th colspan="2">Time</th>
@@ -130,7 +130,7 @@
                     <tr>
                         <th colspan="2">Scored by</th>
                         <th colspan="2">Assisted by</th>
-                        <th>club</th>
+                        <th>Club</th>
                         <th>Goal Type</th>
                         <th>Time</th>
                     </tr>
@@ -138,10 +138,10 @@
                         {% if id == match.id %}
                             {% for goal_event in goal_events %}
                                 <tr>
-                                    <td colspan="2">{{goal_event.player.name}}</td>
-                                    <td colspan="2">{{goal_event.assist_player.name}}</td>
-                                    <td>{{goal_event.player.club}}</td>
-                                    <td>{{goal_event.type}}</td>
+                                    <td colspan="2">{{goal_event.scoring_player.name}}</td>
+                                    <td colspan="2">{{goal_event.assisting_player.name}}</td>
+                                    <td>{{goal_event.club}}</td>
+                                    <td>{{goal_event.get_type_display}}</td>
                                     <td>{{goal_event.time}}</td>
                                 </tr>
                             {% endfor %}

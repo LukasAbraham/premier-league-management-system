@@ -81,12 +81,10 @@ def report(request):
     goal_events = {}
     for match in matches:
         try:
-            result = Result.objects.get(id=match.id)
-            ge = GoalEvent.objects.filter(result=result)
+            ge = GoalEvent.objects.filter(match=match)
         except ObjectDoesNotExist:
-            result = None
             ge = None
-        goal_events[match.id]=ge
+        goal_events[match.id] = ge
     club_stats = ClubStats.objects.all()
     standings = sorted(club_stats, key=lambda club_stat: (club_stat.points, club_stat.goal_difference), reverse=True)
     player_stats = PlayerStats.objects.all()
@@ -108,15 +106,13 @@ def report(request):
 def export_to_pdf(request):
     buffer = BytesIO()
 
-    template = get_template('more/report.html')
+    template = get_template('more/export_pdf.html')
     matches = Match.objects.all()
     goal_events = {}
     for match in matches:
         try:
-            result = Result.objects.get(id=match.id)
-            ge = GoalEvent.objects.filter(result=result)
+            ge = GoalEvent.objects.filter(match=match)
         except ObjectDoesNotExist:
-            result = None
             ge = None
         goal_events[match.id]=ge
     club_stats = ClubStats.objects.all()

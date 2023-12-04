@@ -89,7 +89,7 @@
                         <tr>
                             <th>Rank</th>
                             <th>Name</th>
-                            <th>club</th>
+                            <th>Club</th>
                             <th>Appearances</th>
                             <th>Position</th>
                             <th>Goals</th>
@@ -125,14 +125,14 @@
                         <tr>
                             <th>Rank</th>
                             <th>Name</th>
-                            <th>club</th>
+                            <th>Club</th>
                             <th>Appearances</th>
                             <th>Position</th>
                             <th>Assists</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for player_stat in top_playmakers %}
+                        {% for player_stat in top_play_makers %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ player_stat.player.name }}</td>

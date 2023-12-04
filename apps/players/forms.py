@@ -14,7 +14,7 @@ class PlayerForm(ModelForm):
         exclude = ['type']
     
     dob = forms.DateField(widget=widgets.DateInput(attrs={'type': 'date'}), initial=date.today())
-    image = forms.ImageField(required=True)
+    # image = forms.ImageField(required=True)
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['height'].label += ' (cm)'

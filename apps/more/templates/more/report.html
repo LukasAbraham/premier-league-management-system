@@ -17,7 +17,7 @@
             <thead>
                 <tr>
                     <th>Rank</th>
-                    <th>Name</th>
+                    <th>Club</th>
                     <th>Matches</th>
                     <th>Wins</th>
                     <th>Draws</th>
@@ -32,7 +32,7 @@
                 {% for club_stat in standings %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td>{{ club_stat.club.club_name }}</td>
+                        <td>{{ club_stat.club.name }}</td>
                         <td>{{ club_stat.wins|add:club_stat.draws|add:club_stat.losses }}</td>
                         <td>{{ club_stat.wins }}</td>
                         <td>{{ club_stat.draws }}</td>
@@ -53,7 +53,7 @@
                 <tr>
                     <th>Rank</th>
                     <th>Name</th>
-                    <th>club</th>
+                    <th>Club</th>
                     <th>Position</th>
                     <th>Appearances</th>
                     <th>Goals</th>
@@ -87,7 +87,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for player_stat in top_playmakers %}
+                {% for player_stat in top_play_makers %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td>{{ player_stat.player.name }}</td>
@@ -104,12 +104,12 @@
         <br>
         <table class="table">
             {% for match in matches %}
-                {% if match.status == 'Previous' %}
+                {% if match.status == 'P' %}
                     <thead>
                         <tr class="text-center" style="font-size: 19px">
-                            <th>club 1</th>
+                            <th>Club 1</th>
                             <th>Result</th>
-                            <th>club 2</th>
+                            <th>Club 2</th>
                             <th>Round</th>
                             <th>Stadium</th>
                             <th colspan="2">Time</th>
@@ -125,23 +125,23 @@
                             <td colspan="2"><b>{{match.time}}</b></td>
                         </tr>
                         <tr>
-                            <td colspan="7" class="text-center"><b>Goal Events</b></td>
+                            <td colspan="7" class="text-center"><b>Goal events</b></td>
                         </tr>
                         <tr>
-                            <th colspan="2">Scorer</th>
-                            <th colspan="2">Assist</th>
-                            <th>club</th>
-                            <th>Goal Type</th>
+                            <th colspan="2">Scored by</th>
+                            <th colspan="2">Assisted by</th>
+                            <th>Club</th>
+                            <th>Goal type</th>
                             <th>Time</th>
                         </tr>
                         {% for id, goal_events in goal_events.items %}
                             {% if id == match.id %}
                                 {% for goal_event in goal_events %}
                                     <tr>
-                                        <td colspan="2">{{goal_event.player.name}}</td>
-                                        <td colspan="2">{{goal_event.assist_player.name}}</td>
-                                        <td>{{goal_event.player.club}}</td>
-                                        <td>{{goal_event.type}}</td>
+                                        <td colspan="2">{{goal_event.scoring_player.name}}</td>
+                                        <td colspan="2">{{goal_event.assisting_player.name}}</td>
+                                        <td>{{goal_event.club}}</td>
+                                        <td>{{goal_event.get_type_display}}</td>
                                         <td>{{goal_event.time}}</td>
                                     </tr>
                                 {% endfor %}
