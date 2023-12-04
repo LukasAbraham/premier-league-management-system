@@ -1,6 +1,7 @@
 from django.db import models
 from apps.clubs.models import Club
 from .choices import NATIONALITY_CHOICES, POSITION_CHOICES, TYPE_CHOICES
+from datetime import date
 
 class Player(models.Model):
     name = models.CharField(max_length=255)
@@ -21,6 +22,11 @@ class Player(models.Model):
         super().save(*args, **kwargs)
         if is_new:
             PlayerStats.objects.create(player=self)
+    
+    @property
+    def age(self):
+        today = date.today()
+        return today.year - self.dob.year - ((self.dob.month, self.dob.day) > (today.month, today.day)) 
     
 class PlayerStats(models.Model):
     player = models.OneToOneField(Player, on_delete=models.CASCADE, related_name='player_stats')

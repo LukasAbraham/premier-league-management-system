@@ -1,5 +1,6 @@
 from django.db import models
 from apps.players.choices import NATIONALITY_CHOICES
+from datetime import date
 
 class Manager(models.Model):
     name = models.CharField(max_length=255)
@@ -11,3 +12,7 @@ class Manager(models.Model):
     def __str__(self):
         return self.name
     
+    @property
+    def age(self):
+        today = date.today()
+        return today.year - self.dob.year - ((self.dob.month, self.dob.day) > (today.month, today.day))
