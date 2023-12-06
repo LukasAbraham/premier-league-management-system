@@ -48,7 +48,7 @@
                             <td>{{goal_event.scoring_player}}</td>
                             <td>{{goal_event.assisting_player}}</td>
                             <td>{{goal_event.scoring_player.club}}</td>
-                            <td>{{goal_event.type}}</td>
+                            <td>{{goal_event.get_type_display}}</td>
                             <td colspan="2">{{goal_event.time}}</td>
                         </tr>
                     {% endfor %}
