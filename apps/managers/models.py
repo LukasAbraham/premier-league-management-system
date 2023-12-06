@@ -16,3 +16,7 @@ class Manager(models.Model):
     def age(self):
         today = date.today()
         return today.year - self.dob.year - ((self.dob.month, self.dob.day) > (today.month, today.day))
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        self.club.update_status()
