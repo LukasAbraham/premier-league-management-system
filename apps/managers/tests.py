@@ -3,15 +3,13 @@ import shutil
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import Client, RequestFactory, TestCase, override_settings
+from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 from apps.auth.models import UserProfile
 
 from apps.clubs.models import Club
 from .models import Manager
-from .views import index
 
 class ManagerModelTest(TestCase):
     def setUp(self):
@@ -139,7 +137,7 @@ class ManagerViewsTest(TestCase):
 
             response = self.client.post(url, data, follow=True)
             print(response.context['form'].errors)
-            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.status_code, 302) # Expect redirection
             self.assertTemplateUsed(response, 'managers/add.html')
             self.assertTrue(Manager.objects.filter(name='New Manager').exists())
 
