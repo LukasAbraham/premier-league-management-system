@@ -3,7 +3,7 @@ from django.urls import reverse
 from .models import Match, Result, GoalEvent
 from apps.players.models import Player
 from apps.clubs.models import Club 
-from .forms import MatchForm, ResultForm, GoalEventForm
+from .forms import MatchForm, ResultForm, GoalEventForm, BaseGoalEventFormSet
 from django.utils import timezone
 from django.forms import formset_factory
 from django.core.exceptions import ObjectDoesNotExist
@@ -47,14 +47,14 @@ def add(request):
 def add_result(request, match_id):
     match = Match.objects.get(id=match_id)
     if request.method == 'POST':
-        form = ResultForm(request.POST)
+        form = ResultForm(request.POST, match=match)
         if form.is_valid():
             result = form.save(commit=False)
             result.match = match
             result.save()
             return redirect(reverse('matches:add_goal_events', args=[match.id]))
     else:
-        form = ResultForm()
+        form = ResultForm(match=match)
         
     user = request.user
     clubs = Club.objects.all()
@@ -70,9 +70,9 @@ def add_goal_events(request, match_id):
     match = get_object_or_404(Match, pk=match_id)
     result = get_object_or_404(Result, match=match)
     total_goals = result.club1_goals + result.club2_goals
-    GoalEventFormSet = formset_factory(GoalEventForm, extra=total_goals)
+    GoalEventFormSet = formset_factory(GoalEventForm, extra=total_goals, formset=BaseGoalEventFormSet)
     if request.method == 'POST':
-        formset = GoalEventFormSet(request.POST)
+        formset = GoalEventFormSet(request.POST, form_kwargs={'match': match})
         if formset.is_valid():
             for form in formset:
                 goal_event = form.save(commit=False)
@@ -80,7 +80,7 @@ def add_goal_events(request, match_id):
                 goal_event.save()
             return redirect(reverse('matches:index'))
     else:
-        formset = GoalEventFormSet()
+        formset = GoalEventFormSet(form_kwargs={'match': match})
         # Filter players from the clubs participating in the match
         club1_players = Player.objects.filter(club=match.club1)
         club2_players = Player.objects.filter(club=match.club2)

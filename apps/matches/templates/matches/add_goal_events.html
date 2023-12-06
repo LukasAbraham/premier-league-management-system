@@ -12,6 +12,16 @@
         <div class="col-lg-6">
             <form method="POST">
                 {% csrf_token %}
+                {% if formset.non_form_errors %}
+                    <div class="alert alert-danger">
+                        {{ formset.non_form_errors }}
+                    </div>
+                {% endif %}
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
                 {{ formset.management_form }}
                 {% for form in formset %}
                 <fieldset>
