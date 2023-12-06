@@ -28,6 +28,13 @@ class Match(models.Model):
             
         self.stadium = self.club1.stadium
         super().save(*args, **kwargs)
+        
+    def delete(self, *args, **kwargs):
+        if self.result:
+            self.result.delete()
+        for goal_event in self.goal_event.all():
+            goal_event.delete()
+        super().delete(*args, **kwargs)
     
 class Result(models.Model):
     club1_goals = models.PositiveIntegerField()
@@ -39,19 +46,19 @@ class Result(models.Model):
     
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        club1 = self.match.club1.club_stats
-        club2 = self.match.club2.club_stats
+        club1_stats = self.match.club1.club_stats
+        club2_stats = self.match.club2.club_stats
         if self.club1_goals > self.club2_goals:
-            club1.wins += 1
-            club2.losses += 1
+            club1_stats.wins += 1
+            club2_stats.losses += 1
         elif self.club1_goals < self.club2_goals:
-            club1.losses += 1
-            club2.wins += 1
+            club1_stats.losses += 1
+            club2_stats.wins += 1
         else:
-            club1.draws += 1
-            club2.draws += 1
-        club1.save()
-        club2.save()
+            club1_stats.draws += 1
+            club2_stats.draws += 1
+        club1_stats.save()
+        club2_stats.save()
 
     def update(self, old_result):
         # Get the ClubStats instances for the clubs
@@ -85,19 +92,19 @@ class Result(models.Model):
         club2_stats.save()
 
     def delete(self, *args, **kwargs):
-        club1 = self.match.club1.club_stats
-        club2 = self.match.club2.club_stats
+        club1_stats = self.match.club1.club_stats
+        club2_stats = self.match.club2.club_stats
         if self.club1_goals > self.club2_goals:
-            club1.wins -= 1
-            club2.losses -= 1
+            club1_stats.wins -= 1
+            club2_stats.losses -= 1
         elif self.club1_goals < self.club2_goals:
-            club1.losses -= 1
-            club2.wins -= 1
+            club1_stats.losses -= 1
+            club2_stats.wins -= 1
         else:
-            club1.draws -= 1
-            club2.draws -= 1
-        club1.save()
-        club2.save()
+            club1_stats.draws -= 1
+            club2_stats.draws -= 1
+        club1_stats.save()
+        club2_stats.save()
         super().delete(*args, **kwargs)
 
 class GoalEvent(models.Model):
@@ -107,7 +114,7 @@ class GoalEvent(models.Model):
         ('OG', 'Own goal'),
     ]
     
-    match = models.ForeignKey(Match, on_delete=models.CASCADE, null=True)
+    match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name="goal_event", null=True)
     scoring_player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='scoring_event')
     assisting_player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='assisting_event', null=True, blank=True)
     club = models.ForeignKey(Club, on_delete=models.CASCADE)

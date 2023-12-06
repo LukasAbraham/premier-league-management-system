@@ -74,9 +74,9 @@ def edit(request, club_id):
     club = Club.objects.get(pk=club_id)
     
     if request.method == "POST":
-        form = ClubForm(request.POST, request.FILES, instance=club)
-        if form.is_valid():
-            club = form.save()
+        club_form = ClubForm(request.POST, request.FILES, instance=club)
+        if club_form.is_valid():
+            club = club_form.save()
             if 'logo' in request.FILES:
                 if club.logo:
                     club.logo.delete(save=False)
@@ -85,11 +85,11 @@ def edit(request, club_id):
                 club.save()
             return redirect('/clubs')
     else:
-        form = ClubForm(instance=club)
+        club_form = ClubForm(instance=club)
     user = request.user
     clubs = Club.objects.all()
     context = {
-        'form': form,
+        'club_form': club_form,
         'clubs': clubs,
         'user': user,
     }
