@@ -24,7 +24,12 @@ class Club(models.Model):
         if is_new:
             ClubStats.objects.create(club=self)
     
-    def update_status(self, max_foreign_players, min_players, max_players):
+    def update_status(self):
+        regulation = Regulation.objects.get(pk=1)
+        max_foreign_players = regulation.max_foreign_players
+        max_players = regulation.max_players
+        min_players = regulation.min_players        
+        
         foreign_players = self.player_set.filter(nationality='England').count()
         total_players = self.player_set.count()
         try: 
@@ -36,6 +41,8 @@ class Club(models.Model):
             self.status = 'V'
         else:
             self.status = 'I'
+            
+        self.save()
         
     
 class ClubStats(models.Model):

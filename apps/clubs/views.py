@@ -7,10 +7,9 @@ from apps.more.models import Regulation
 import re
 
 def update_clubs_status():
-    regulation = Regulation.objects.get(pk=1)
     clubs = Club.objects.all()
     for club in clubs:
-        club.update_status(max_foreign_players=regulation.max_foreign_players, max_players=regulation.max_players, min_players=regulation.min_players)
+        club.update_status()
         
 def index(request):
     form = ClubSearchForm(request.GET)

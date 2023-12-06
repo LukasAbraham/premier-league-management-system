@@ -20,6 +20,7 @@ class Player(models.Model):
     def save(self, *args, **kwargs):
         is_new = self.pk is None
         super().save(*args, **kwargs)
+        self.club.update_status()
         if is_new:
             PlayerStats.objects.create(player=self)
     
