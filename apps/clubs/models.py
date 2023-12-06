@@ -30,7 +30,7 @@ class Club(models.Model):
         max_players = regulation.max_players
         min_players = regulation.min_players        
         
-        foreign_players = self.player_set.filter(nationality='England').count()
+        foreign_players = self.player_set.filter(nationality='English').count()
         total_players = self.player_set.count()
         try: 
             manager = Manager.objects.get(club=self)
