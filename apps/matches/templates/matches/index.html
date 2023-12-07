@@ -1,5 +1,9 @@
-{% extends "matches/base.html" %}
+{% extends "base.html" %}
 {% load static %}
+
+{% block additional_styles %}
+    <link rel="stylesheet" href="{% static 'css/matches.css' %}">
+{% endblock %}
 {% block title %}Matches{% endblock %}
 
 {% block content %}
@@ -46,7 +50,7 @@
                     <div class="match col-6">
                         <div class="match-header">
                             <div class = "match-status">{{ match.get_status_display }}</div>
-                            <div class="match-tournament"><img src={%static "imgs/Premiere-League.png"%} style="height: 30px; width: auto;"/>English Premier League</div>
+                            <div class="match-tournament"><img src={%static "imgs/epl.png"%} style="height: 30px; width: auto;"/>English Premier League</div>
                         </div>
                         <div class="match-content">
                             <div class="column">

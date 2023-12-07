@@ -1,5 +1,9 @@
-{% extends "clubs/base.html" %}
+{% extends "base.html" %}
 {% load static %}
+
+{% block additional_styles %}
+    <link rel="stylesheet" href="{% static 'css/clubs.css' %}">
+{% endblock %}
 {% block title %}Clubs{% endblock %}
 
 {% block content %}
@@ -107,17 +111,19 @@
         <button onclick="location.href='{% url 'clubs:delete' club_id=club.id %}'" class="btn btn-primary">Remove</button>
         <button onclick="location.href='/clubs'"class="btn btn-secondary">Back</button>
     </div>
+{% endblock %}
 
-    <script>
-        function deletePlayerConfirmation(playerId) {
-            if (confirm("Do you confirm to remove this player?")) {
-                location.href = "/players/delete/" + playerId + "/";
-            }
+{% block additional_scripts %}
+<script>
+    function deletePlayerConfirmation(playerId) {
+        if (confirm("Do you confirm to remove this player?")) {
+            location.href = "/players/delete/" + playerId + "/";
         }
-        function deleteManagerConfirmation(managerId) {
-            if (confirm("Do you confirm to remove this manager?")) {
-                location.href = "/managers/delete/" + managerId + "/";
-            }
+    }
+    function deleteManagerConfirmation(managerId) {
+        if (confirm("Do you confirm to remove this manager?")) {
+            location.href = "/managers/delete/" + managerId + "/";
         }
-    </script>
+    }
+</script>
 {% endblock %}

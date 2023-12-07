@@ -1,5 +1,9 @@
-{% extends "more/base.html" %}
+{% extends "base.html" %}
 {% load static %}
+
+{% block additional_styles %}
+    <link rel="stylesheet" href="{% static 'css/more.css' %}">
+{% endblock %}
 {% block title %}Stats and Records{% endblock %}
 
 {% block content %}
