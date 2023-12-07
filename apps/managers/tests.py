@@ -100,7 +100,7 @@ class ManagerViewsTest(TestCase):
                                                    club=self.club1,
                                                    image=image)
             self.manager2 = Manager.objects.create(name='Test Manager 2',
-                                                   nationality='Spain',
+                                                   nationality='Spanish',
                                                    dob='1980-02-02',
                                                    club=self.club2,
                                                    image=image)
@@ -210,7 +210,7 @@ class ManagerFormsTests(TestCase):
     def test_valid_data(self):
         form = ManagerForm(data={
             'name': 'Test Manager',
-            'nationality': 'England',
+            'nationality': 'English',
             'dob': '1970-10-10',
             'club': self.club.id,
         })
@@ -223,7 +223,7 @@ class ManagerFormsTests(TestCase):
         # Special characters
         form = ManagerForm(data={
             'name': '123&*!*@#[]',
-            'nationality': 'England',
+            'nationality': 'English',
             'dob': '1970-10-10',
             'club': self.club.id,
         })
@@ -233,7 +233,7 @@ class ManagerFormsTests(TestCase):
         # Empty
         form = ManagerForm(data={
             'name': '',
-            'nationality': 'England',
+            'nationality': 'English',
             'dob': '1970-10-10',
             'club': self.club.id,
         })
@@ -243,7 +243,7 @@ class ManagerFormsTests(TestCase):
         # Valid boundary
         form = ManagerForm(data={
             'name': generate_random_string(255),
-            'nationality': 'England',
+            'nationality': 'English',
             'dob': '1970-10-10',
             'club': self.club.id,
         })
@@ -253,7 +253,7 @@ class ManagerFormsTests(TestCase):
         # Invalid boundary
         form = ManagerForm(data={
             'name': generate_random_string(256),
-            'nationality': 'England',
+            'nationality': 'English',
             'dob': '1970-10-10',
             'club': self.club.id,
         })
@@ -277,7 +277,7 @@ class ManagerFormsTests(TestCase):
     def test_dob_empty(self):
         form = ManagerForm(data={
             'name': 'Test Manager',
-            'nationality': 'England',
+            'nationality': 'English',
             'dob': '',
             'club': self.club.id,
         })
@@ -286,7 +286,7 @@ class ManagerFormsTests(TestCase):
     def test_dob_invalid(self):
         form = ManagerForm(data={
             'name': 'Test Manager',
-            'nationality': 'England',
+            'nationality': 'English',
             'dob': '1999-02-29',
             'club': self.club.id,
         })
@@ -298,7 +298,7 @@ class ManagerFormsTests(TestCase):
     def test_club_empty(self):
         form = ManagerForm(data={
             'name': 'Test Manager',
-            'nationality': 'England',
+            'nationality': 'English',
             'dob': '1970-10-10',
             'club': '',
         })
