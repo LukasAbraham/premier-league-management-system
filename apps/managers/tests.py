@@ -1,15 +1,21 @@
 import os
 import shutil
+import random
+import string
+from datetime import date
 
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.forms import widgets
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 from apps.auth.models import UserProfile
 
 from apps.clubs.models import Club
+from apps.more.models import Regulation
 from .models import Manager
+from .forms import ManagerForm, ManagerSearchForm
 
 class ManagerModelTest(TestCase):
     def setUp(self):
@@ -186,3 +192,114 @@ class ManagerViewsTest(TestCase):
         self.assertTemplateUsed(response, 'managers/search.html')
         self.assertIn(self.manager1, response.context['found_managers'])
         self.assertNotIn(self.manager2, response.context['found_managers'])
+
+def generate_random_string(length):
+    letters = string.ascii_letters
+    return ''.join(random.choice(letters) for _ in range(length))
+
+class ManagerFormsTests(TestCase):
+    def setUp(self):
+        Regulation.objects.get_or_create(pk=1)
+        self.club = Club.objects.create(name='Test Club')
+
+    def test_init(self):
+        form = ManagerForm()
+        self.assertEqual(form.fields['dob'].initial, date.today())
+        self.assertIsInstance(form.fields['dob'].widget, widgets.DateInput)
+
+    def test_valid_data(self):
+        form = ManagerForm(data={
+            'name': 'Test Manager',
+            'nationality': 'England',
+            'dob': '1970-10-10',
+            'club': self.club.id,
+        })
+        self.assertTrue(form.is_valid())
+
+    """
+    Test manager name field
+    """
+    def test_name_with_special_characters(self):
+        # Special characters
+        form = ManagerForm(data={
+            'name': '123&*!*@#[]',
+            'nationality': 'England',
+            'dob': '1970-10-10',
+            'club': self.club.id,
+        })
+        self.assertFalse(form.is_valid())
+
+    def test_name_empty(self):
+        # Empty
+        form = ManagerForm(data={
+            'name': '',
+            'nationality': 'England',
+            'dob': '1970-10-10',
+            'club': self.club.id,
+        })
+        self.assertFalse(form.is_valid())
+
+    def test_name_valid_boundary(self):
+        # Valid boundary
+        form = ManagerForm(data={
+            'name': generate_random_string(255),
+            'nationality': 'England',
+            'dob': '1970-10-10',
+            'club': self.club.id,
+        })
+        self.assertTrue(form.is_valid())
+
+    def test_name_invalid_boundary(self):
+        # Invalid boundary
+        form = ManagerForm(data={
+            'name': generate_random_string(256),
+            'nationality': 'England',
+            'dob': '1970-10-10',
+            'club': self.club.id,
+        })
+        self.assertFalse(form.is_valid())
+
+    """
+    Test nationality field
+    """
+    def test_nationality_empty(self):
+        form = ManagerForm(data={
+            'name': 'Test Manager',
+            'nationality': '',
+            'dob': '1970-10-10',
+            'club': self.club.id,
+        })
+        self.assertFalse(form.is_valid())
+
+    """
+    Test dob field
+    """
+    def test_dob_empty(self):
+        form = ManagerForm(data={
+            'name': 'Test Manager',
+            'nationality': 'England',
+            'dob': '',
+            'club': self.club.id,
+        })
+        self.assertFalse(form.is_valid())
+
+    def test_dob_invalid(self):
+        form = ManagerForm(data={
+            'name': 'Test Manager',
+            'nationality': 'England',
+            'dob': '1999-02-29',
+            'club': self.club.id,
+        })
+        self.assertFalse(form.is_valid())
+
+    """
+    Test club field
+    """
+    def test_club_empty(self):
+        form = ManagerForm(data={
+            'name': 'Test Manager',
+            'nationality': 'England',
+            'dob': '1970-10-10',
+            'club': '',
+        })
+        self.assertFalse(form.is_valid())
