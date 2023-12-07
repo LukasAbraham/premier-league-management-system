@@ -30,7 +30,7 @@ class Club(models.Model):
         max_players = regulation.max_players
         min_players = regulation.min_players        
         
-        foreign_players = self.player_set.filter(nationality='England').count()
+        foreign_players = self.player_set.filter(nationality='English').count()
         total_players = self.player_set.count()
         try: 
             manager = Manager.objects.get(club=self)
@@ -69,7 +69,7 @@ class Achievement(models.Model):
     image = models.CharField(max_length=255, blank=True)
     
     def __str__(self):
-        return f'{self.club.name} won {self.cup} in {self.year} {self.times_won} times'
+        return f'{self.club.name} won {self.cup} in {self.year}'
 
     def save(self, *args, **kwargs):
         self.image = CUP_CHOICES_DICT[self.cup][1]

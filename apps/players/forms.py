@@ -30,7 +30,7 @@ class PlayerForm(ModelForm):
     def save(self, commit=True):
         player = super().save(commit=commit)
         if commit:
-            if player.nationality == 'England':
+            if player.nationality == 'English':
                 player.type = 'HG'
             else:
                 player.type = 'FR'

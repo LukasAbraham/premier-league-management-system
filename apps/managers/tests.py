@@ -95,15 +95,15 @@ class ManagerViewsTest(TestCase):
                                        image_file.read(),
                                        content_type='image/png')
             self.manager1 = Manager.objects.create(name='Test Manager 1',
-                                                  nationality='England',
-                                                  dob='1970-01-01',
-                                                  club=self.club1,
-                                                  image=image)
+                                                   nationality='English',
+                                                   dob='1970-01-01',
+                                                   club=self.club1,
+                                                   image=image)
             self.manager2 = Manager.objects.create(name='Test Manager 2',
-                                                  nationality='Spain',
-                                                  dob='1980-02-02',
-                                                  club=self.club2,
-                                                  image=image)
+                                                   nationality='Spain',
+                                                   dob='1980-02-02',
+                                                   club=self.club2,
+                                                   image=image)
 
         # Login with admin priviledges
         self.client.login(username='admin', password='admin123')
@@ -135,7 +135,7 @@ class ManagerViewsTest(TestCase):
 
             data = {
                 'name': 'New Manager',
-                'nationality': 'England',
+                'nationality': 'English',
                 'dob': '1978-10-10',
                 'club': self.club3.id,
                 'image': image
