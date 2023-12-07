@@ -1,10 +1,14 @@
-{% extends "home/base.html" %}
+{% extends "base.html" %}
 {% load static %}
+
+{% block additional_styles %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
 {% block title %}Home{% endblock %}
 
 {% block content %}
     <br><br>
-    <div class="container marketing">
+    <div class="container">
       <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
           <li data-target="#myCarousel" data-slide-to="0" class=""></li>
@@ -74,7 +78,7 @@
     </div>
     <br><br>
 
-    <div class="container marketing">
+    <div class="container">
       <h3 class='display-4' style="position: relative; top: 20px;"> Players  </h3>
       <br>
       <br>
@@ -103,7 +107,7 @@
                         <img class="card-img-top" src="{{club_stat.club.logo.url}}" alt="club-logo">
                         <div class="card-body">
                           <p class="font-weight-bold">{{club_stat.club.name}}</p>
-                          <p class="item-price">Points: {{club_stat.club.points}}</p>
+                          <p class="item-price">Points: {{club_stat.points}}</p>
                           <a class="btn btn-secondary btn-md" href="/clubs/view/{{club_stat.club.id}}" role="button">Detail</a>
                         </div>
                     </div>
@@ -122,5 +126,4 @@
             <a class="btn btn-info btn-md" href="/clubs" role="button">View all clubs</a>
           </p>
         </div>
-
 {% endblock %}

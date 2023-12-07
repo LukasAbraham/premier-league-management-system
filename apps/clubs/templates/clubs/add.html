@@ -1,7 +1,10 @@
-{% extends "clubs/base.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% load crispy_forms_tags %}
 
+{% block additional_styles %}
+    <link rel="stylesheet" href="{% static 'css/clubs.css' %}">
+{% endblock %}
 {% block title %}Clubs{% endblock %}
 
 {% block content %}
@@ -78,7 +81,9 @@
         </form>
     </div>
 </div>
+{% endblock %}
 
+{% block additional_scripts %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function() {

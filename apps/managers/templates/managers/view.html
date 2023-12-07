@@ -1,5 +1,9 @@
-{% extends "managers/base.html" %}
+{% extends "base.html" %}
 {% load static %}
+
+{% block additional_styles %} 
+    <link rel="stylesheet" href="{% static 'css/managers.css' %}">
+{% endblock %}
 {% block title %}Managers{% endblock %}
 
 {% block content %}
@@ -30,4 +34,14 @@
         {% endif %}
         <button onclick="location.href='/managers'" class="btn btn-secondary">Back</button>
     </div>
+{% endblock %}
+
+{% block  additional_scripts %}
+<script>
+    function deleteManagerConfirmation(managerId) {
+        if (confirm("Do you confirm to remove this manager?")) {
+            location.href = "/managers/delete/" + managerId + "/";
+        }
+    }
+</script>
 {% endblock %}

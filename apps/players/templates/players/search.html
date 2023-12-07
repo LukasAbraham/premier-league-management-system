@@ -1,5 +1,9 @@
-{% extends "players/base.html" %}
+{% extends "base.html" %}
 {% load static %}
+
+{% block additional_styles %}
+    <link rel="stylesheet" href="{% static 'css/players.css' %}">
+{% endblock %}
 {% block title %}Players{% endblock %}
 
 {% block content %}
@@ -13,7 +17,7 @@
                 <button type="submit" class="btn btn-outline-primary">SEARCH</button>
             </form>
         </div>
-        {% if players %}
+        {% if found_players %}
             <br>
             <h3 class="display-4 font-select"> Players </h3>
             <br>
@@ -44,11 +48,14 @@
             </div>
         {% endif %}
     </div>
-    <script>
-        function deletePlayerConfirmation(playerId) {
-            if (confirm("Do you confirm to remove this player?")) {
-                location.href = "/players/delete/" + playerId + "/";
-            }
+{% endblock %}
+
+{% block additional_scripts %}
+<script>
+    function deletePlayerConfirmation(playerId) {
+        if (confirm("Do you confirm to remove this player?")) {
+            location.href = "/players/delete/" + playerId + "/";
         }
-    </script>
+    }
+</script>
 {% endblock %}

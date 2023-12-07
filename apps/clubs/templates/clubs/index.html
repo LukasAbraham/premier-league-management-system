@@ -1,9 +1,13 @@
-{% extends "clubs/base.html" %}
+{% extends "base.html" %}
 {% load static %}
+
+{% block additional_styles %}
+    <link rel="stylesheet" href="{% static 'css/clubs.css' %}">
+{% endblock %}
 {% block title %}Clubs{% endblock %}
 
 {% block content %}
-    <div class="container marketing">
+    <div class="container">
     <br>
     <div class="input-group">
         <form method="GET" action="{% url 'clubs:search' %}" class="d-flex">
@@ -31,7 +35,7 @@
                 </a>
                 <span class="text-success font-weight-bold">&nbsp;Manager: {{ club.manager.name }}</span>
                 {% if user.user_profile.type == 'admin' %}
-                    <span class="float-right text-info ml-2"><button onclick="deleteConfirmation('{{ club.id }}')" class="btn btn-secondary">Remove</button></span>
+                    <span class="float-right text-info ml-2"><button onclick="deleteClubConfirmation('{{ club.id }}')" class="btn btn-secondary">Remove</button></span>
                     <span class="float-right text-info ml-3"><button onclick="location.href='{% url 'clubs:edit' club_id=club.id %}'" class="btn btn-secondary">Edit</button></span>
                 {% endif %}
                 <span class="float-right text-info">&nbsp; Points: {{ club.club_stats.points }} &nbsp;</span>
@@ -49,11 +53,14 @@
         </div>
     {% endif %}
     </div>
-    <script>
-        function deleteConfirmation(clubId) {
-            if (confirm("Do you confirm to remove this club?")) {
-                location.href = "/clubs/delete/" + clubId + "/";
-            }
+{% endblock %}
+
+{% block additional_scripts %}
+<script>
+    function deleteClubConfirmation(clubId) {
+        if (confirm("Do you confirm to remove this club?")) {
+            location.href = "/clubs/delete/" + clubId + "/";
         }
-    </script>
+    }
+</script>
 {% endblock %}

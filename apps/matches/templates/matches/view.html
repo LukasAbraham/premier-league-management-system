@@ -1,5 +1,9 @@
-{% extends "matches/base.html" %}
+{% extends "base.html" %}
 {% load static %}
+
+{% block additional_styles %}
+    <link rel="stylesheet" href="{% static 'css/matches.css' %}">
+{% endblock %}
 {% block title %}Matches{% endblock %}
 
 {% block content %}
@@ -63,11 +67,14 @@
         <span class="text-info ml-4"><button onclick="location.href='/matches'" class="btn btn-secondary">Back</button></span>
     </div>
     </div>
-    <script>
-        function deleteMatchConfirmation(matchId) {
-            if (confirm("Do you confirm to remove this match?")) {
-                location.href = "/matches/delete/" + matchId + "/";
-            }
+{% endblock %}
+
+{% block additional_scripts %}
+<script>
+    function deleteMatchConfirmation(matchId) {
+        if (confirm("Do you confirm to remove this match?")) {
+            location.href = "/matches/delete/" + matchId + "/";
         }
-    </script>
+    }
+</script>
 {% endblock %}
