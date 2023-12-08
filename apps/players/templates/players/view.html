@@ -12,7 +12,7 @@
             <div class="card col-md-12 p-3 jumbotron">
                 <div class="row ">
                     <div class="col-md-4">
-                        <img src="{{player.image.url}}" width="300" height="300">
+                        <img src="{% if player.image %}{{player.image.url}}{% else %}{% static 'imgs/default.png' %}{% endif %}" width="300" height="300">
                     </div>
                     <div class="col-md-8">
                         <div class="card-block">

@@ -27,7 +27,7 @@
                     <div class="card mb-3 card-bg h-100" style="max-width: 540px;">
                         <div class="row no-gutters">
                             <div class="col-md-4 mt-5">
-                                <img src="{{ manager.image.url }}" class="card-img" alt="">
+                                <img src="{% if manager.image %}{{manager.image.url}}{% else %}{% static 'imgs/default.png' %}{% endif %}" class="card-img" alt="">
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body text-white">
@@ -63,7 +63,7 @@
         {% for manager in managers_list %}
             <div class="card">
                 <div class="card-header">
-                    <span><img src="{{manager.image.url}}" style="height:50px; width:50px; "></span>
+                    <span><img src="{% if manager.image %}{{manager.image.url}}{% else %}{% static 'imgs/default.png' %}{% endif %}" style="height:50px; width:50px; "></span>
                     &nbsp;
                     <a href="{% url 'managers:view' manager_id=manager.id %}">
                         <span class="font-weight-bold">{{manager.name}}</span>

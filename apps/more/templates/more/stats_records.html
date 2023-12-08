@@ -18,7 +18,7 @@
                     <div class="card mb-3 card-bg-2 h-100" style="max-width: 540px;">
                         <div class="row no-gutters">
                             <div class="col-md-4 mt-3">
-                                <img src="{{player_stat.player.image.url}}" class="card-img" alt="">
+                                <img src="{% if player_stat.player.image %}{{player_stat.player.image.url}}{% else %}{% static 'imgs/default.png' %}{% endif %}" class="card-img" alt="">
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body text-white">
@@ -52,7 +52,7 @@
                     <div class="card mb-3 card-bg-1 h-100" style="max-width: 540px;">
                         <div class="row no-gutters">
                             <div class="col-md-4 mt-3">
-                                <img src="{{player_stat.player.image.url}}" class="card-img" alt="">
+                                <img src="{% if player_stat.player.image %}{{player_stat.player.image.url}}{% else %}{% static 'imgs/default.png' %}{% endif %}" class="card-img" alt="">
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body text-white">
