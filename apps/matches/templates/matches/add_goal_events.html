@@ -2,14 +2,14 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block title %}Matches{% endblock %}
+{% block title %}Goal events{% endblock %}
 
 {% block content %}
     <div class="content">
-        {% if submitted %}
-            <div class="alert alert-success">Match was created successfully!</div>
-        {% endif %}
         <div class="col-lg-6">
+            {% if submitted %}
+                <div class="alert alert-success">Goal events were created successfully!</div>
+            {% endif %}
             <form method="POST">
                 {% csrf_token %}
                 {% if formset.non_form_errors %}

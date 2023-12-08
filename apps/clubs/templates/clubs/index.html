@@ -18,7 +18,14 @@
         </form>
     </div>
     <br><br>
-    <h3 class="display-4 font-select"> All Clubs </h3>
+    <div class="d-flex justify-content-between">
+        <h3 class="display-4 font-select"> All Clubs </h3>     
+        {% if user.user_profile.type == 'admin' %}
+            <div class="add-club text-center">
+                <button class="btn btn-primary mr-3 mt-2" onclick="location.href='{% url 'clubs:add' %}'">Add club</button>
+            </div>
+        {% endif %}
+    </div>
     {% if not clubs|length|divisibleby:2 %}
         <div class="alert alert-warning" role="alert">
             Number of clubs should be even.
@@ -47,11 +54,6 @@
         </div>
     {% endfor %}
     <br>
-    {% if user.user_profile.type == 'admin' %}
-        <div class="add-club text-center">
-            <button class="btn btn-primary" onclick="location.href='{% url 'clubs:add' %}'">Add club</button>
-        </div>
-    {% endif %}
     </div>
 {% endblock %}
 

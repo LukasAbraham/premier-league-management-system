@@ -58,7 +58,14 @@
             </div>
         {% endfor %} 
         <br>
-        <h3 class="display-4"> Managers </h3>
+        <div class="d-flex justify-content-between">
+            <h3 class="display-4"> Managers </h3>
+            {% if user.user_profile.type == 'admin' %}
+                <div class="add-manager text-center mr-3 mt-2">
+                    <button onclick="location.href='{% url 'managers:add' %}'" class="btn btn-primary">Add manager</button>
+                </div>
+            {% endif %}
+        </div>
         <br>
         {% for manager in managers_list %}
             <div class="card">
@@ -77,11 +84,6 @@
                 <br>
             </div>
         {% endfor %}
-        {% if user.user_profile.type == 'admin' %}
-            <div class="add-manager text-center">
-                <button onclick="location.href='{% url 'managers:add' %}'" class="btn btn-primary">Add manager</button>
-            </div>
-        {% endif %}
     </div>
 {% endblock %}
 
