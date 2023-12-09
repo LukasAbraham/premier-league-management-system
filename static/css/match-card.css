@@ -25,12 +25,6 @@ textarea {
 	font: inherit;
 }
 
-
-img {
-	display: block;
-	
-}
-
 strong {
 	font-weight: 600;
 }
@@ -42,13 +36,18 @@ body {
 	background-color: var(--color-bg-secondary);
 }
 
+.container {
+    max-width: 1450px;
+    margin: 20px auto;
+}
+
 .match {
 	background-color: var(--color-bg-primary);
 	display: flex;
 	flex-direction: column;
-	min-width:450px;
+	min-width: 440px;
 	border-radius: 10px;
-    max-width: 1000px;
+    max-width: 700px;
 	box-shadow: 0 0 2px 0 rgba(48, 48, 48, 0.1), 0 4px 4px 0 rgba(48, 48, 48, 0.1);
 }
 
@@ -114,14 +113,13 @@ body {
 }
 
 
-.club {
+.match .club {
 	display: flex;
 	flex-direction:column;
 	align-items: center;
-	
 }
 
-.club-logo {
+.match .club-logo {
 	width: 100px;
 	height: 100px;
 	display: flex;
@@ -134,13 +132,12 @@ body {
 	img {
 		width: 50px;
 	}
-
 }
 
-.club-name {
+.match .club-name {
 	text-align:center;
 	margin-top: 26px;
-	font-size: 20px;
+	font-size: 16px;
 	font-weight: 600;
 }
 
@@ -151,7 +148,7 @@ body {
 }
 
 .match-date, .match-referee {
-	font-size: 14px;
+	font-size: 12px;
 	color: var(--color-text-secondary);
 	strong {
 		color: var (--color-text-primary);
@@ -180,10 +177,20 @@ body {
 	color: var (--color-text-icon);
 	margin-left: 10px;
 	margin-right: 10px;
-	
 }
 
-.match-bet-place {
+.match-time {
+	font-size: 24px;
+	font-weight: 700;
+	line-height: 1;
+	color: var (--color-text-icon);
+	margin-left: 10px;
+	margin-right: 10px;
+	border: 2px solid #757b82;
+	padding: 10px;
+}
+
+.match-button {
 	position: absolute;
 	bottom: -16px;
 	left: 50%;
@@ -197,23 +204,11 @@ body {
     box-shadow: 0 4px 8px 0 rgba(48, 48, 48, 0.25);
 }
 
-.container {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
 h3.display-4{
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 600;
-    font-size: 50px;
+    font-size: 30px;
 }
 
 .form-border {
@@ -225,18 +220,16 @@ h3.display-4{
 .scrolling-item {
     flex-shrink: 0;
     margin-right: auto;
+	/* margin-left: auto; */
 }
 
-@media (min-width: 600px) and (max-width: 930px) {
-    .scrolling-item {
-        flex-shrink: 0;
-        margin-right: 170px;
-    }
-}
-
-@media (max-width: 600px) {
-    .scrolling-item {
-        flex-shrink: 0;
-        margin-right: 270px;
-    }
+@media (max-width: 1023px) {
+	.scrolling-item {
+        width: 100%;
+        padding: 20px; 
+		margin: auto 0px;
+	}
+	.row {
+		flex-direction: column;
+	}
 }

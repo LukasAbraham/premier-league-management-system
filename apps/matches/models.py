@@ -30,7 +30,7 @@ class Match(models.Model):
         super().save(*args, **kwargs)
         
     def delete(self, *args, **kwargs):
-        if self.result:
+        if hasattr(self, 'result'):
             self.result.delete()
         for goal_event in self.goal_event.all():
             goal_event.delete()

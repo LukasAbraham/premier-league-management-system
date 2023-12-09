@@ -2,120 +2,61 @@
 {% load static %}
 
 {% block additional_styles %}
-    <link rel="stylesheet" href="{% static 'css/matches.css' %}">
+    <link rel="stylesheet" href="{% static 'css/match-card.css' %}">
+    <link rel="stylesheet" href="{% static 'css/match-fixture.css' %}">
 {% endblock %}
 {% block title %}Matches{% endblock %}
 
 {% block content %}
-    <h3 class='display-4' style="position: relative; top: 20px; left: 40px"> Previous </h3>
-    <div class="container-fluid">
-        <div class="scroll-container mt-5 mb-4">
-            <div class="row flex-nowrap overflow-auto jumbotron">
-                {% for match in matches_list %}
-                    {% if match.status == 'P' %}
-                        {% include 'matches/matches_scrollview.html' with match=match %}
-                    {% endif %}
+
+<div class="container">
+    <h3 class='display-4' style="position: relative; top: 20px; padding: 0 5px;"> Featured Matches </h3>
+    <div class="scroll-container mt-5 mb-4">
+        <div class="row flex-wrap overflow-auto jumbotron">
+            {% if matches_list|length >= 2 %}
+                {% for match in matches_list|slice:":2" %}
+                    {% include 'matches/matches_scrollview.html' with match=match %}
                 {% endfor %}
-            </div>
+            {% elif matches_list|length == 1 %}
+                {% include 'matches/matches_scrollview.html' with match=matches_list.0 %}
+            {% endif %}
         </div>
-    </div> 
-    <hr class="featurette-divider">
-    <h3 class='display-4' style="position: relative; top: 20px; left: 40px"> Upcoming </h3>
-    <div class="container-fluid">
-        <div class="scroll-container mt-5 mb-4">
-            <div class="row flex-nowrap overflow-auto jumbotron">
-                {% for match in matches_list %}
-                    {% if match.status == 'U' %}
-                        {% include 'matches/matches_scrollview.html' with match=match %}
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </div>
+        
     </div>
-    <br>
+</div> 
 
-    <hr class="featurette-divider">
-    <h3 class='display-4' style="position: relative; top: 20px; left: 40px"> All Matches </h3>
-    <br><br>
-    <div class="d-flex justify-content-between">
-        <button class="btn btn-warning button-left" type="button" data-toggle="collapse" data-target="#apply_collapse" aria-expanded="false" aria-controls="apply_collapse">
-            Expand/Collapse All
-        </button>
-        {% if user.user_profile.type == 'admin' %}
-            <div class="add-match text-center mr-3">
-                <button class="btn btn-primary" onclick="location.href='{% url 'matches:add' %}'">Add match</button>
-            </div>
-        {% endif %}
-    </div>
-
-
-    <div class="collapse" id="apply_collapse">
-        <br>
-        <div class="container-fluid jumbotron">
-            {% for match in matches_list %}
-                <div class="row justify-content-center">
-                    <div class="match col-6">
-                        <div class="match-header">
-                            <div class = "match-status">{{ match.get_status_display }}</div>
-                            <div class="match-tournament"><img src={%static "imgs/epl.png"%} style="height: 30px; width: auto;"/>English Premier League</div>
-                        </div>
-                        <div class="match-content">
-                            <div class="column">
-                                <div class="club club--home">
-                                    <div class="club-logo">
-                                        <img src="{{match.club1.logo.url}}" style="width:40%"/>
-                                    </div>
-                                    <h2 class="club-name">{{match.club1.name}}</h2>
-                                </div>
-                            </div>
-                            <div class="column">
-                                <div class="match-details">
-                                    <div class="match-round">
-                                        <strong>Round</strong>
-                                        <strong>{{ match.round }}</strong>
-                                    </div>
-                                    <div class="match-date">
-                                        <strong>{{ match.time }}</strong>
-                                    </div>
-                                    <div class="match-score">
-                                        <span class="match-score-number match-score-number--leading">{{ match.result.club1_goals }}</span>
-                                        <span class="match-score-divider">:</span>
-                                        <span class="match-score-number">{{ match.result.club2_goals }}</span>
-                                    </div>
-                                    {% if match.status == 'P' %}
-                                        {% if match.result.club1_goals >= 0 and match.result.club2_goals >= 0 %}
-                                            <button class="match-bet-place" onclick="location.href='{% url 'matches:view' match.id %}'">Detail</button>
-                                        {% elif not fixture.result.exists %}
-                                            {% if user.user_profile.type == 'admin' %}
-                                                <button class="match-bet-place" onclick="location.href='{% url 'matches:add_result' match.id %}'">Update</button>
-                                            {% endif %}
-                                        {% endif %}
-                                    {% else %}
-                                        <button class="match-bet-place" onclick="location.href='{% url 'matches:view' match.id %}'">Detail</button>
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <div class="column">
-                                <div class="club club--away">
-                                    <div class="club-logo">
-                                        <img src="{{match.club2.logo.url}}" style="width:40%"/>
-                                    </div>
-                                    <h2 class="club-name">{{match.club2.name}}</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<div class="col-12">
+    <section class="fixtures">
+        <div class="fixtures-container">
+            <div class="fixtures-content-container">
+                <div class="fixtures__heading">
+                    All Matches
                 </div>
-                <br>
-                <br>
-            {% endfor %}
-        </div> 
-    </div>
+                <span>
+                    <img class="fixtures__competition-logo" src={% static "imgs/epl_competition_logo_baw.png" %}>
+                    {% if user.user_profile.type == "admin" %}
+                        <button class="btn btn-primary btn-sm ml-3" onclick="location.href='{% url 'matches:add' %}'">Add</button>
+                    {% endif %}
+                </span>
+            </div>
+            <div class="fixtures__matches-list">
+                <ul class="matchList">
+                    {% for match in matches_list %}
+                    {% include 'matches/match-fixture.html' with match=match %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
 
-    <style>
-        .button-left {
-            position: relative;
-            left: 40px;
+{% block additional_scripts %}
+<script>
+    function deleteMatchConfirmation(matchId) {
+        if (confirm("Do you confirm to remove this match?")) {
+            location.href = "/matches/delete/" + matchId + "/";
         }
-    </style>
+    }
+</script>
 {% endblock %}

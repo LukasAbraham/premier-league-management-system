@@ -22,18 +22,22 @@
                         <strong>{{ match.round }}</strong>
                     </div>
                     <div class="match-date">
-                        <strong>{{ match.time }}</strong>
+                        <strong>{{ match.time|date:"d, M. Y" }}</strong>
                     </div>
                     <div class="match-score">
-                        <span class="match-score-number match-score-number--leading">{{ match.result.club1_goals }}</span>
-                        <span class="match-score-divider">:</span>
-                        <span class="match-score-number">{{ match.result.club2_goals }}</span>
+                        {% if match.status == "P" %}
+                            <span class="match-score-number match-score-number--leading">{{ match.result.club1_goals }}</span>
+                            <span class="match-score-divider">:</span>
+                            <span class="match-score-number">{{ match.result.club2_goals }}</span>
+                        {% else %}
+                            <span class="match-time">{{ match.time|date:"h:i.A" }}</span>
+                        {% endif %}
                     </div>
                     {% if match.result.club1_goals >= 0 and match.result.club2_goals >= 0 %}
-                        <button class="match-bet-place" onclick="location.href='{% url 'matches:view' match.id %}'">Detail</button>
+                        <button class="match-button" onclick="location.href='{% url 'matches:view' match.id %}'">Detail</button>
                     {% elif not match.result.exists %}
                         {% if user.user_profile.type == 'admin' %}
-                            <button class="match-bet-place" onclick="location.href='{% url 'matches:add_result' match.id %}'">Update</button>
+                            <button class="match-button" onclick="location.href='{% url 'matches:add_result' match.id %}'">Update</button>
                         {% endif %}
                     {% endif %}
                 </div>
