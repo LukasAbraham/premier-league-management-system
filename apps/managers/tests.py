@@ -20,48 +20,151 @@ from .forms import ManagerForm, ManagerSearchForm
 class ManagerModelTest(TestCase):
     def setUp(self):
         self.club = Club.objects.create(name='Test Club')
-        self.manager = Manager.objects.create(name='Test Manager',
-                                              nationality='English',
-                                              dob='1970-01-01',
-                                              club=self.club)
+        self.manager = Manager.objects.create(
+            name='Test Manager',
+            nationality='English',
+            dob=date(1970, 1, 1),
+            club=self.club
+        )
 
-    # Create
-    def test_manager_creation(self):
+    def test_creating_manager(self):
         self.assertTrue(isinstance(self.manager, Manager))
         self.assertEqual(self.manager.__str__(), self.manager.name)
 
-    # Update
-    def test_manager_name_update(self):
+    def test_updating_manager(self):
         new_name = 'Updated Manager'
         self.manager.name = new_name
         self.manager.save()
         self.assertEqual(self.manager.name, new_name)
 
-    def test_manager_nationality_update(self):
         new_nationality = 'Spanish'
         self.manager.nationality = new_nationality
         self.manager.save()
         self.assertEqual(self.manager.nationality, new_nationality)
 
-    def test_manager_dob_update(self):
-        new_dob = '1980-05-15'
+        new_dob = date(1980, 5, 15)
         self.manager.dob = new_dob
         self.manager.save()
         self.assertEqual(self.manager.dob, new_dob)
 
-    def test_manager_club_update(self):
         new_club = Club.objects.create(name='Another Test Club')
         self.manager.club = new_club
         self.manager.save()
         self.assertEqual(self.manager.club, new_club)
 
-    # Delete
-    def test_manager_deletion(self):
+    def test_deleting_manager(self):
         self.assertIsNotNone(self.manager.id)
         self.manager.delete()
         self.assertEqual(Manager.objects.count(), 0)
         with self.assertRaises(Manager.DoesNotExist):
             Manager.objects.get(id=self.manager.id)
+
+def generate_random_string(length):
+    letters = string.ascii_letters
+    return ''.join(random.choice(letters) for _ in range(length))
+
+class ManagerFormsTests(TestCase):
+    def setUp(self):
+        Regulation.objects.get_or_create(pk=1)
+        self.club = Club.objects.create(name='Test Club')
+
+    def test_initial_values(self):
+        form = ManagerForm()
+        self.assertEqual(form.fields['dob'].initial, date.today())
+        self.assertIsInstance(form.fields['dob'].widget, widgets.DateInput)
+
+    def test_valid_data(self):
+        form = ManagerForm(data={
+            'name': 'Test Manager',
+            'nationality': 'English',
+            'dob': date(1970, 10, 10),
+            'club': self.club.id,
+        })
+        self.assertTrue(form.is_valid())
+
+    """
+    Test manager name field
+    """
+    def test_name_with_special_characters(self):
+        form = ManagerForm(data={
+            'name': '123&*!*@#[]',
+            'nationality': 'English',
+            'dob': date(1970, 10, 10),
+            'club': self.club.id,
+        })
+        self.assertFalse(form.is_valid())
+
+    def test_name_empty(self):
+        form = ManagerForm(data={
+            'name': '',
+            'nationality': 'English',
+            'dob': date(1970, 10, 10),
+            'club': self.club.id,
+        })
+        self.assertFalse(form.is_valid())
+
+    def test_name_valid_boundary(self):
+        form = ManagerForm(data={
+            'name': generate_random_string(255),
+            'nationality': 'English',
+            'dob': date(1970, 10, 10),
+            'club': self.club.id,
+        })
+        self.assertTrue(form.is_valid())
+
+    def test_name_invalid_boundary(self):
+        form = ManagerForm(data={
+            'name': generate_random_string(256),
+            'nationality': 'English',
+            'dob': date(1970, 10, 10),
+            'club': self.club.id,
+        })
+        self.assertFalse(form.is_valid())
+
+    """
+    Test nationality field
+    """
+    def test_nationality_empty(self):
+        form = ManagerForm(data={
+            'name': 'Test Manager',
+            'nationality': '',
+            'dob': date(1970, 10, 10),
+            'club': self.club.id,
+        })
+        self.assertFalse(form.is_valid())
+
+    """
+    Test dob field
+    """
+    def test_dob_empty(self):
+        form = ManagerForm(data={
+            'name': 'Test Manager',
+            'nationality': 'English',
+            'dob': '',
+            'club': self.club.id,
+        })
+        self.assertFalse(form.is_valid())
+
+    def test_dob_invalid(self):
+        form = ManagerForm(data={
+            'name': 'Test Manager',
+            'nationality': 'English',
+            'dob': '1999-2-29',
+            'club': self.club.id,
+        })
+        self.assertFalse(form.is_valid())
+
+    """
+    Test club field
+    """
+    def test_club_empty(self):
+        form = ManagerForm(data={
+            'name': 'Test Manager',
+            'nationality': 'English',
+            'dob': date(1970, 10, 10),
+            'club': '',
+        })
+        self.assertFalse(form.is_valid())
 
 class ManagerViewsTest(TestCase):
     @override_settings(MEDIA_ROOT=os.path.join('tmp'))
@@ -78,32 +181,32 @@ class ManagerViewsTest(TestCase):
         self.admin = User.objects.create_user(username='admin', password='admin123')
         UserProfile.objects.create(user=self.admin, type='admin')
 
-        club_logo_path = 'test_media/test_club_logo.png'
-        club_logo_name = 'test_club_logo.png'
-        with open(club_logo_path, 'rb') as logo_file:
-            logo = SimpleUploadedFile(club_logo_name,
+        with open('test_media/test_club_logo.png', 'rb') as logo_file:
+            logo = SimpleUploadedFile(logo_file.name,
                                       logo_file.read(),
                                       content_type='image/png')
             self.club1 = Club.objects.create(name='Test Club 1', logo=logo)
             self.club2 = Club.objects.create(name='Test Club 2', logo=logo)
             self.club3 = Club.objects.create(name='Test Club 3', logo=logo)
 
-        manager_image_path = 'test_media/test_manager.png'
-        manager_image_name = 'test_manager.png'
-        with open(manager_image_path, 'rb') as image_file:
-            image = SimpleUploadedFile(manager_image_name,
+        with open('test_media/test_manager.png', 'rb') as image_file:
+            image = SimpleUploadedFile(image_file.name,
                                        image_file.read(),
                                        content_type='image/png')
-            self.manager1 = Manager.objects.create(name='Test Manager 1',
-                                                   nationality='English',
-                                                   dob='1970-01-01',
-                                                   club=self.club1,
-                                                   image=image)
-            self.manager2 = Manager.objects.create(name='Test Manager 2',
-                                                   nationality='Spanish',
-                                                   dob='1980-02-02',
-                                                   club=self.club2,
-                                                   image=image)
+            self.manager1 = Manager.objects.create(
+                name='Test Manager 1',
+                nationality='English',
+                dob=date(1970, 1, 1),
+                club=self.club1,
+                image=image
+            )
+            self.manager2 = Manager.objects.create(
+                name='Test Manager 2',
+                nationality='Spanish',
+                dob=date(1980, 2, 2),
+                club=self.club2,
+                image=image
+            )
 
         # Login with admin priviledges
         self.client.login(username='admin', password='admin123')
@@ -142,7 +245,6 @@ class ManagerViewsTest(TestCase):
             }
 
             response = self.client.post(url, data, follow=True)
-            print(response.context['form'].errors)
             self.assertEqual(response.status_code, 302) # Expect redirection
             self.assertTemplateUsed(response, 'managers/add.html')
             self.assertTrue(Manager.objects.filter(name='New Manager').exists())
@@ -175,7 +277,7 @@ class ManagerViewsTest(TestCase):
             }
 
             response = self.client.post(url, data, follow=True)
-            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.status_code, 302)
             self.manager1.refresh_from_db()
             self.assertEqual(self.manager1.name, 'Updated Manager')
 
@@ -193,113 +295,3 @@ class ManagerViewsTest(TestCase):
         self.assertIn(self.manager1, response.context['found_managers'])
         self.assertNotIn(self.manager2, response.context['found_managers'])
 
-def generate_random_string(length):
-    letters = string.ascii_letters
-    return ''.join(random.choice(letters) for _ in range(length))
-
-class ManagerFormsTests(TestCase):
-    def setUp(self):
-        Regulation.objects.get_or_create(pk=1)
-        self.club = Club.objects.create(name='Test Club')
-
-    def test_init(self):
-        form = ManagerForm()
-        self.assertEqual(form.fields['dob'].initial, date.today())
-        self.assertIsInstance(form.fields['dob'].widget, widgets.DateInput)
-
-    def test_valid_data(self):
-        form = ManagerForm(data={
-            'name': 'Test Manager',
-            'nationality': 'English',
-            'dob': '1970-10-10',
-            'club': self.club.id,
-        })
-        self.assertTrue(form.is_valid())
-
-    """
-    Test manager name field
-    """
-    def test_name_with_special_characters(self):
-        # Special characters
-        form = ManagerForm(data={
-            'name': '123&*!*@#[]',
-            'nationality': 'English',
-            'dob': '1970-10-10',
-            'club': self.club.id,
-        })
-        self.assertFalse(form.is_valid())
-
-    def test_name_empty(self):
-        # Empty
-        form = ManagerForm(data={
-            'name': '',
-            'nationality': 'English',
-            'dob': '1970-10-10',
-            'club': self.club.id,
-        })
-        self.assertFalse(form.is_valid())
-
-    def test_name_valid_boundary(self):
-        # Valid boundary
-        form = ManagerForm(data={
-            'name': generate_random_string(255),
-            'nationality': 'English',
-            'dob': '1970-10-10',
-            'club': self.club.id,
-        })
-        self.assertTrue(form.is_valid())
-
-    def test_name_invalid_boundary(self):
-        # Invalid boundary
-        form = ManagerForm(data={
-            'name': generate_random_string(256),
-            'nationality': 'English',
-            'dob': '1970-10-10',
-            'club': self.club.id,
-        })
-        self.assertFalse(form.is_valid())
-
-    """
-    Test nationality field
-    """
-    def test_nationality_empty(self):
-        form = ManagerForm(data={
-            'name': 'Test Manager',
-            'nationality': '',
-            'dob': '1970-10-10',
-            'club': self.club.id,
-        })
-        self.assertFalse(form.is_valid())
-
-    """
-    Test dob field
-    """
-    def test_dob_empty(self):
-        form = ManagerForm(data={
-            'name': 'Test Manager',
-            'nationality': 'English',
-            'dob': '',
-            'club': self.club.id,
-        })
-        self.assertFalse(form.is_valid())
-
-    def test_dob_invalid(self):
-        form = ManagerForm(data={
-            'name': 'Test Manager',
-            'nationality': 'English',
-            'dob': '1999-02-29',
-            'club': self.club.id,
-        })
-        self.assertFalse(form.is_valid())
-
-    """
-    Test club field
-    """
-    def test_club_empty(self):
-        form = ManagerForm(data={
-            'name': 'Test Manager',
-            'nationality': 'English',
-            'dob': '1970-10-10',
-            'club': '',
-        })
-        self.assertFalse(form.is_valid())
