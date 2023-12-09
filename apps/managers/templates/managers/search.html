@@ -25,7 +25,7 @@
             {% for manager in found_managers %}
                 <div class="card">
                     <div class="card-header">
-                        <span><img src="{{manager.image.url}}" style="height:50px; width:50px; "></span>
+                        <span><img src="{% if manager.image %}{{manager.image.url}}{% else %}{% static 'imgs/default.png' %}{% endif %}" style="height:50px; width:50px; "></span>
                         &nbsp;
                         <a href="{% url 'managers:view' manager_id=manager.id %}">
                             <span class="font-weight-bold">{{manager.name}}</span>

@@ -79,20 +79,20 @@
     <br><br>
 
     <div class="container">
-      <h3 class='display-4' style="position: relative; top: 20px;"> Players  </h3>
-      <br>
-      <br>
-      <div class="row bg-light">
-          {% for player_stat in top_players %}
-          <div class="col-lg-4">
-            <img class="rounded-circle" src="{{player_stat.player.image.url}}" alt="Generic placeholder image" width="140" height="140">
+        <h3 class='display-4' style="position: relative; top: 20px;"> Players  </h3>
+        <br>
+        <br>
+        <div class="row bg-light">
+            {% for player_stat in top_players %}
+            <div class="col-lg-4">
+            <img class="rounded-circle" src="{% if player_stat.player.image %}{{player_stat.player.image.url}}{% else %}{% static 'imgs/default.png' %}{% endif %}" alt="Player image" width="140" height="140">
             <h2>{{player_stat.player.name}}</h2>
             <p>Goals Scored: {{player_stat.goals}}</p>
             <a class="btn btn-secondary btn-md" href="/players/view/{{player_stat.player.id}}" role="button">Detail</a>
-          </div>
-          {% endfor %}
+            </div>
+            {% endfor %}
         </div>
-      <br>
+        <br>
     <br>
         <hr class="featurette-divider">
       <br>

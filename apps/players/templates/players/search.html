@@ -24,7 +24,7 @@
             {% for player in found_players %}
                 <div class="card">
                     <div class="card-header">
-                        <span><img src="{{player.image.url}}" style="height:50px; width:50px; "></span>
+                        <span><img src="{% if player.image %}{{player.image.url}}{% else %}{% static 'imgs/default.png' %}{% endif %}" style="height:50px; width:50px; "></span>
                         <a href="{% url 'players:view' player_id=player.id %}">
                             <span class="font-weight-bold">{{player.name}}</span>
                         </a>

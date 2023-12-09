@@ -37,9 +37,16 @@
     <hr class="featurette-divider">
     <h3 class='display-4' style="position: relative; top: 20px; left: 40px"> All Matches </h3>
     <br><br>
-    <button class="btn btn-warning button-left" type="button" data-toggle="collapse" data-target="#apply_collapse" aria-expanded="false" aria-controls="apply_collapse">
-        Expand/Collapse All
-    </button>
+    <div class="d-flex justify-content-between">
+        <button class="btn btn-warning button-left" type="button" data-toggle="collapse" data-target="#apply_collapse" aria-expanded="false" aria-controls="apply_collapse">
+            Expand/Collapse All
+        </button>
+        {% if user.user_profile.type == 'admin' %}
+            <div class="add-match text-center mr-3">
+                <button class="btn btn-primary" onclick="location.href='{% url 'matches:add' %}'">Add match</button>
+            </div>
+        {% endif %}
+    </div>
 
 
     <div class="collapse" id="apply_collapse">
@@ -104,11 +111,6 @@
             {% endfor %}
         </div> 
     </div>
-    {% if user.user_profile.type == 'admin' %}
-        <div class="add-match text-center mt-5">
-            <button class="btn btn-primary" onclick="location.href='{% url 'matches:add' %}'">Add match</button>
-        </div>
-    {% endif %}
 
     <style>
         .button-left {

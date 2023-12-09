@@ -6,10 +6,10 @@
 
 {% block content %}
     <div class="content">
-        {% if submitted %}
-            <div class="alert alert-success">Match was created successfully!</div>
-        {% endif %}
         <div class="col-lg-6">
+            {% if submitted %}
+                <div class="alert alert-success">Match was created successfully!</div>
+            {% endif %}
             <form method="POST">
                 {% csrf_token %}
                 {% if form.non_field_errors %}

@@ -25,7 +25,7 @@
                 {% for player in highlight_players|slice:":4" %}
                     <div class='col-md-6 col-sm-12 col-lg-3' style="padding-bottom:40px">
                         <div class="card" style="width: 14rem; background-image: url('{% static 'imgs/bg_1.png' %}'); background-size: cover;">
-                            <img class="card-img-top" src="{{player.image.url}}" alt="">
+                            <img class="card-img-top" src="{% if player.image %}{{player.image.url}}{% else %}{% static 'imgs/default.png' %}{% endif %}" alt="">
                             <div class="card-body">
                                 <p class="font-weight-bold">{{player.name}}</p>
                                 <p class="item-price">Goals: {{player.player_stats.goals}}</p>
@@ -38,12 +38,19 @@
             </div>         
         </div>            
         <br><br>
-        <h3 class="display-4"> Players</h3>
+        <div class="d-flex justify-content-between">
+            <h3 class="display-4"> Players</h3>
+            {% if user.user_profile.type == 'admin' %}
+            <div class="add-player text-center mr-3 mt-2">
+                <button onclick="location.href='{% url 'players:add' %}'" class="btn btn-primary">Add player</button>
+            </div>
+            {% endif %}
+        </div>
         <br>
         {% for player in players_list %}
             <div class="card">
                 <div class="card-header">
-                    <span><img src="{{player.image.url}}" style="height:50px; width:50px; "></span>
+                    <span><img src="{% if player.image %}{{player.image.url}}{% else %}{% static 'imgs/default.png' %}{% endif %}" style="height:50px; width:50px; "></span>
                     &nbsp;
                     <a href="{% url 'players:view' player_id=player.id %}">
                         <span class="font-weight-bold">{{player.name}}</span>
@@ -57,11 +64,6 @@
                 <br>
             </div>
         {% endfor %}
-        {% if user.user_profile.type == 'admin' %}
-            <div class="add-player text-center">
-                <button onclick="location.href='{% url 'players:add' %}'" class="btn btn-primary">Add player</button>
-            </div>
-        {% endif %}
     </div>
 {% endblock %}
 
