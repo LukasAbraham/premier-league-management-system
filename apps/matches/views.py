@@ -72,6 +72,9 @@ def add_goal_events(request, match_id):
     total_goals = result.club1_goals + result.club2_goals
     GoalEventFormSet = formset_factory(GoalEventForm, extra=total_goals, formset=BaseGoalEventFormSet)
     if request.method == 'POST':
+        if 'cancel' in request.POST and request.POST['cancel'] == 'true':
+            result.delete()
+            return redirect(reverse('matches:index'))
         formset = GoalEventFormSet(request.POST, form_kwargs={'match': match})
         if formset.is_valid():
             for form in formset:

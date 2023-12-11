@@ -7,12 +7,6 @@
 {% block title %}More{% endblock %}
 
 {% block content %}
-    <style>
-    table, th, td {
-        border: 1px solid black;
-    }
-    </style>
-
     <div class="container">
         <br>
         <h3 class="display-4 font-select"> Standings </h3>
@@ -77,14 +71,14 @@
             </tbody>
         </table>
         <br>
-        <h3 class="display-4 font-select"> Top playmakers</h3>
+        <h3 class="display-4 font-select"> Top playmakers </h3>
         <br>
         <table class="table">
             <thead>
                 <tr>
                     <th>Rank</th>
                     <th>Name</th>
-                    <th>club</th>
+                    <th>Club</th>
                     <th>Position</th>
                     <th>Appearances</th>
                     <th>Assists</th>
@@ -104,13 +98,13 @@
             </tbody>
         </table>
         <br>
-        <h3 class="display-4 font-select"> Matches</h3>
+        <h3 class="display-4 font-select"> Matches </h3>
         <br>
         <table class="table">
             {% for match in matches %}
                 {% if match.status == 'P' %}
                     <thead>
-                        <tr class="text-center" style="font-size: 19px">
+                        <tr class="text-center">
                             <th>Club 1</th>
                             <th>Result</th>
                             <th>Club 2</th>
@@ -121,12 +115,12 @@
                     </thead>
                     <tbody>
                         <tr style="background-color:#E0FEFE" class="text-center">
-                            <td><b>{{match.club1}}</b></td>
-                            <td><b>{{match.result.club1_goals}}-{{match.result.club2_goals}}</b></td>
-                            <td><b>{{match.club2}}</b></td>
-                            <td><b>{{match.round}}</b></td>
-                            <td><b>{{match.get_stadium_display}}</b></td>
-                            <td colspan="2"><b>{{match.time}}</b></td>
+                            <td>{{match.club1}}</td>
+                            <td>{{match.result.club1_goals}}-{{match.result.club2_goals}}</td>
+                            <td>{{match.club2}}</td>
+                            <td>{{match.round}}</td>
+                            <td>{{match.get_stadium_display}}</td>
+                            <td colspan="2">{{match.time}}</td>
                         </tr>
                         <tr>
                             <td colspan="7" class="text-center"><b>Goal events</b></td>
@@ -143,7 +137,13 @@
                                 {% for goal_event in goal_events %}
                                     <tr>
                                         <td colspan="2">{{goal_event.scoring_player.name}}</td>
-                                        <td colspan="2">{{goal_event.assisting_player.name}}</td>
+                                        <td colspan="2">
+                                        {% if goal_event.assisting_player.name %}
+                                            {{goal_event.assisting_player.name}}
+                                        {% else %}
+                                            None
+                                        {% endif %}
+                                        </td>
                                         <td>{{goal_event.club}}</td>
                                         <td>{{goal_event.get_type_display}}</td>
                                         <td>{{goal_event.time}}</td>

@@ -25,6 +25,10 @@ textarea {
 	font: inherit;
 }
 
+.table th, .table td, .table tr, .table thead th{
+    border: 1px solid #000;
+}
+
 strong {
 	font-weight: 600;
 }
@@ -202,13 +206,6 @@ body {
     color: rgba(255, 255, 255, 0.9);
 	font-size: 14px;
     box-shadow: 0 4px 8px 0 rgba(48, 48, 48, 0.25);
-}
-
-h3.display-4{
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 30px;
 }
 
 .form-border {

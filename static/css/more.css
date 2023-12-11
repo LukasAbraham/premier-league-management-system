@@ -1,8 +1,5 @@
-h3.display-4{
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 50px;
+.table th, .table td, .table tr, .table thead th{
+    border: 1px solid #000;
 }
 
 .first-row {

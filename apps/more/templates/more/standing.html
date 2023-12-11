@@ -3,6 +3,11 @@
 
 {% block additional_styles %}
     <link rel="stylesheet" href="{% static 'css/more.css' %}">
+    <style>
+        .table th, .table td, .table tr, .table thead th {
+            border: 0px;
+        }
+    </style>
 {% endblock %}
 {% block title %}More{% endblock %}
 

@@ -49,12 +49,13 @@
                     </div>
                 </fieldset>
                 {% endfor %}
+                <input type="hidden" id="cancel" name="cancel" value="">
                 <div class="row">
                     <div class="col-lg-6 p-2">
                         <button class="btn btn-primary w-100"> Save </button>
                     </div>
                     <div class="col-lg-6 p-2">
-                        <a onclick="location.href='/matches'" class="btn btn-secondary w-100" style="color: white; cursor: pointer">Cancel</a>
+                        <button type="button" onclick="document.getElementById('cancel').value='true'; this.form.submit();" class="btn btn-secondary w-100" style="color: white; cursor: pointer">Cancel</button>
                     </div>
                 </div>             
             </form>

@@ -77,7 +77,7 @@
                     </a>
                     <span class="text-success font-weight-bold"> from: {{ manager.club.name}}</span>
                     {% if user.user_profile.type == 'admin' %}
-                        <span class="float-right text-info ml-2"><button onclick="deleteManagerConfirmation('{{ manager.id }}')" class="btn btn-secondary">Remove</button></span>
+                        <span class="float-right text-info ml-2"><button onclick="deleteManagerConfirmation('{{ manager.id }}')" class="btn btn-danger">Delete</button></span>
                         <span class="float-right text-info ml-3"><button onclick="location.href='{% url 'managers:edit' manager_id=manager.id %}'" class="btn btn-secondary">Edit</button></span>
                     {% endif %}
                 </div>

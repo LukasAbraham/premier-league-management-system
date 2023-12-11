@@ -1,10 +1,3 @@
-h3.display-4{
-    font-family: 'Poppins';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 50px;
-}
-
 .card-bg {
     background-image: url('../../static/imgs/bg_2.jpg');
     background-size: cover;

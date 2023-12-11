@@ -24,13 +24,13 @@
         
     </div>
 </div> 
-
+<hr style="width: 90%">
 <div class="col-12">
     <section class="fixtures">
         <div class="fixtures-container">
             <div class="fixtures-content-container">
                 <div class="fixtures__heading">
-                    All Matches
+                    Fixtures
                 </div>
                 <span>
                     <img class="fixtures__competition-logo" src={% static "imgs/epl_competition_logo_baw.png" %}>
@@ -42,7 +42,36 @@
             <div class="fixtures__matches-list">
                 <ul class="matchList">
                     {% for match in matches_list %}
-                    {% include 'matches/match-fixture.html' with match=match %}
+                        {% if match.status == "U" %}
+                            {% include 'matches/match-fixture.html' with match=match %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+<hr style="width: 90%">
+<div class="col-12">
+    <section class="fixtures">
+        <div class="fixtures-container">
+            <div class="fixtures-content-container">
+                <div class="fixtures__heading">
+                    Results
+                </div>
+                <span>
+                    <img class="fixtures__competition-logo" src={% static "imgs/epl_competition_logo_baw.png" %}>
+                    {% if user.user_profile.type == "admin" %}
+                        <button class="btn btn-primary btn-sm ml-3" onclick="location.href='{% url 'matches:add' %}'">Add</button>
+                    {% endif %}
+                </span>
+            </div>
+            <div class="fixtures__matches-list">
+                <ul class="matchList">
+                    {% for match in matches_list %}
+                        {% if match.status == "P" %}
+                            {% include 'matches/match-fixture.html' with match=match %}
+                        {% endif %}
                     {% endfor %}
                 </ul>
             </div>
