@@ -1,16 +1,52 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}League{% endblock %}
+{% load crispy_forms_tags %}
+{% block title %} Regulation {% endblock %}
 
 {% block content %}
     <div class="content">
         <form action="" method="POST">
             {% csrf_token %}
-
-            {{ form.as_p }}
-
+            <fieldset>
+                <legend> <strong> Regulations </strong> </legend>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        {{ form.min_age|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6">
+                        {{ form.max_age|as_crispy_field }}
+                    </div> 
+                </div> 
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        {{ form.min_players|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6">
+                        {{ form.max_players|as_crispy_field }}
+                    </div> 
+                </div> 
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        {{ form.win_points|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-4">
+                        {{ form.loss_points|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-4">
+                        {{ form.draw_points|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        {{ form.max_foreign_players|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6">
+                        {{ form.duration|as_crispy_field }}
+                    </div>
+                </div> 
+            </fieldset>
             <input type="submit" value="Save" class="btn btn-primary">
-            <button onclick="location.href='/more'" class="btn btn-secondary">Back</button>
+            <a onclick="location.href='/more/regulation/view/'" class="btn btn-secondary" style="cursor: pointer; color: white">Back</a>
         </form>
     </div>
 {% endblock %}
