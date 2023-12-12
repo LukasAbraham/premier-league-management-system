@@ -11,10 +11,18 @@
                 <legend> <strong> Regulations </strong> </legend>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        {{ form.min_age|as_crispy_field }}
+                        {{ form.player_min_age|as_crispy_field }}
                     </div>
                     <div class="form-group col-md-6">
-                        {{ form.max_age|as_crispy_field }}
+                        {{ form.player_max_age|as_crispy_field }}
+                    </div> 
+                </div> 
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        {{ form.manager_min_age|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6">
+                        {{ form.manager_max_age|as_crispy_field }}
                     </div> 
                 </div> 
                 <div class="form-row">

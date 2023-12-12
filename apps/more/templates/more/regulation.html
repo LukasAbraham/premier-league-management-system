@@ -9,33 +9,72 @@
 {% block content %}
     <div class="container">
         <br>
-        <h3 class="display-4"> Regulation</h3>
+        <h3 class="display-4"> Regulation </h3>
         <br>
+        <h4> Player constraints </h4>
         <table class="table">
             <thead>
                 <tr>
-                    <th>Min Age</th>
-                    <th>Max Age</th>
-                    <th>Min Players</th>
-                    <th>Max Players</th>
-                    <th>Max Foreign Players</th>
-                    <th>Win Points</th>
-                    <th>Draw Points</th>
-                    <th>Loss Points</th>
-                    <th>Match Duration</th>
+                    <th>Min age</th>
+                    <th>Max age</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>{{regulation.min_age}}</td>
-                    <td>{{regulation.max_age}}</td>
+                    <td>{{regulation.player_min_age}}</td>
+                    <td>{{regulation.player_max_age}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <h4> Manager constraints </h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Min age</th>
+                    <th>Max age</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{regulation.manager_min_age}}</td>
+                    <td>{{regulation.manager_max_age}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <h4> Club constraints </h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Min number of players</th>
+                    <th>Max number of players</th>
+                    <th>Max number of foreign players</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
                     <td>{{regulation.min_players}}</td>
                     <td>{{regulation.max_players}}</td>
                     <td>{{regulation.max_foreign_players}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <h4> Match constraints </h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Win points</th>
+                    <th>Loss points</th>
+                    <th>Draw points</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
                     <td>{{regulation.win_points}}</td>
-                    <td>{{regulation.draw_points}}</td>
                     <td>{{regulation.loss_points}}</td>
-                    <td>{{regulation.duration}}</td>
+                    <td>{{regulation.draw_points}}</td>
                 </tr>
             </tbody>
         </table>
