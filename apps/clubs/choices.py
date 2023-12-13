@@ -119,7 +119,7 @@ CITY_CHOICES = [
 ]
 
 CUP_CHOICES_DICT = {
-    'EPL': ('Premier League', 'premier_league.png'),
+    'EPL': ('Premier League', 'epl.png'),
     'FA': ('FA Cup', 'fa_cup.png'),
     'EFL': ('EFL Cup', 'efl_cup.png'),
     'CS': ('Community Shield', 'community_shield.png'),

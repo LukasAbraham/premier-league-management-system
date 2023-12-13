@@ -37,9 +37,10 @@ def add(request):
                 club.logo.name = f'club_{club.id}.png'
                 club.save()
             for achievement_form in achievement_formset:
-                achievement = achievement_form.save(commit=False)
-                achievement.club = club
-                achievement.save()
+                if achievement_form.cleaned_data.values() and all(value for value in achievement_form.cleaned_data.values()):
+                    achievement = achievement_form.save(commit=False)
+                    achievement.club = club
+                    achievement.save()
             return HttpResponseRedirect('/clubs/add?submitted=True')
     else:
         club_form = ClubForm()
@@ -72,10 +73,12 @@ def view(request, club_id):
 
 def edit(request, club_id):
     club = Club.objects.get(pk=club_id)
-    
+    achievements = Achievement.objects.filter(club=club)
+
     if request.method == "POST":
         club_form = ClubForm(request.POST, request.FILES, instance=club)
-        if club_form.is_valid():
+        achievement_formset = AchievementFormSet(request.POST, prefix='achievements')
+        if club_form.is_valid() and achievement_formset.is_valid():
             club = club_form.save()
             if 'logo' in request.FILES:
                 if club.logo:
@@ -83,17 +86,25 @@ def edit(request, club_id):
                 club.logo = request.FILES['logo']
                 club.logo.name = f'club_{club.id}.png'
                 club.save()
+            for achievement_form in achievement_formset:
+                if achievement_form.cleaned_data.values() and all(value for value in achievement_form.cleaned_data.values()):
+                    achievement = achievement_form.save(commit=False)
+                    achievement.club = club
+                    achievement.save()
             return redirect('/clubs')
     else:
         club_form = ClubForm(instance=club)
+        achievement_formset = AchievementFormSet(prefix='achievements')
+
     user = request.user
     clubs = Club.objects.all()
     context = {
+        'achievement_formset': achievement_formset,
         'club_form': club_form,
         'clubs': clubs,
         'user': user,
     }
-    return render(request, 'clubs/add.html',context)
+    return render(request, 'clubs/add.html', context)
 
 def delete(request, club_id):
     club = Club.objects.get(pk=club_id)

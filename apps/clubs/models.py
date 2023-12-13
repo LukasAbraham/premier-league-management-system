@@ -72,7 +72,8 @@ class Achievement(models.Model):
         return f'{self.club.name} won {self.cup} in {self.year}'
 
     def save(self, *args, **kwargs):
-        self.image = CUP_CHOICES_DICT[self.cup][1]
+        if self.cup:
+            self.image = CUP_CHOICES_DICT[self.cup][1]
         super().save(*args, **kwargs)
         
     def get_img_url(self):

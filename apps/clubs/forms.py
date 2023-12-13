@@ -25,7 +25,8 @@ class ClubForm(ModelForm):
     
     def clean(self):
         cleaned_data = super().clean()
-        if cleaned_data.get('established_year') > date.today().year:
+        established_year = cleaned_data.get('established_year')
+        if established_year and established_year > date.today().year:
             self.add_error('established_year', "Invalid club's established year!")
         return cleaned_data
     
@@ -41,7 +42,8 @@ class AchievementForm(ModelForm):
             
     def clean(self):
         cleaned_data = super().clean()
-        if cleaned_data.get('year') > date.today().year:
+        year = cleaned_data.get('year')
+        if year and year > date.today().year:
             self.add_error('year', "Invalid year")
         return cleaned_data
             
