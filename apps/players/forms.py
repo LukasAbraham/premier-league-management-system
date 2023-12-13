@@ -48,7 +48,7 @@ class PlayerForm(ModelForm):
             today = date.today()
             age = today.year - dob.year
 
-            if age < regulation.min_age or age > regulation.max_age:
-                self.add_error('dob', "Invalid date of birth. Player's age must be between " + str(regulation.min_age) + " and " + str(regulation.max_age) + " years.")
+            if age < regulation.player_min_age or age > regulation.player_max_age:
+                self.add_error('dob', "Invalid date of birth. Player's age must be between " + str(regulation.player_min_age) + " and " + str(regulation.player_max_age) + " years of age")
         return cleaned_data
     

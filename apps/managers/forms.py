@@ -32,6 +32,6 @@ class ManagerForm(ModelForm):
             today = date.today()
             age = today.year - dob.year
 
-            if age < regulation.min_age:
-                self.add_error('dob', "Invalid date of birth. Manager's age must be greater than " + str(regulation.min_age) + ".")
+            if age < regulation.manager_min_age or age > regulation.manager_max_age:
+                self.add_error('dob', "Invalid date of birth. Manager's age must be between " + str(regulation.manager_min_age) + " and " + str(regulation.manager_max_age) + " years of age.")
     
