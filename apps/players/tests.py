@@ -224,7 +224,7 @@ class PlayerFormTest(TestCase):
     def test_dob_valid_boundary(self):
         form1 = PlayerForm(data={
             'name': 'John Doe',
-            'dob': date(date.today().year - Regulation.objects.get(pk=1).min_age, date.today().month, date.today().day),
+            'dob': date(date.today().year - Regulation.objects.get(pk=1).player_min_age, date.today().month, date.today().day),
             'height': 180,
             'weight': 80,
             'club': self.club.id,
@@ -236,7 +236,7 @@ class PlayerFormTest(TestCase):
 
         form2 = PlayerForm(data={
             'name': 'John Doe',
-            'dob': date(date.today().year - Regulation.objects.get(pk=1).max_age, date.today().month, date.today().day),
+            'dob': date(date.today().year - Regulation.objects.get(pk=1).player_max_age, date.today().month, date.today().day),
             'height': 180,
             'weight': 80,
             'club': self.club.id,
@@ -249,7 +249,7 @@ class PlayerFormTest(TestCase):
     def test_dob_invalid_boundary(self):
         form1 = PlayerForm(data={
             'name': 'John Doe',
-            'dob': date(date.today().year - Regulation.objects.get(pk=1).min_age + 1, date.today().month, date.today().day),
+            'dob': date(date.today().year - Regulation.objects.get(pk=1).player_min_age + 1, date.today().month, date.today().day),
             'height': 180,
             'weight': 80,
             'club': self.club.id,
@@ -261,7 +261,7 @@ class PlayerFormTest(TestCase):
 
         form2 = PlayerForm(data={
             'name': 'John Doe',
-            'dob': date(date.today().year - Regulation.objects.get(pk=1).max_age - 1, date.today().month, date.today().day),
+            'dob': date(date.today().year - Regulation.objects.get(pk=1).player_max_age - 1, date.today().month, date.today().day),
             'height': 180,
             'weight': 80,
             'club': self.club.id,
