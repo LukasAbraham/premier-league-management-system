@@ -1,4 +1,12 @@
-.clubname {
+.table th {
+    border-top: none;
+}
+
+.table thead th {
+    border-bottom: 1.5px solid #9f9f9f;
+}
+
+.club-name {
     width: 100%;
     position: absolute;
     font-family: 'Poppins';

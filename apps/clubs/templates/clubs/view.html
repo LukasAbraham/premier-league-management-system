@@ -30,6 +30,7 @@
             </tbody>
         </table>
         <br>
+        {% if has_manager %}
         <h3 class="display-4 font-select">Manager</h3>
         <table class="table">
             <thead>
@@ -40,7 +41,6 @@
                     <th></th>
                 </tr>
             </thead>
-        {% if has_manager %}
             <tbody>
                 <tr>
                     <td>
@@ -51,13 +51,14 @@
                     <td>{{club.manager.nationality}}</td>
                     {% if user.user_profile.type == 'admin' %}
                         <td><button onclick="location.href='{% url 'managers:edit' manager_id=club.manager.id %}'"class="btn btn-primary">Edit</button></td>
-                        <td><button onclick="deleteManagerConfirmation('{{ club.manager.id }}')"class="btn btn-primary">Remove</button></td>
+                        <td><button onclick="deleteManagerConfirmation('{{ club.manager.id }}')"class="btn btn-danger">Delete</button></td>
                     {% endif %}
                 </tr>
             </tbody>
-        {% endif %}
         </table>
+        {% endif %}
         <br>
+        {% if club.player_set.all %}
         <h3 class="display-4 font-select">Players</h3>
         <table class="table">
             <thead>
@@ -81,12 +82,14 @@
                     <td>{{player.get_position_display}}</td>
                     {% if user.user_profile.type == 'admin' %}
                         <td><button onclick="location.href='{% url 'players:edit' player.id %}'"class="btn btn-primary">Edit</button></td>
-                        <td><button onclick="deletePlayerConfirmation('{{ player.id }}')"class="btn btn-primary">Remove</button></td>
+                        <td><button onclick="deletePlayerConfirmation('{{ player.id }}')"class="btn btn-danger">Delete</button></td>
                     {% endif %}
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+        {% endif %}
+        {% if club.achievement_set.all %}
         <h3 class="display-4 font-select">Achievements</h3>
         <table class="table">
             <thead>
@@ -107,6 +110,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        {% endif %}
         <button onclick="location.href='{% url 'clubs:edit' club_id=club.id %}'" class="btn btn-primary">Edit</button>
         <button onclick="location.href='{% url 'clubs:delete' club_id=club.id %}'" class="btn btn-danger">Delete</button>
         <button onclick="location.href='/clubs'"class="btn btn-secondary">Back</button>
