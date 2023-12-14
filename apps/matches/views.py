@@ -45,17 +45,24 @@ def add(request):
     return render(request, 'matches/add.html', context)
 
 def add_result(request, match_id):
-    match = Match.objects.get(id=match_id)
+    match = get_object_or_404(Match, pk=match_id)
+    existing_result = Result.objects.filter(match=match).first()
+
     if request.method == 'POST':
-        form = ResultForm(request.POST, match=match)
+        if existing_result:
+            form = ResultForm(request.POST, instance=existing_result)
+        else:
+            form = ResultForm(request.POST, match=match)
+
         if form.is_valid():
             result = form.save(commit=False)
             result.match = match
             result.save()
             return redirect(reverse('matches:add_goal_events', args=[match.id]))
+
     else:
-        form = ResultForm(match=match)
-        
+        form = ResultForm(match=match, instance=existing_result)
+
     user = request.user
     clubs = Club.objects.all()
     context = {
@@ -70,6 +77,9 @@ def add_goal_events(request, match_id):
     match = get_object_or_404(Match, pk=match_id)
     result = get_object_or_404(Result, match=match)
     total_goals = result.club1_goals + result.club2_goals
+    if total_goals == 0:
+        GoalEvent.objects.filter(match=match).delete()
+        return redirect(reverse('matches:index'))
     GoalEventFormSet = formset_factory(GoalEventForm, extra=total_goals, formset=BaseGoalEventFormSet)
     if request.method == 'POST':
         if 'cancel' in request.POST and request.POST['cancel'] == 'true':
