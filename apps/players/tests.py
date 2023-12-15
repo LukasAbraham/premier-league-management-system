@@ -7,6 +7,7 @@ from datetime import date
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.db import IntegrityError
 from django.forms import widgets
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
@@ -35,6 +36,20 @@ class PlayerModelTest(TestCase):
     def test_creating_player(self):
         self.assertTrue(isinstance(self.player, Player))
         self.assertEqual(self.player.__str__(), self.player.name)
+
+    def test_creating_player_with_same_name(self):
+        with self.assertRaises(IntegrityError):
+            Player.objects.create(
+                name='John Doe',
+                dob=date(1990, 1, 1),
+                height=175,
+                weight=70,
+                club=self.club,
+                nationality='English',
+                position='MF',
+                # image=image,
+                type='HG'
+            )
 
     def test_updating_player(self):
         new_name = 'Jane Doe'
