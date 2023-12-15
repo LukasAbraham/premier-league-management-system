@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "layout.html" %}
 {% load static %}
 
 {% block additional_styles %}
@@ -33,11 +33,13 @@
                 </div>
             </div>
         </div>
-        {% if user.user_profile.type == 'admin' %}
-            <button onclick="location.href='{% url 'players:edit' player.id %}'" class="btn btn-primary">Edit</button>
-            <button onclick="deletePlayerConfirmation('{{ player.id }}')" class="btn btn-danger">Delete</button>
-        {% endif %}
-        <button onclick="location.href='/players'" class="btn btn-secondary">Back</button>
+        <div class="text-center">
+            {% if user.user_profile.type == 'admin' %}
+                <button onclick="location.href='{% url 'players:edit' player.id %}'" class="btn btn-primary">Edit</button>
+                <button onclick="deletePlayerConfirmation('{{ player.id }}')" class="btn btn-danger">Delete</button>
+            {% endif %}
+            <button onclick="location.href='/players'" class="btn btn-secondary">Back</button>
+        </div>
     </div>
 {% endblock %}
 

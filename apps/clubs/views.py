@@ -86,6 +86,7 @@ def edit(request, club_id):
                 club.logo = request.FILES['logo']
                 club.logo.name = f'club_{club.id}.png'
                 club.save()
+            achievements.delete()  # Delete all existing achievements
             for achievement_form in achievement_formset:
                 if achievement_form.cleaned_data.values() and all(value for value in achievement_form.cleaned_data.values()):
                     achievement = achievement_form.save(commit=False)
@@ -94,7 +95,7 @@ def edit(request, club_id):
             return redirect('/clubs')
     else:
         club_form = ClubForm(instance=club)
-        achievement_formset = AchievementFormSet(prefix='achievements')
+        achievement_formset = AchievementFormSet(initial=[{'cup': a.cup, 'year': a.year} for a in achievements], prefix='achievements')
 
     user = request.user
     clubs = Club.objects.all()

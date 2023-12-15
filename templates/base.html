@@ -12,64 +12,8 @@
         <title>{% block title %}{% endblock %}</title>
     </head>
     <body>
-        {% if user.is_authenticated %}
-            <div class="icon_logo">
-                <div class="clubs_icon">
-                    {% if user.user_profile.type == 'admin' %}
-                    <button>
-                        <a href="/clubs/add"><img src="{% static 'imgs/insert-img.png' %}" class="image_insert"/></a>
-                    </button>
-                    {% endif %}
-                    {% for club in clubs %}
-                    <img src="{{ club.logo.url }}" class="icon"/>
-                    {% endfor %}
-                </div>
-                <div class="logo">
-                    <div class="user">
-                        <b class="username">{{user.username}}</b>
-                        <a href="{% url 'auth:logout' %}" class="logout">Sign out</a>
-                    </div>
-                    <a href="/">
-                        <b class="logo_name">Premier League</b>
-                        <b class="season">Season 2023 - 2024</b>
-                        <img src="{% static 'imgs/epl.png' %}" class="league-image"/>
-                    </a>
-                </div>
-            </div>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/matches">Matches</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/clubs">Clubs</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/players">Players</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/managers">Managers</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/more">More</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            {% block content %}
-            {% endblock %}
-        {% else %} 
-            <script>
-                window.location.replace("/auth/");
-            </script>
-        {% endif %}
+        {% block content %}
+        {% endblock %}
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

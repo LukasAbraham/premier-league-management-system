@@ -1,9 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block additional_styles %}
-    <link rel="stylesheet" href="{% static 'css/more.css' %}">
-{% endblock %}
 {% block title %}More{% endblock %}
 
 {% block content %}
@@ -106,7 +103,7 @@
                 <thead>
                     <tr class="text-center">
                         <th>Club 1</th>
-                        <th>Result</th>
+                        <th>Result</th=>
                         <th>Club 2</th>
                         <th>Round</th>
                         <th>Stadium</th>
@@ -114,7 +111,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr style="background-color:#E0FEFE" class="text-center">
+                    <tr class="text-center">
                         <td><b>{{match.club1}}</b></td>
                         <td><b>{{match.result.club1_goals}}-{{match.result.club2_goals}}</b></td>
                         <td><b>{{match.club2}}</b></td>
@@ -151,13 +148,9 @@
                             {% endfor %}
                         {% endif %}
                     {% endfor %}
-                    <tr style="background-color: #FFFFFF"><td colspan="7"><br></td></tr>
                 </tbody>
             {% endif %}
         {% endfor %}
     </table>
-    <br>
-    <button onclick="location.href='{% url 'more:export_pdf' %}'" class="btn btn-primary">Export to PDF</button>
-    <button onclick="location.href='/more'" class="btn btn-secondary">Back</button>
     </div>
 {% endblock %}
