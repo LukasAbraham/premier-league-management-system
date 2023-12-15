@@ -36,7 +36,7 @@
             </tr>
         </tbody>
     </table>
-    {% if match.status == 'P' %}
+    {% if match.status == 'P' and match.goal_event.all %}
     <table class="table">
         <thead>
             <tr>
