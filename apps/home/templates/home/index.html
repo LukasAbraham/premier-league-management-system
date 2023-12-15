@@ -88,7 +88,7 @@
             <img class="rounded-circle" src="{% if player_stat.player.image %}{{player_stat.player.image.url}}{% else %}{% static 'imgs/default.png' %}{% endif %}" alt="Player image" width="140" height="140">
             <h2>{{player_stat.player.name}}</h2>
             <p>Goals Scored: {{player_stat.goals}}</p>
-            <a class="btn btn-secondary btn-md" href="/players/view/{{player_stat.player.id}}" role="button">Detail</a>
+            <a class="btn btn-info btn-md" href="/players/view/{{player_stat.player.id}}" role="button">Detail</a>
             </div>
             {% endfor %}
         </div>
@@ -109,7 +109,7 @@
                         <div class="card-body">
                           <p class="font-weight-bold">{{club_stat.club.name}}</p>
                           <p class="item-price">Points: {{club_stat.points}}</p>
-                          <a class="btn btn-secondary btn-md" href="/clubs/view/{{club_stat.club.id}}" role="button">Detail</a>
+                          <a class="btn btn-info btn-md" href="/clubs/view/{{club_stat.club.id}}" role="button">Detail</a>
                         </div>
                     </div>
                     </div>
@@ -125,7 +125,7 @@
         <div class="jumbotron">
           <h3 class="display-4"> Explore all clubs and managers</h1>
           <p class="lead">
-            <a class="btn btn-info btn-md" href="/clubs" role="button">View all clubs</a>
+            <a class="btn btn-primary btn-md" href="/clubs" role="button">View all clubs</a>
           </p>
         </div>
 {% endblock %}

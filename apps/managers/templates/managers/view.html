@@ -28,11 +28,13 @@
                 </div>
             </div>
         </div>
-        {% if user.user_profile.type == 'admin' %}
-            <button onclick="location.href='{% url 'managers:edit' manager.id %}'" class="btn btn-primary">Edit</button>
-            <button onclick="deleteManagerConfirmation('{{ manager.id }}')" class="btn btn-danger">Delete</button>
-        {% endif %}
-        <button onclick="location.href='/managers'" class="btn btn-secondary">Back</button>
+        <div class="text-center">
+            {% if user.user_profile.type == 'admin' %}
+                <button onclick="location.href='{% url 'managers:edit' manager.id %}'" class="btn btn-primary">Edit</button>
+                <button onclick="deleteManagerConfirmation('{{ manager.id }}')" class="btn btn-danger">Delete</button>
+            {% endif %}
+            <button onclick="location.href='/managers'" class="btn btn-secondary">Back</button>
+        </div>
     </div>
 {% endblock %}
 

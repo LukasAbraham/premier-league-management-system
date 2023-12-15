@@ -111,9 +111,12 @@
             </tbody>
         </table>
         {% endif %}
-        <button onclick="location.href='{% url 'clubs:edit' club_id=club.id %}'" class="btn btn-primary">Edit</button>
-        <button onclick="location.href='{% url 'clubs:delete' club_id=club.id %}'" class="btn btn-danger">Delete</button>
-        <button onclick="location.href='/clubs'"class="btn btn-secondary">Back</button>
+        <hr>
+        <div class="text-center mb-5">
+            <button onclick="location.href='{% url 'clubs:edit' club_id=club.id %}'" class="btn btn-primary">Edit</button>
+            <button onclick="location.href='{% url 'clubs:delete' club_id=club.id %}'" class="btn btn-danger">Delete</button>
+            <button onclick="location.href='/clubs'"class="btn btn-secondary">Back</button>
+        </div>
     </div>
 {% endblock %}
 
