@@ -77,8 +77,8 @@ def add_goal_events(request, match_id):
     match = get_object_or_404(Match, pk=match_id)
     result = get_object_or_404(Result, match=match)
     total_goals = result.club1_goals + result.club2_goals
+    GoalEvent.objects.filter(match=match).delete()
     if total_goals == 0:
-        GoalEvent.objects.filter(match=match).delete()
         return redirect(reverse('matches:index'))
     GoalEventFormSet = formset_factory(GoalEventForm, extra=total_goals, formset=BaseGoalEventFormSet)
     if request.method == 'POST':
