@@ -7,6 +7,7 @@ from datetime import date
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.db import IntegrityError
 from django.forms import widgets
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
@@ -30,6 +31,15 @@ class ManagerModelTest(TestCase):
     def test_creating_manager(self):
         self.assertTrue(isinstance(self.manager, Manager))
         self.assertEqual(self.manager.__str__(), self.manager.name)
+
+    def test_creatin_manager_with_same_name(self):
+        with self.assertRaises(IntegrityError):
+            Manager.objects.create(
+                name='Test Manager',
+                nationality='English',
+                dob=date(1970, 1, 1),
+                club=self.club
+            )
 
     def test_updating_manager(self):
         new_name = 'Updated Manager'
