@@ -1,5 +1,6 @@
 {% extends "auth/base.html" %}
 {% load static %}
+{% load static crispy_forms_tags %}
 {% block title %}Sign up{% endblock %}
 
 {% block content %}
@@ -10,8 +11,8 @@
         {% endif %}
         <form action="{% url 'auth:sign_up' %}" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Sign up" class="btn btn-primary">
+            {{ form|crispy }}
+            <input type="submit" value="Sign up" class="btn btn-primary mt-3">
             <div class="Remind">
                 <b>Already have an account?</b>
                 <a href="/auth/">Sign in</a>
