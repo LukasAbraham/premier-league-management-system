@@ -7,6 +7,7 @@ from datetime import date
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.db import IntegrityError
 from django.forms import widgets
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
@@ -35,6 +36,20 @@ class PlayerModelTest(TestCase):
     def test_creating_player(self):
         self.assertTrue(isinstance(self.player, Player))
         self.assertEqual(self.player.__str__(), self.player.name)
+
+    def test_creating_player_with_same_name(self):
+        with self.assertRaises(IntegrityError):
+            Player.objects.create(
+                name='John Doe',
+                dob=date(1990, 1, 1),
+                height=175,
+                weight=70,
+                club=self.club,
+                nationality='English',
+                position='MF',
+                # image=image,
+                type='HG'
+            )
 
     def test_updating_player(self):
         new_name = 'Jane Doe'
@@ -224,7 +239,7 @@ class PlayerFormTest(TestCase):
     def test_dob_valid_boundary(self):
         form1 = PlayerForm(data={
             'name': 'John Doe',
-            'dob': date(date.today().year - Regulation.objects.get(pk=1).min_age, date.today().month, date.today().day),
+            'dob': date(date.today().year - Regulation.objects.get(pk=1).player_min_age, date.today().month, date.today().day),
             'height': 180,
             'weight': 80,
             'club': self.club.id,
@@ -236,7 +251,7 @@ class PlayerFormTest(TestCase):
 
         form2 = PlayerForm(data={
             'name': 'John Doe',
-            'dob': date(date.today().year - Regulation.objects.get(pk=1).max_age, date.today().month, date.today().day),
+            'dob': date(date.today().year - Regulation.objects.get(pk=1).player_max_age, date.today().month, date.today().day),
             'height': 180,
             'weight': 80,
             'club': self.club.id,
@@ -249,7 +264,7 @@ class PlayerFormTest(TestCase):
     def test_dob_invalid_boundary(self):
         form1 = PlayerForm(data={
             'name': 'John Doe',
-            'dob': date(date.today().year - Regulation.objects.get(pk=1).min_age + 1, date.today().month, date.today().day),
+            'dob': date(date.today().year - Regulation.objects.get(pk=1).player_min_age + 1, date.today().month, date.today().day),
             'height': 180,
             'weight': 80,
             'club': self.club.id,
@@ -261,7 +276,7 @@ class PlayerFormTest(TestCase):
 
         form2 = PlayerForm(data={
             'name': 'John Doe',
-            'dob': date(date.today().year - Regulation.objects.get(pk=1).max_age - 1, date.today().month, date.today().day),
+            'dob': date(date.today().year - Regulation.objects.get(pk=1).player_max_age - 1, date.today().month, date.today().day),
             'height': 180,
             'weight': 80,
             'club': self.club.id,
