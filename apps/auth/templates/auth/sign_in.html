@@ -1,5 +1,9 @@
-{% extends "auth/base.html" %}
+{% extends "base.html" %}
 {% load static %}
+{% block additional_styles %}
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
 {% block title %}Sign in{% endblock %}
 
 {% block content %}

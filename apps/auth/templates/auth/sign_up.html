@@ -1,6 +1,10 @@
-{% extends "auth/base.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% load static crispy_forms_tags %}
+{% block additional_styles %}
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
 {% block title %}Sign up{% endblock %}
 
 {% block content %}
