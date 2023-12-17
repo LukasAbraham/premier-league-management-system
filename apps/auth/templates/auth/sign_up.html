@@ -11,7 +11,10 @@
     <div class="left" style="background-image: url('{% static 'imgs/auth-bg.png' %}');"></div>
     <div class = "right">
         {% if form.errors %}
-            <p>Account creation failed!</p>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            Account creation failed!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         {% endif %}
         <form action="{% url 'auth:sign_up' %}" method="post">
             {% csrf_token %}
