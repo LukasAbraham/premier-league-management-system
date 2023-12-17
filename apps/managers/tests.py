@@ -32,7 +32,7 @@ class ManagerModelTest(TestCase):
         self.assertTrue(isinstance(self.manager, Manager))
         self.assertEqual(self.manager.__str__(), self.manager.name)
 
-    def test_creatin_manager_with_same_name(self):
+    def test_creating_manager_with_same_name(self):
         with self.assertRaises(IntegrityError):
             Manager.objects.create(
                 name='Test Manager',
