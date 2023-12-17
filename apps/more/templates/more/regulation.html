@@ -79,9 +79,11 @@
             </tbody>
         </table>
         <br>
-        {% if user.user_profile.type == 'admin' %}
-            <button onclick="location.href='{% url 'more:edit_regulation' %}'" class="btn btn-primary">Edit</button>
-        {% endif %}
-        <button onclick="location.href='/more'" class="btn btn-secondary">Back</button>
+        <div class="text-center mb-5">
+            {% if user.user_profile.type == 'admin' %}
+                <button onclick="location.href='{% url 'more:edit_regulation' %}'" class="btn btn-primary">Edit</button>
+            {% endif %}
+            <button onclick="location.href='/more'" class="btn btn-secondary">Back</button>
+        </div>
     </div>
 {% endblock %}
