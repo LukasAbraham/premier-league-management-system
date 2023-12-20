@@ -17,7 +17,6 @@
 	--color-theme-primary: #623ce6;
 }
 
-
 button,
 input,
 select,
@@ -217,7 +216,7 @@ body {
 .scrolling-item {
     flex-shrink: 0;
     margin-right: auto;
-	/* margin-left: auto; */
+	margin-left: auto;
 }
 
 @media (max-width: 1023px) {
@@ -228,5 +227,8 @@ body {
 	}
 	.row {
 		flex-direction: column;
+	}
+	.match {
+		min-width: 500px;
 	}
 }

@@ -18,40 +18,36 @@
             </form>
         </div>
         <br>
-        <div class="bg-dark py-2">
-            <h3 class="display-4 text-white text-center mb-0">Manager of the month</h3>
-        </div>
+        <h3 class="display-4 text-center"> Manager of the month </h3>
         {% for manager in managers_list|slice:":1" %}
-            <div class="jumbotron">
-                <div class="col-md-6 mx-auto">
-                    <div class="card mb-3 card-bg h-100" style="max-width: 540px;">
-                        <div class="row no-gutters">
-                            <div class="col-md-4 mt-5">
-                                <img src="{% if manager.image %}{{manager.image.url}}{% else %}{% static 'imgs/default.png' %}{% endif %}" class="card-img" alt="">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body text-white">
-                                    <h4 class="card-title font-weight-bold">{{ manager.name }}</h4>
-                                    <div class="d-flex align-items-center mb-3">
-                                        <img src="{{ manager.club.logo.url }}" class="card-logo-img img-fluid mr-2" height="30px" width="30px" alt="">
-                                        <p class="mb-0">{{ manager.club.name }}</p>
-                                    </div>
-                                    <p class="card-text">Games: {{ manager.club.club_stats.wins|add:manager.club.club_stats.draws|add:manager.club.club_stats.losses }}</p>
-                                    <div class="d-flex">
-                                        <p class="card-text mr-4">GF: {{ manager.club.club_stats.goals }}</p>
-                                        <p class="card-text">GA: {{ manager.club.club_stats.conceded_goals }}</p>
-                                    </div>
-                                    <div class="d-flex">
-                                        <p class="card-text mr-4">Wins: {{ manager.club.club_stats.wins }}</p>
-                                        <p class="card-text mr-4">Draws: {{ manager.club.club_stats.draws }}</p>
-                                        <p class="card-text">Losses: {{ manager.club.club_stats.losses }}</p>
-                                    </div>                 
+            <div class="col-md-6 mx-auto">
+                <div class="card mb-3 card-bg h-100" style="max-width: 540px;">
+                    <div class="row no-gutters">
+                        <div class="col-md-4 mt-5">
+                            <img src="{% if manager.image %}{{manager.image.url}}{% else %}{% static 'imgs/default.png' %}{% endif %}" class="card-img" alt="">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body text-white">
+                                <h4 class="card-title font-weight-bold">{{ manager.name }}</h4>
+                                <div class="d-flex align-items-center mb-3">
+                                    <img src="{{ manager.club.logo.url }}" class="card-logo-img img-fluid mr-2" height="30px" width="30px" alt="">
+                                    <p class="mb-0"><b>{{ manager.club.name }}</b></p>
                                 </div>
+                                <p class="card-text"><b>Games:</b> {{ manager.club.club_stats.wins|add:manager.club.club_stats.draws|add:manager.club.club_stats.losses }}</p>
+                                <div class="d-flex">
+                                    <p class="card-text mr-4"><b>GF:</b> {{ manager.club.club_stats.goals }}</p>
+                                    <p class="card-text"><b>GA:</b> {{ manager.club.club_stats.conceded_goals }}</p>
+                                </div>
+                                <div class="d-flex">
+                                    <p class="card-text mr-4"><b>Wins:</b> {{ manager.club.club_stats.wins }}</p>
+                                    <p class="card-text mr-4"><b>Draws:</b> {{ manager.club.club_stats.draws }}</p>
+                                    <p class="card-text"><b>Losses:</b> {{ manager.club.club_stats.losses }}</p>
+                                </div>                 
                             </div>
-                            <div class="d-flex align-items-center mb-0">
-                                <img src="{% static 'imgs/MOTM_award.png' %}" class="card-logo-img img-fluid mr-2" height="25px" width="25px" alt="">
-                                <p class="card-text"><small class="text-white">MOTM award</small></p>
-                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-0">
+                            <img src="{% static 'imgs/MOTM_award.png' %}" class="card-logo-img img-fluid mr-2" height="25px" width="25px" alt="">
+                            <p class="card-text"><small class="text-white"><b>MOTM award</b></small></p>
                         </div>
                     </div>
                 </div>
