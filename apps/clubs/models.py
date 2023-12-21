@@ -25,24 +25,25 @@ class Club(models.Model):
             ClubStats.objects.create(club=self)
     
     def update_status(self):
-        regulation = Regulation.objects.get(pk=1)
-        max_foreign_players = regulation.max_foreign_players
-        max_players = regulation.max_players
-        min_players = regulation.min_players        
-        
-        foreign_players = self.player_set.filter(nationality='English').count()
-        total_players = self.player_set.count()
-        try: 
-            manager = Manager.objects.get(club=self)
-        except Manager.DoesNotExist:
-            manager = None
-        
-        if foreign_players <= max_foreign_players and total_players <= max_players and total_players >= min_players and manager is not None:
-            self.status = 'V'
-        else:
-            self.status = 'I'
+        if Regulation.objects.exists():
+            regulation = Regulation.objects.get(pk=1)
+            max_foreign_players = regulation.max_foreign_players
+            max_players = regulation.max_players
+            min_players = regulation.min_players        
             
-        self.save()
+            foreign_players = self.player_set.filter(nationality='English').count()
+            total_players = self.player_set.count()
+            try: 
+                manager = Manager.objects.get(club=self)
+            except Manager.DoesNotExist:
+                manager = None
+            
+            if foreign_players <= max_foreign_players and total_players <= max_players and total_players >= min_players and manager is not None:
+                self.status = 'V'
+            else:
+                self.status = 'I'
+                
+            self.save()
         
     
 class ClubStats(models.Model):
