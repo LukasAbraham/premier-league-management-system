@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Match, Result, GoalEvent
 from apps.players.models import Player
@@ -27,20 +28,23 @@ def index(request):
     return render(request, 'matches/index.html', context)
 
 def add(request):
+    submitted = False
     if request.method == 'POST':
         form = MatchForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("/matches")
+            return HttpResponseRedirect("/matches/add?submitted=True")
     else:
         form = MatchForm()
-    
+        if 'submitted' in request.GET:
+            submitted = True    
     user = request.user
     clubs = Club.objects.all()
     context = {
         'form': form,
         'clubs': clubs,
         'user': user,
+        'submitted': submitted,
     }
     return render(request, 'matches/add.html', context)
 

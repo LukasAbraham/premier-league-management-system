@@ -50,10 +50,10 @@
 <div class="match-fixture__end-container"> 
     {% if user.user_profile.type == "admin" %}
         {% if match.status == "P" %}
-            <button class="btn btn-info btn-sm" onclick="event.stopPropagation(); location.href='{% url 'matches:add_result' match_id=match.id %}'">Update result</button>
+            <button id="update-{{match.id}}" class="btn btn-info btn-sm" onclick="event.stopPropagation(); location.href='{% url 'matches:add_result' match_id=match.id %}'">Update result</button>
         {% endif %}
-        <button class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); location.href='{% url 'matches:edit' match_id=match.id %}'">Edit</button>
-        <button class="btn btn-danger btn-sm" onclick="event.stopPropagation(); deleteMatchConfirmation('{{ match.id }}')">Delete</button>
+        <button id="edit-{{match.id}}" class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); location.href='{% url 'matches:edit' match_id=match.id %}'">Edit</button>
+        <button id="delete-{{match.id}}" class="btn btn-danger btn-sm" onclick="event.stopPropagation(); deleteMatchConfirmation('{{ match.id }}')">Delete</button>
     {% endif %}
 </div>
 <span class="match-fixture__end-icon">
