@@ -23,10 +23,11 @@ class RegulationForm(forms.ModelForm):
         win_points = cleaned_data.get('win_points')
         loss_points = cleaned_data.get('loss_points')
         draw_points = cleaned_data.get('draw_points')
-        if win_points < draw_points or win_points < loss_points:
-            self.add_error('win_points', "Points for a win must be greater than points for a loss and points for a draw")
-        if draw_points < loss_points or draw_points > win_points:
-            self.add_error('draw_points', "Points for a draw must be greater than points for a loss and lower than points for a win")
-        if loss_points > draw_points or loss_points > win_points:
-            self.add_error('loss_points', "Points for a loss must be lower that points for a draw and points for a win") 
+        if win_points and loss_points and draw_points:
+            if win_points < draw_points or win_points < loss_points:
+                self.add_error('win_points', "Points for a win must be greater than points for a loss and points for a draw")
+            if draw_points < loss_points or draw_points > win_points:
+                self.add_error('draw_points', "Points for a draw must be greater than points for a loss and lower than points for a win")
+            if loss_points > draw_points or loss_points > win_points:
+                self.add_error('loss_points', "Points for a loss must be lower that points for a draw and points for a win") 
         
