@@ -2,6 +2,7 @@ import os
 import time
 from datetime import date
 from django.conf import settings
+from django.core.files import File
 from django.contrib.auth.models import User
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from apps.clubs.models import Club
@@ -57,9 +58,15 @@ class TestPlayersApp(StaticLiveServerTestCase):
 
     def create_club(self):
         """
-        This method create a dummy club instance for testing.
+        This method creates a dummy club instance for testing.
         """
-        self.club = Club.objects.create(name="Liverpool", logo="test_media/test/club_logo.png", stadium="AN")
+        with open("test_media/test_club_logo.png", 'rb') as f:
+            logo_image = File(f)
+            self.club = Club.objects.create(
+                name="Liverpool", 
+                logo=logo_image,
+                stadium="AN"
+            )
 
     def navigate_to_players(self):
         """

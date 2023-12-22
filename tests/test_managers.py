@@ -57,7 +57,7 @@ class TestManagersApp(StaticLiveServerTestCase):
 
     def create_club(self):
         """
-        This method create a dummy club instance for testing.
+        This method creates a dummy club instance for testing.
         """
         with open("test_media/test_club_logo.png", 'rb') as f:
             logo_image = File(f)
