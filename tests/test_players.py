@@ -45,7 +45,7 @@ class TestPlayersApp(StaticLiveServerTestCase):
         """
         This method logs in to the application as an admin
 
-        Args:
+        Parameters:
             username (str): The username to sign in with.
             password (str): The password to sign in with.
         """
@@ -79,7 +79,7 @@ class TestPlayersApp(StaticLiveServerTestCase):
         """
         This method fills out the player form.
 
-        Args:
+        Parameters:
             name (str): The player name
             dob (str): The player's date of birth
             weight (str): The player's weight
@@ -122,7 +122,7 @@ class TestPlayersApp(StaticLiveServerTestCase):
         """
         This method adds a new player through the UI by automating with Selenium
 
-        Args:
+        Parameters:
             name (str): The player name
             dob (str): The player's date of birth
             weight (str): The player's weight

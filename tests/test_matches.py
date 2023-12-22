@@ -50,7 +50,7 @@ class TestMatchesApp(StaticLiveServerTestCase):
         """
         This method logs in to the application as an admin
 
-        Args:
+        Parameters:
             username (str): The username to sign in with.
             password (str): The password to sign in with.
         """
@@ -65,7 +65,7 @@ class TestMatchesApp(StaticLiveServerTestCase):
         """
         This method creates a dummy club for testing
 
-        Args:
+        Parameters:
             name (str): The club name
             logo_path (str): The path to club logo image
             stadium (str): The club's stadium
@@ -93,7 +93,7 @@ class TestMatchesApp(StaticLiveServerTestCase):
         """
         This method fills out the match form.
 
-        Args:
+        Parameters:
             round (int): Fixture round number
             time (datetime): Match fixture
             club1 (str): Club 1 name (indicate the club which competes its opponent at home)
@@ -123,7 +123,7 @@ class TestMatchesApp(StaticLiveServerTestCase):
         """
         This method fills out the result form of a previous match.
 
-        Args:
+        Parameters:
             club1_goals (int): number of goals scored by club 1
             club2_goals (int): number of goals scored by club 2
         """
@@ -138,7 +138,7 @@ class TestMatchesApp(StaticLiveServerTestCase):
         """
         This method fills out the goal event forms for a previous match. 
 
-        Args:
+        Parameters:
             id (int): the number order of the goal event form in the formset.
             scoring_player_name (str): name of the scoring player for that goal event
             assisting_player_name (str): name of the assisting player for that goal event (can be None)
@@ -167,7 +167,7 @@ class TestMatchesApp(StaticLiveServerTestCase):
         """
         This method adds a new match through the UI
 
-        Args:
+        Parameters:
             round (int): Fixture round number
             time (str): Match fixture
             club1 (str): Club 1 name

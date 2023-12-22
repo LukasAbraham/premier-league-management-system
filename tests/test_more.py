@@ -40,7 +40,7 @@ class TestRegulation(StaticLiveServerTestCase):
         """
         This method logs in to the application as an admin
 
-        Args:
+        Parameters:
             username (str): The username to sign in with
             password (str): The password to sign in with
         """
@@ -58,11 +58,11 @@ class TestRegulation(StaticLiveServerTestCase):
         more_tab = self.driver.find_element(by=By.XPATH, value="//a[@href='/more']")
         more_tab.click()
     
-    def fill_regulation_form(self, **kwargs):
+    def fill_regulation_form(self, **kwParameters):
         """
         This method fills out the edit regulation form
         """
-        for key, value in kwargs.items():
+        for key, value in kwParameters.items():
             if value is not None:
                 requested_field = self.driver.find_element(by=By.ID, value=f"id_{key}")
                 requested_field.clear()

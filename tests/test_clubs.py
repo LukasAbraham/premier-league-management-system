@@ -93,7 +93,7 @@ class TestClubsApp(StaticLiveServerTestCase):
         """
         This method adds a new club through the UI by automating with Selenium
 
-        Args:
+        Parameters:
             name (str): The name of the club
             logo (_type_): The path to the club logo image.
             stadium (_type_): The name of the club stadium.
@@ -105,7 +105,7 @@ class TestClubsApp(StaticLiveServerTestCase):
     def create_club(self, name, logo_path, stadium):
         """
         This method adds a new club in the database using Django's ORM
-        Args:
+        Parameters:
             name (str): The name of the club
             logo (str): The path to the club logo image
             stadium (str): The name of the club stadium
