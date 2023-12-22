@@ -147,7 +147,6 @@ class TestClubsApp(StaticLiveServerTestCase):
         self.fill_form("Manchester City", "test_media/test_club_logo.png", "Etihad Stadium")    
         updated_club = Club.objects.get(id=self.club.id)
         self.assertEqual(updated_club.name, "Manchester City", "The club's name was not updated correctly")
-        time.sleep(3)
         
     def test_delete_club(self):
         """
@@ -155,7 +154,6 @@ class TestClubsApp(StaticLiveServerTestCase):
         """
         self.create_club(name="Everton", logo_path="test_media/test_club_logo.png", stadium="LS")
         self.driver.refresh()
-        time.sleep(3)
         try:
             delete_button = self.driver.find_element(by=By.ID, value=f"delete-{self.club.id}")
         except NoSuchElementException as e:
