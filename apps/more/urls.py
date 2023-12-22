@@ -5,7 +5,7 @@ from . import views
 
 app_name = 'more'
 urlpatterns = [
-    path('', views.index),
+    path('', views.index, name='index'),
     path('regulation/edit/', views.edit_regulation, name='edit_regulation'),
     path('standing', views.standing, name='standing'),
     path('stats_records', views.stats_records, name='stats_records'),
