@@ -30,20 +30,23 @@ class MatchForm(forms.ModelForm):
         club2 = cleaned_data.get('club2')
         round = cleaned_data.get('round')
         
-        if club1 == club2:
-            raise ValidationError("A club cannot compete against itself.")
-        
-        if club1.status == 'I':
-            raise ValidationError(f"{club1.name} is not valid to compete.")
-        
-        if club2.status == 'I':
-            raise ValidationError(f"{club2.name} is not valid to compete.")
-        
-        if Match.objects.filter(round=round, club1=club1).exists() or Match.objects.filter(round=round, club2=club1).exists():
-            raise ValidationError(f"{club1.name} has already competed in round {round}.")
-        
-        if Match.objects.filter(round=round, club1=club2).exists() or Match.objects.filter(round=round, club2=club2).exists():
-            raise ValidationError(f"{club2.name} has already competed in round {round}.")
+        if club1 and club2:
+            if club1 == club2:
+                raise ValidationError("A club cannot compete against itself.")
+            
+            if club1.status == 'I':
+                raise ValidationError(f"{club1.name} is not valid to compete.")
+            
+            if club2.status == 'I':
+                raise ValidationError(f"{club2.name} is not valid to compete.")
+            
+            if Match.objects.filter(round=round, club1=club1).exists() or Match.objects.filter(round=round, club2=club1).exists():
+                raise ValidationError(f"{club1.name} has already competed in round {round}.")
+            
+            if Match.objects.filter(round=round, club1=club2).exists() or Match.objects.filter(round=round, club2=club2).exists():
+                raise ValidationError(f"{club2.name} has already competed in round {round}.")
+        else:
+            raise ValidationError("Invalid club IDs provided.")
 
         
 class ResultForm(forms.ModelForm):
