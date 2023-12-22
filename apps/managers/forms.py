@@ -27,11 +27,15 @@ class ManagerForm(ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         dob = cleaned_data.get('dob')
-        regulation = Regulation.objects.get(pk=1)
-        if dob:
-            today = date.today()
-            age = today.year - dob.year
+        
+        if Regulation.objects.exists():
+            regulation = Regulation.objects.get(pk=1)
+            if dob:
+                today = date.today()
+                age = today.year - dob.year
 
-            if age < regulation.manager_min_age or age > regulation.manager_max_age:
-                self.add_error('dob', "Invalid date of birth. Manager's age must be between " + str(regulation.manager_min_age) + " and " + str(regulation.manager_max_age) + " years of age.")
-    
+                if age < regulation.manager_min_age or age > regulation.manager_max_age:
+                    self.add_error('dob', "Invalid date of birth. Manager's age must be between " + str(regulation.manager_min_age) + " and " + str(regulation.manager_max_age) + " years of age.")
+        else:
+            if dob and dob > date.today():
+                self.add_error('dob', "Invalid date of birth. Date of birth cannot be in the future.")
