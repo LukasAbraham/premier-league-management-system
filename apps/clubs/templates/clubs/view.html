@@ -50,8 +50,8 @@
                     </td>
                     <td>{{club.manager.nationality}}</td>
                     {% if user.user_profile.type == 'admin' %}
-                        <td><button onclick="location.href='{% url 'managers:edit' manager_id=club.manager.id %}'"class="btn btn-primary">Edit</button></td>
-                        <td><button onclick="deleteManagerConfirmation('{{ club.manager.id }}')"class="btn btn-danger">Delete</button></td>
+                        <td><button id="manager-edit-{{club.manager.id}}" onclick="location.href='{% url 'managers:edit' manager_id=club.manager.id %}'"class="btn btn-primary">Edit</button></td>
+                        <td><button id="manager-delete-{{club.manager.id}}" onclick="deleteManagerConfirmation('{{ club.manager.id }}')"class="btn btn-danger">Delete</button></td>
                     {% endif %}
                 </tr>
             </tbody>
@@ -81,8 +81,8 @@
                     <td>{{player.nationality}}</td>
                     <td>{{player.get_position_display}}</td>
                     {% if user.user_profile.type == 'admin' %}
-                        <td><button onclick="location.href='{% url 'players:edit' player.id %}'"class="btn btn-primary">Edit</button></td>
-                        <td><button onclick="deletePlayerConfirmation('{{ player.id }}')"class="btn btn-danger">Delete</button></td>
+                        <td><button id="player-edit-{{player.id}}" onclick="location.href='{% url 'players:edit' player.id %}'"class="btn btn-primary">Edit</button></td>
+                        <td><button id="player-delete-{{player.id}}" onclick="deletePlayerConfirmation('{{ player.id }}')"class="btn btn-danger">Delete</button></td>
                     {% endif %}
                 </tr>
                 {% endfor %}
@@ -113,8 +113,8 @@
         {% endif %}
         <hr>
         <div class="text-center mb-5">
-            <button onclick="location.href='{% url 'clubs:edit' club_id=club.id %}'" class="btn btn-primary">Edit</button>
-            <button onclick="location.href='{% url 'clubs:delete' club_id=club.id %}'" class="btn btn-danger">Delete</button>
+            <button id="club-edit" onclick="location.href='{% url 'clubs:edit' club_id=club.id %}'" class="btn btn-primary">Edit</button>
+            <button id="club-delete" onclick="deleteClubConfirmation('{{ club.id }}')" class="btn btn-danger">Delete</button>
             <button onclick="location.href='/clubs'"class="btn btn-secondary">Back</button>
         </div>
     </div>
@@ -122,6 +122,11 @@
 
 {% block additional_scripts %}
 <script>
+    function deleteClubConfirmation(clubId) {
+        if (confirm("Do you confirm to remove this club?")) {
+            location.href = "/clubs/delete/" + clubId + "/";
+        }
+    }
     function deletePlayerConfirmation(playerId) {
         if (confirm("Do you confirm to remove this player?")) {
             location.href = "/players/delete/" + playerId + "/";
