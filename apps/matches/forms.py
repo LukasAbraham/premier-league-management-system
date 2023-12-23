@@ -93,7 +93,10 @@ class GoalEventForm(forms.ModelForm):
         time = cleaned_data.get('time')
         type = cleaned_data.get('type')
         
-        regulation = Regulation.objects.get(pk=1)
+        if Regulation.objects.exists():
+            regulation = Regulation.objects.get(pk=1)
+        else:
+            regulation = None
         
         if (scoring_player and assisting_player) and scoring_player == assisting_player:
             self.add_error("assisting_player", "A player cannot assist himself")
@@ -102,7 +105,7 @@ class GoalEventForm(forms.ModelForm):
             self.add_error("assisting_player", "Scoring player and assisting player must be in the same club!")
         if (club and scoring_player and type) and (scoring_player.club != club and type != 'OG'):
             self.add_error("type", "If a player scored for the opposing club then the goal type must be 'Own goal'")
-        if time and time > regulation.duration:
+        if time and regulation and time > regulation.duration:
             self.add_error('time', f"Invalid goal scoring time. The match duration is only {regulation.duration} minutes")
         if club and club not in [self.match.club1, self.match.club2]:
             self.add_error('club', "The club must be one of the clubs playing in the match.")

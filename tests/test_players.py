@@ -2,6 +2,7 @@ import os
 import time
 from datetime import date
 from django.conf import settings
+from django.core.files import File
 from django.contrib.auth.models import User
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from apps.clubs.models import Club
@@ -44,7 +45,7 @@ class TestPlayersApp(StaticLiveServerTestCase):
         """
         This method logs in to the application as an admin
 
-        Args:
+        Parameters:
             username (str): The username to sign in with.
             password (str): The password to sign in with.
         """
@@ -57,9 +58,15 @@ class TestPlayersApp(StaticLiveServerTestCase):
 
     def create_club(self):
         """
-        This method create a dummy club instance for testing.
+        This method creates a dummy club instance for testing.
         """
-        self.club = Club.objects.create(name="Liverpool", logo="test_media/test/club_logo.png", stadium="AN")
+        with open("test_media/test_club_logo.png", 'rb') as f:
+            logo_image = File(f)
+            self.club = Club.objects.create(
+                name="Liverpool", 
+                logo=logo_image,
+                stadium="AN"
+            )
 
     def navigate_to_players(self):
         """
@@ -72,7 +79,7 @@ class TestPlayersApp(StaticLiveServerTestCase):
         """
         This method fills out the player form.
 
-        Args:
+        Parameters:
             name (str): The player name
             dob (str): The player's date of birth
             weight (str): The player's weight
@@ -115,7 +122,7 @@ class TestPlayersApp(StaticLiveServerTestCase):
         """
         This method adds a new player through the UI by automating with Selenium
 
-        Args:
+        Parameters:
             name (str): The player name
             dob (str): The player's date of birth
             weight (str): The player's weight

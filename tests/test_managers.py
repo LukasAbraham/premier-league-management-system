@@ -44,7 +44,7 @@ class TestManagersApp(StaticLiveServerTestCase):
     def login(self, username, password):
         """
         This method logs in to the application as an admin
-        Args:
+        Parameters:
             username (str): The username to log in with
             password (str): The password to log in with
         """
@@ -57,7 +57,7 @@ class TestManagersApp(StaticLiveServerTestCase):
 
     def create_club(self):
         """
-        This method create a dummy club instance for testing.
+        This method creates a dummy club instance for testing.
         """
         with open("test_media/test_club_logo.png", 'rb') as f:
             logo_image = File(f)
@@ -78,7 +78,7 @@ class TestManagersApp(StaticLiveServerTestCase):
         """
         This method fills out the manager form.
 
-        Args:
+        Parameters:
             name (str): The manager name
             dob (str): The manager's date of birth
             club (str): The manager's club
@@ -109,7 +109,7 @@ class TestManagersApp(StaticLiveServerTestCase):
         """
         This method adds a new manager through the UI by automating with Selenium
 
-        Args:
+        Parameters:
             name (str): The manager name
             dob (str): The manager's date of birth
             club (str): The manager's club
