@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from apps.auth.models import UserProfile
 from apps.clubs.models import Club
+from apps.players.models import Player
+from apps.managers.models import Manager
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -162,6 +164,89 @@ class TestClubsApp(StaticLiveServerTestCase):
         alert = self.driver.switch_to.alert
         alert.accept()
         # add a little delay for the db to update
+        time.sleep(2)
+        with self.assertRaises(Club.DoesNotExist):
+            Club.objects.get(id=self.club.id)
+            
+    def test_delete_player_from_club(self):
+        """
+        This method tests the deletion of a player in the club view screen
+        """
+        self.create_club(name="Everton", logo_path="test_media/test_club_logo.png", stadium="ET")
+        self.player = Player.objects.create(
+            name="John Doe",
+            dob = "1999-10-29",
+            weight=80,
+            height=180,
+            club=self.club,
+            nationality="Croatian",
+            position="FW"
+        )
+        self.driver.refresh()
+        try:
+            selected_club = self.driver.find_element(by=By.XPATH, value="//span[text()='Everton']")
+        except NoSuchElementException as e:
+            self.fail(f"Test failed: {e}")
+        selected_club.click()
+        try:
+            player_delete_button = self.driver.find_element(by=By.ID, value=f"player-delete-{self.player.id}")
+        except NoSuchElementException as e:
+            self.fail(f"Test failed: {e}")
+        player_delete_button.click()
+        alert = self.driver.switch_to.alert
+        alert.accept()
+        time.sleep(1)
+        assert self.driver.title == "Clubs"
+        
+    def test_delete_manager_from_club(self):
+        """
+        This method tests the deletion of a manager in the club view screen
+        """
+        self.create_club(name="Everton", logo_path="test_media/test_club_logo.png", stadium="ET")
+        self.manager = Manager.objects.create(
+            name="John Doe",
+            dob = "1975-10-29",
+            club=self.club,
+            nationality="Croatian",
+        )
+        self.driver.refresh()
+        try:
+            selected_club = self.driver.find_element(by=By.XPATH, value="//span[text()='Everton']")
+        except NoSuchElementException as e:
+            self.fail(f"Test failed: {e}")
+        selected_club.click()
+        try:
+            manager_delete_button = self.driver.find_element(by=By.ID, value=f"manager-delete-{self.manager.id}")
+        except NoSuchElementException as e:
+            self.fail(f"Test failed: {e}")
+        manager_delete_button.click()
+        alert = self.driver.switch_to.alert
+        alert.accept()
+        time.sleep(1)
+        assert self.driver.title == "Clubs"
+        
+    def test_delete_club_from_view_page(self):
+        """
+        This method tests the deletion of a club in its view page.
+        """
+        self.create_club(name="Everton", logo_path="test_media/test_club_logo.png", stadium="LS")
+        self.driver.refresh()
+        try:
+            selected_club = self.driver.find_element(by=By.XPATH, value="//span[text()='Everton']")
+        except NoSuchElementException as e:
+            self.fail(f"Test failed: {e}")
+        selected_club.click()
+        try:
+            delete_button = self.driver.find_element(by=By.ID, value="club-delete")
+        except NoSuchElementException as e:
+            self.fail(f"Test failed: {e}")
+        delete_button.click()
+        try: 
+            WebDriverWait(self.driver, 5).until(EC.alert_is_present())
+            alert = self.driver.switch_to.alert
+            alert.accept()
+        except TimeoutException:
+            self.fail("No alert popped up")
         time.sleep(2)
         with self.assertRaises(Club.DoesNotExist):
             Club.objects.get(id=self.club.id)
