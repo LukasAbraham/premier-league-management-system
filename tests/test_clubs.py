@@ -16,7 +16,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import Select
 
-class TestClubsApp(StaticLiveServerTestCase):
+class TestClubsManagement(StaticLiveServerTestCase):
     """
     This class contains automation tests for the Clubs app.
     """
@@ -97,8 +97,8 @@ class TestClubsApp(StaticLiveServerTestCase):
 
         Parameters:
             name (str): The name of the club
-            logo (_type_): The path to the club logo image.
-            stadium (_type_): The name of the club stadium.
+            logo (str): The path to the club logo image.
+            stadium (str): The name of the club stadium.
         """
         add_club_button = self.driver.find_element(by=By.XPATH, value="//button[@class='btn btn-primary mr-3 mt-2']")
         add_club_button.click()
@@ -250,3 +250,128 @@ class TestClubsApp(StaticLiveServerTestCase):
         time.sleep(2)
         with self.assertRaises(Club.DoesNotExist):
             Club.objects.get(id=self.club.id)
+        
+class TestClubsSearch(StaticLiveServerTestCase):
+    def setUp(self):
+        """
+        This method sets up the test environment. It is run before each test method.
+        """
+        options = Options()
+        options.add_argument("--headless=new")
+        self.driver = webdriver.Chrome(options=options)
+        self.driver.get(f"{self.live_server_url}/")
+        self.driver.maximize_window()
+        self.user = User.objects.create_user(username='user', password='user123456')
+        self.user_profile = UserProfile.objects.create(user=self.user, type='user')
+        self.login('user', 'user123456')
+        self.navigate_to_clubs()
+
+    def tearDown(self):
+        """
+        This method cleans up after each test method.
+        """
+        self.driver.quit()
+
+    def login(self, username, password):
+        """
+        This method logs in to the application as an user
+        Parameters:
+            username (str): The username 
+            password (str): The password 
+        """
+        username_field = self.driver.find_element(by=By.NAME, value="username")
+        password_field = self.driver.find_element(by=By.NAME, value="password")
+        submit_button = self.driver.find_element(by=By.XPATH, value="//input[@type='submit']")
+        username_field.send_keys(username)
+        password_field.send_keys(password)
+        submit_button.click()
+
+    def navigate_to_clubs(self):
+        """
+        This method navigates to the clubs page.
+        """
+        clubs_tab = self.driver.find_element(by=By.XPATH, value="//a[@href='/clubs']")
+        clubs_tab.click()
+
+    def create_club(self, name, logo_path, stadium):
+        """
+        This method adds a new club in the database using Django's ORM
+        Parameters:
+            name (str): The name of the club
+            logo (str): The path to the club logo image
+            stadium (str): The name of the club stadium
+        """
+        with open(logo_path, 'rb') as f:
+            logo_image = File(f)
+            Club.objects.create(
+                name=name,
+                logo=logo_image,
+                stadium=stadium,
+            )
+
+    def populate_clubs(self, *args):
+        """
+        This method populates the test database with some Club instances. (this method serves for search functionality testing)
+        """
+        for arg in args:
+            self.create_club(name=arg, logo_path="test_media/test_club_logo.png", stadium="OT")
+
+    def test_search_returns_single_club(self):
+        """
+        This method tests if the search functionality returns a single club when the search query matches exactly one club.
+        """
+        self.populate_clubs("Liverpool", "Manchester United", "Manchester City")
+        self.driver.refresh()
+        self.query = "Liv"
+        try:
+            search_bar = self.driver.find_element(by=By.XPATH, value="//input[@placeholder='Search']")
+            search_button = self.driver.find_element(by=By.XPATH, value="//button[text()='SEARCH']")
+            search_bar.send_keys(self.query)
+            search_button.click()
+            
+            WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//span[@class='font-weight-bold']")))
+            club_name_elements = self.driver.find_elements(by=By.XPATH, value="//span[@class='font-weight-bold']")
+            assert len(club_name_elements) == 1, "There are more than 1 club displayed"
+            assert self.query in club_name_elements[0].text, f"The club name does not contain the search query: '{self.query}'"
+            
+        except NoSuchElementException as e:
+            self.fail(f"Test failed: {e}")
+
+    def test_search_returns_multiple_clubs(self):
+        """
+        This method tests if the search functionality returns multiple clubs when the search query matches more than one club.
+        """
+        self.populate_clubs("Liverpool", "Manchester United", "Manchester City")
+        self.driver.refresh()
+        self.query = "Man"
+        try:
+            search_bar = self.driver.find_element(by=By.XPATH, value="//input[@placeholder='Search']")
+            search_button = self.driver.find_element(by=By.XPATH, value="//button[text()='SEARCH']")
+            search_bar.send_keys(self.query)
+            search_button.click()
+            
+            WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//span[@class='font-weight-bold']")))
+            club_name_elements = self.driver.find_elements(by=By.XPATH, value="//span[@class='font-weight-bold']")
+            assert len(club_name_elements) == 2, "Expected 2 clubs, but got {0}".format(len(club_name_elements))
+            for club_name_element in club_name_elements:
+                assert self.query in club_name_element.text, f"Club name does not contain '{self.query}'"
+        except NoSuchElementException as e:
+            self.fail(f"Test failed: {e}")
+
+    def test_search_returns_no_club(self):
+        """
+        This method tests if the search functionality returns no clubs when the search query does not match any club.
+        """
+        self.populate_clubs("Liverpool", "Manchester City")
+        self.driver.refresh()
+        self.query = "Zha"
+        try:
+            search_bar = self.driver.find_element(by=By.XPATH, value="//input[@placeholder='Search']")
+            search_button = self.driver.find_element(by=By.XPATH, value="//button[text()='SEARCH']")
+            search_bar.send_keys(self.query)
+            search_button.click()
+            display_message = self.driver.find_element(by=By.XPATH, value="//h3[@class='display-4 font-select']")
+            assert display_message.text == "No clubs found.", "The search result is wrong"
+
+        except NoSuchElementException as e:
+            self.fail(f"Test failed: {e}")

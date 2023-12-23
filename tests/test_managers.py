@@ -16,7 +16,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import Select
 
-class TestManagersApp(StaticLiveServerTestCase):
+class TestManagersManagement(StaticLiveServerTestCase):
     """
     This class contains automation tests for the Managers app.
     """
@@ -140,7 +140,7 @@ class TestManagersApp(StaticLiveServerTestCase):
         """
         self.manager = Manager.objects.create(
             name="John Doe",
-            dob = "1975-10-29",
+            dob="1975-10-29",
             club=self.club,
             nationality="Croatian",
         )
@@ -160,7 +160,7 @@ class TestManagersApp(StaticLiveServerTestCase):
         """
         self.manager = Manager.objects.create(
             name="John Doe",
-            dob = "1976-10-29",
+            dob="1976-10-29",
             club=self.club,
             nationality="Croatian",
         )
@@ -177,3 +177,137 @@ class TestManagersApp(StaticLiveServerTestCase):
         time.sleep(2)
         with self.assertRaises(Manager.DoesNotExist):
             Manager.objects.get(id=self.manager.id)
+
+class TestManagersSearch(StaticLiveServerTestCase):
+    def setUp(self):
+        """
+        This method sets up the test environment. It is run before each test method.
+        """
+        options = Options()
+        options.add_argument("--headless=new")
+        self.driver = webdriver.Chrome(options=options)
+        self.driver.get(f"{self.live_server_url}/")
+        self.driver.maximize_window()
+        self.user = User.objects.create_user(username='user', password='user123456')
+        self.user_profile = UserProfile.objects.create(user=self.user, type='user')
+        self.login('user', 'user123456')
+        self.clubs = list()
+        self.clubs.append(self.create_club("Manchester United", "test_media/test_club_logo.png", "OT"))
+        self.clubs.append(self.create_club("Liverpool", "test_media/test_club_logo.png", "AN"))
+        self.clubs.append(self.create_club("Manchester City", "test_media/test_club_logo.png", "ET"))
+        self.navigate_to_managers()
+
+    def tearDown(self):
+        """
+        This method cleans up after each test method.
+        """
+        self.driver.quit()
+
+    def login(self, username, password):
+        """
+        This method logs in to the application as an user
+        Parameters:
+            username (str): The username 
+            password (str): The password 
+        """
+        username_field = self.driver.find_element(by=By.NAME, value="username")
+        password_field = self.driver.find_element(by=By.NAME, value="password")
+        submit_button = self.driver.find_element(by=By.XPATH, value="//input[@type='submit']")
+        username_field.send_keys(username)
+        password_field.send_keys(password)
+        submit_button.click()
+
+    def navigate_to_managers(self):
+        """
+        This method navigates to the managers page.
+        """
+        managers_tab = self.driver.find_element(by=By.XPATH, value="//a[@href='/managers']")
+        managers_tab.click()
+
+    def create_club(self, name, logo_path, stadium):
+        """
+        This method adds a new club in the database using Django's ORM
+        Parameters:
+            name (str): The name of the club
+            logo (str): The path to the club logo image
+            stadium (str): The name of the club stadium
+        """
+        with open(logo_path, 'rb') as f:
+            logo_image = File(f)
+            return Club.objects.create(
+                name=name,
+                logo=logo_image,
+                stadium=stadium,
+            )
+
+    def populate_managers(self, *args):
+        """
+        This method populates the test database with some Manager instances. (this method serves for search functionality testing)
+        """
+        for i, arg in enumerate(args):
+            Manager.objects.create(
+                name=arg,
+                dob="1976-10-29",
+                club=self.clubs[i],
+                nationality="English",
+            )
+
+    def test_search_returns_single_manager(self):
+        """
+        This method tests if the search functionality returns a single manager when the search query matches exactly one manager.
+        """
+        self.populate_managers("Jurgen Klopp", "Pep Guardiola", "Erik Ten-hag")
+        self.driver.refresh()
+        self.query = "Klo"
+        try:
+            search_bar = self.driver.find_element(by=By.XPATH, value="//input[@placeholder='Search']")
+            search_button = self.driver.find_element(by=By.XPATH, value="//button[text()='SEARCH']")
+            search_bar.send_keys(self.query)
+            search_button.click()
+            
+            WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//span[@class='font-weight-bold']")))
+            manager_name_elements = self.driver.find_elements(by=By.XPATH, value="//span[@class='font-weight-bold']")
+            assert len(manager_name_elements) == 1, "There are more than 1 manager displayed"
+            assert self.query in manager_name_elements[0].text, f"The manager name does not contain the search query: '{self.query}'"
+            
+        except NoSuchElementException as e:
+            self.fail(f"Test failed: {e}")
+
+    def test_search_returns_multiple_managers(self):
+        """
+        This method tests if the search functionality returns multiple managers when the search query matches more than one manager.
+        """
+        self.populate_managers("Jurgen Klopp", "Erik Nine-hag", "Erik Ten-hag")
+        self.driver.refresh()
+        self.query = "Erik"
+        try:
+            search_bar = self.driver.find_element(by=By.XPATH, value="//input[@placeholder='Search']")
+            search_button = self.driver.find_element(by=By.XPATH, value="//button[text()='SEARCH']")
+            search_bar.send_keys(self.query)
+            search_button.click()
+            
+            WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//span[@class='font-weight-bold']")))
+            manager_name_elements = self.driver.find_elements(by=By.XPATH, value="//span[@class='font-weight-bold']")
+            assert len(manager_name_elements) == 2, "Expected 2 managers, but got {0}".format(len(manager_name_elements))
+            for manager_name_element in manager_name_elements:
+                assert self.query in manager_name_element.text, f"Manager name does not contain '{self.query}'"
+        except NoSuchElementException as e:
+            self.fail(f"Test failed: {e}")
+
+    def test_search_returns_no_manager(self):
+        """
+        This method tests if the search functionality returns no managers when the search query does not match any manager.
+        """
+        self.populate_managers("Jurgen Klopp", "Pep Guardiola")
+        self.driver.refresh()
+        self.query = "Zinchenko"
+        try:
+            search_bar = self.driver.find_element(by=By.XPATH, value="//input[@placeholder='Search']")
+            search_button = self.driver.find_element(by=By.XPATH, value="//button[text()='SEARCH']")
+            search_bar.send_keys(self.query)
+            search_button.click()
+            display_message = self.driver.find_element(by=By.XPATH, value="//h3[@class='display-4 font-select']")
+            assert display_message.text == "No managers found.", "The search result is wrong"
+
+        except NoSuchElementException as e:
+            self.fail(f"Test failed: {e}")
