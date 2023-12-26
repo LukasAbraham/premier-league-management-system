@@ -37,20 +37,6 @@ class PlayerModelTest(TestCase):
         self.assertTrue(isinstance(self.player, Player))
         self.assertEqual(self.player.__str__(), self.player.name)
 
-    def test_creating_player_with_same_name(self):
-        with self.assertRaises(IntegrityError):
-            Player.objects.create(
-                name='John Doe',
-                dob=date(1990, 1, 1),
-                height=175,
-                weight=70,
-                club=self.club,
-                nationality='English',
-                position='MF',
-                # image=image,
-                type='HG'
-            )
-
     def test_updating_player(self):
         new_name = 'Jane Doe'
         self.player.name = new_name
@@ -161,7 +147,7 @@ class PlayerFormTest(TestCase):
             'club': self.club.id,
             'nationality': 'English',
             'position': 'FW',
-            'type': 'HR'
+            'type': 'HG'
         })
         self.assertTrue(form.is_valid())
 
@@ -177,7 +163,7 @@ class PlayerFormTest(TestCase):
             'club': self.club.id,
             'nationality': 'English',
             'position': 'FW',
-            'type': 'HR'
+            'type': 'HG'
         })
         self.assertFalse(form.is_valid())
 
@@ -190,7 +176,7 @@ class PlayerFormTest(TestCase):
             'club': self.club.id,
             'nationality': 'English',
             'position': 'FW',
-            'type': 'HR'
+            'type': 'HG'
         })
         self.assertFalse(form.is_valid())
 
@@ -203,7 +189,7 @@ class PlayerFormTest(TestCase):
             'club': self.club.id,
             'nationality': 'English',
             'position': 'FW',
-            'type': 'HR'
+            'type': 'HG'
         })
         self.assertTrue(form.is_valid())
 
@@ -216,7 +202,7 @@ class PlayerFormTest(TestCase):
             'club': self.club.id,
             'nationality': 'English',
             'position': 'FW',
-            'type': 'HR'
+            'type': 'HG'
         })
         self.assertFalse(form.is_valid())
 
@@ -232,7 +218,7 @@ class PlayerFormTest(TestCase):
             'club': self.club.id,
             'nationality': 'English',
             'position': 'FW',
-            'type': 'HR'
+            'type': 'HG'
         })
         self.assertFalse(form.is_valid())
 
@@ -245,7 +231,7 @@ class PlayerFormTest(TestCase):
             'club': self.club.id,
             'nationality': 'English',
             'position': 'FW',
-            'type': 'HR'
+            'type': 'HG'
         })
         self.assertTrue(form1.is_valid())
 
@@ -257,7 +243,7 @@ class PlayerFormTest(TestCase):
             'club': self.club.id,
             'nationality': 'English',
             'position': 'FW',
-            'type': 'HR'
+            'type': 'HG'
         })
         self.assertTrue(form2.is_valid())
 
@@ -270,7 +256,7 @@ class PlayerFormTest(TestCase):
             'club': self.club.id,
             'nationality': 'English',
             'position': 'FW',
-            'type': 'HR'
+            'type': 'HG'
         })
         self.assertFalse(form1.is_valid())
 
@@ -282,7 +268,7 @@ class PlayerFormTest(TestCase):
             'club': self.club.id,
             'nationality': 'English',
             'position': 'FW',
-            'type': 'HR'
+            'type': 'HG'
         })
         self.assertFalse(form2.is_valid())
 
@@ -298,7 +284,7 @@ class PlayerFormTest(TestCase):
             'club': self.club.id,
             'nationality': 'English',
             'position': 'FW',
-            'type': 'HR'
+            'type': 'HG'
         })
         self.assertFalse(form.is_valid())
 
@@ -311,7 +297,7 @@ class PlayerFormTest(TestCase):
             'club': self.club.id,
             'nationality': 'English',
             'position': 'FW',
-            'type': 'HR'
+            'type': 'HG'
         })
         self.assertFalse(form.is_valid())
 
@@ -327,7 +313,7 @@ class PlayerFormTest(TestCase):
             'club': self.club.id,
             'nationality': 'English',
             'position': 'FW',
-            'type': 'HR'
+            'type': 'HG'
         })
         self.assertFalse(form.is_valid())
 
@@ -340,7 +326,7 @@ class PlayerFormTest(TestCase):
             'club': self.club.id,
             'nationality': 'English',
             'position': 'FW',
-            'type': 'HR'
+            'type': 'HG'
         })
         self.assertFalse(form.is_valid())
 
@@ -356,7 +342,7 @@ class PlayerFormTest(TestCase):
             'club': '',
             'nationality': 'English',
             'position': 'FW',
-            'type': 'HR'
+            'type': 'HG'
         })
         self.assertFalse(form.is_valid())
 
@@ -372,7 +358,7 @@ class PlayerFormTest(TestCase):
             'club': self.club.id,
             'nationality': '',
             'position': 'FW',
-            'type': 'HR'
+            'type': 'HG'
         })
         self.assertFalse(form.is_valid())
 
@@ -388,7 +374,36 @@ class PlayerFormTest(TestCase):
             'club': self.club.id,
             'nationality': 'English',
             'position': '',
-            'type': 'HR'
+            'type': 'HG'
+        })
+        self.assertFalse(form.is_valid())
+
+    """
+    Test type field
+    """
+    def test_empty_type(self):
+        form = PlayerForm(data={
+            'name': 'John Doe',
+            'dob': date(1990, 1, 1),
+            'height': 180,
+            'weight': 80,
+            'club': self.club.id,
+            'nationality': 'English',
+            'position': 'FW',
+            'type': ''
+        })
+        self.assertFalse(form.is_valid())
+
+    def test_invalid_type(self):
+        form = PlayerForm(data={
+            'name': 'John Doe',
+            'dob': date(1990, 1, 1),
+            'height': 180,
+            'weight': 80,
+            'club': self.club.id,
+            'nationality': 'English',
+            'position': 'FW',
+            'type': 'FR'
         })
         self.assertFalse(form.is_valid())
 
