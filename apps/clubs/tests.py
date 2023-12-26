@@ -1,6 +1,8 @@
 import os
 import shutil
 from datetime import date
+import string
+import random
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -165,6 +167,10 @@ class AchievementModelTest(TestCase):
         expected_str = f'Test Club won FA in 2021'
         self.assertEqual(str(achievement), expected_str)
 
+def generate_random_string(length):
+    letters = string.ascii_letters
+    return ''.join(random.choice(letters) for _ in range(length))
+
 class ClubFormTest(TestCase):
     def setUp(self):
         os.makedirs('tmp', exist_ok=True)
@@ -180,16 +186,56 @@ class ClubFormTest(TestCase):
                                       logo_file.read(),
                                       content_type='image/png')
 
-    def test_valid_established_year(self):
-        valid_year = date.today().year - 5
+    def test_valid_data(self):
         logo = self.create_test_logo()
         form_data = {
             'name': 'Test Club',
-            'established_year': valid_year,
+            'established_year': 2000,
             'stadium': 'AN',
         }
         form = ClubForm(data=form_data, files={'logo': logo})
         self.assertTrue(form.is_valid())
+
+    def test_empty_name(self):
+        logo = self.create_test_logo()
+        form_data = {
+            'name': '',
+            'established_year': 2000,
+            'stadium': 'AN',
+        }
+        form = ClubForm(data=form_data, files={'logo': logo})
+        self.assertFalse(form.is_valid())
+
+    def test_name_valid_boundary(self):
+        logo = self.create_test_logo()
+        form_data = {
+            'name': generate_random_string(255),
+            'established_year': 2000,
+            'stadium': 'AN',
+        }
+        form = ClubForm(data=form_data, files={'logo': logo})
+        self.assertTrue(form.is_valid())
+
+    def test_name_invalid_boundary(self):
+        logo = self.create_test_logo()
+        form_data = {
+            'name': generate_random_string(256),
+            'established_year': 2000,
+            'stadium': 'AN',
+        }
+        form = ClubForm(data=form_data, files={'logo': logo})
+        self.assertFalse(form.is_valid())
+
+    def test_name_with_special_characters(self):
+        logo = self.create_test_logo()
+        form_data = {
+            'name': '%^&*(213)',
+            'established_year': 2000,
+            'stadium': 'AN',
+        }
+        form = ClubForm(data=form_data, files={'logo': logo})
+        self.assertFalse(form.is_valid())
+
 
     def test_invalid_established_year_future(self):
         future_year = date.today().year + 5
@@ -202,6 +248,35 @@ class ClubFormTest(TestCase):
         form = ClubForm(data=form_data, files={'logo': logo})
         self.assertFalse(form.is_valid())
         self.assertEqual(form.errors['established_year'], ["Invalid club's established year!"])
+
+    def test_empty_stadium(self):
+        logo = self.create_test_logo()
+        form_data = {
+            'name': 'Test Club',
+            'established_year': 2000,
+            'stadium': '',
+        }
+        form = ClubForm(data=form_data, files={'logo': logo})
+        self.assertFalse(form.is_valid())
+
+    def test_invalid_stadium(self):
+        logo = self.create_test_logo()
+        form_data = {
+            'name': 'Test Club',
+            'established_year': 2000,
+            'stadium': 'XY',
+        }
+        form = ClubForm(data=form_data, files={'logo': logo})
+        self.assertFalse(form.is_valid())
+
+    def test_empty_logo(self):
+        form_data = {
+            'name': 'Test Club',
+            'established_year': 2000,
+            'stadium': 'AN',
+        }
+        form = ClubForm(data=form_data)
+        self.assertFalse(form.is_valid())
 
 class AchievementFormTest(TestCase):
     def setUp(self):

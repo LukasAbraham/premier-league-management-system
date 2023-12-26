@@ -164,6 +164,40 @@ class ManagerFormsTests(TestCase):
         })
         self.assertFalse(form.is_valid())
 
+    def test_dob_valid_boundary(self):
+        form1 = ManagerForm(data={
+            'name': 'Test Manager',
+            'nationality': 'English',
+            'dob': date(date.today().year - Regulation.objects.get(pk=1).manager_min_age, date.today().month, date.today().day),
+            'club': self.club.id,
+        })
+        self.assertTrue(form1.is_valid())
+
+        form2 = ManagerForm(data={
+            'name': 'Test Manager',
+            'nationality': 'English',
+            'dob': date(date.today().year - Regulation.objects.get(pk=1).manager_max_age, date.today().month, date.today().day),
+            'club': self.club.id,
+        })
+        self.assertTrue(form2.is_valid())
+
+    def test_dob_invalid_boundary(self):
+        form1 = ManagerForm(data={
+            'name': 'Test Manager',
+            'nationality': 'English',
+            'dob': date(date.today().year - Regulation.objects.get(pk=1).manager_min_age + 1, date.today().month, date.today().day),
+            'club': self.club.id,
+        })
+        self.assertFalse(form1.is_valid())
+
+        form2 = ManagerForm(data={
+            'name': 'Test Manager',
+            'nationality': 'English',
+            'dob': date(date.today().year - Regulation.objects.get(pk=1).manager_max_age - 1, date.today().month, date.today().day),
+            'club': self.club.id,
+        })
+        self.assertFalse(form2.is_valid())
+
     """
     Test club field
     """
