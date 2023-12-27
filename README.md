@@ -13,7 +13,7 @@ This repository is a simplified model of a football league management system bui
 
 1. Clone the repo:
   ```bash
-  git clone https://github.com/your-username/premier-league-management-system.git
+  git clone https://github.com/LukasAbraham/premier-league-management-system.git
   ```
 2. Create a virtual environment: `python -m venv env`
 
