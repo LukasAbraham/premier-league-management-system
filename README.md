@@ -4,10 +4,10 @@ This repository is a simplified model of a football league management system bui
 
 ## Overview
 
-- Web-based management system: Designed for managing Premier League clubs, players, managers, and matches.
-- Simplified model: Focuses on core features like CRUD operations on player, manager, club, and match data.
-- User-friendly interface: Provides visually appealing views for normal users to access and interact with information.
-- Technologies: Built with the Django framework.
+- **Web-based management system**: Designed for managing Premier League clubs, players, managers, and matches.
+- **Simplified model**: Focuses on core features like CRUD operations on player, manager, club, and match data.
+- **User-friendly interface**: Provides visually appealing views for normal users to access and interact with information.
+- **Technologies**: Built with the Django framework.
 
 ## Installation
 
@@ -15,9 +15,7 @@ This repository is a simplified model of a football league management system bui
   ```bash
   git clone https://github.com/your-username/premier-league-management-system.git
   ```
-2. Create a virtual environment:
-    - macOS/Linux: `python -m venv env`
-    - Windows: `python -m venv env`
+2. Create a virtual environment: `python -m venv env`
 
 3. Activate the virtual environment:
     - macOS/Linux: `source env/bin/activate`
